@@ -8,7 +8,7 @@ int Lambda()
   const int fn=8;//number of files in "infile"
   std::ifstream infile("files_list.dat");//list of histograms
   std::string file;
-  std::string directory="/lustre/nyx/hades/user/iciepal/Lambda1520_ic/withSec2/";//directory comon for all files
+  std::string directory="/lustre/nyx/hades/user/iciepal/Lambda1520_ic/";//directory comon for all files
   int n=0;
 
   
@@ -97,8 +97,8 @@ int Lambda()
       hL1520mass_HFTepep[n]= (TH1F*)hist_file->Get("hL1520mass_HFTepep")->Clone();
 
 
-      //hL1520massFinalRLpi0_L[n]=(TH1F*)hist_file->Get("hL1520massFinalRLpi0_L")->Clone();
-      //hL1520massDistZLRLpi0_L[n]=(TH1F*)hist_file->Get("hL1520massDistZLRLpi0_L")->Clone();
+      hL1520massFinalRLpi0_L[n]=(TH1F*)hist_file->Get("hL1520massFinalRLpi0_L")->Clone();
+      hL1520massDistZLRLpi0_L[n]=(TH1F*)hist_file->Get("hL1520massDistZLRLpi0_L")->Clone();
 	
      n++;
     }
@@ -175,13 +175,14 @@ int Lambda()
       hL1520mass_HHemem[k]->Scale(scale[k]);
       hL1520mass_HHepep[k]->Scale(scale[k]);
       
-      cout<<"End of scaling"<<endl;
-      //hL1520massFinalRLpi0_L[k]->SetLineStyle(2);
-      //hL1520massDistZLRLpi0_L[k]->SetLineStyle(2);
-      //hL1520massFinalRLpi0_L[k]->Rebin(bins);
-      //hL1520massDistZLRLpi0_L[k]->Rebin(bins);
-      //hL1520massFinalRLpi0_L[k]->Scale(scale[k]);
-      //hL1520massDistZLRLpi0_L[k]->Scale(scale[k]);
+      
+      /*hL1520massFinalRLpi0_L[k]->SetLineStyle(2);
+      hL1520massDistZLRLpi0_L[k]->SetLineStyle(2);
+      hL1520massFinalRLpi0_L[k]->Rebin(bins);
+      hL1520massDistZLRLpi0_L[k]->Rebin(bins);
+      hL1520massFinalRLpi0_L[k]->Scale(scale[k]);
+      hL1520massDistZLRLpi0_L[k]->Scale(scale[k]);
+      */    
     }  
   TLegend *legend = new TLegend(0.1,0.2,0.99,0.9);
   legend->AddEntry(hL1520massDist[5],"p K+ #Lambda(1520)[#Lambda(1115) e+ e-] 130#mub","l");
