@@ -235,30 +235,48 @@ Int_t fwdet_tests(HLoop * loop, const AnaParameters & anapars)
 
      TH1F *hDLmassAllRL=new TH1F("hDLmassAllRL","hDLmassAllRL",1000,0,700);
      TH1F *hL1520massAllRL=new TH1F("hL1520massAllRL","hL1520massAllRL",1000,1200,2200);
+
+     TH1F *hDLmassAllRL_L=new TH1F("hDLmassAllRL_L","hDLmassAllRL_L",1000,0,700);
+     TH1F *hL1520massAllRL_L=new TH1F("hL1520massAllRL_L","hL1520massAllRL_L",1000,1200,2200);
+
      
      TH1F *hDLmassDist=new TH1F("hDLmassDist","hDLmassDist",1000,0,700);
      TH1F *hL1520massDist=new TH1F("hL1520massDist","hL1520massDist",1000,1200,2200);
 
      TH1F *hDLmassDistRL=new TH1F("hDLmassDistRL","hDLmassDistRL",1000,0,700);
      TH1F *hL1520massDistRL=new TH1F("hL1520massDistRL","hL1520massDistRL",1000,1200,2200);
-          
+
+     TH1F *hDLmassDistRL_L=new TH1F("hDLmassDistRL_L","hDLmassDistRL_L",1000,0,700);
+     TH1F *hL1520massDistRL_L=new TH1F("hL1520massDistRL_L","hL1520massDistRL_L",1000,1200,2200);
+     
      TH1F *hDLmassDistZ=new TH1F("hDLmassDistZ","hDLmassDistZ",1000,0,700);
      TH1F *hL1520massDistZ=new TH1F("hL1520massDistZ","hL1520massDistZ",1000,1200,2200);
 
      TH1F *hDLmassDistZRL=new TH1F("hDLmassDistZRL","hDLmassDistZRL",1000,0,700);
      TH1F *hL1520massDistZRL=new TH1F("hL1520massDistZRL","hL1520massDistZRL",1000,1200,2200);
+
+     TH1F *hDLmassDistZRL_L=new TH1F("hDLmassDistZRL_L","hDLmassDistZRL_L",1000,0,700);
+     TH1F *hL1520massDistZRL_L=new TH1F("hL1520massDistZRL_L","hL1520massDistZRL_L",1000,1200,2200);
+
      
      TH1F *hDLmassDistL=new TH1F("hDLmassDistL","hDLmassDistL",1000,0,700);
      TH1F *hL1520massDistL=new TH1F("hL1520massDistL","hL1520massDistL",1000,1200,2200);
 
      TH1F *hDLmassDistLRL=new TH1F("hDLmassDistLRL","hDLmassDistLRL",1000,0,700);
      TH1F *hL1520massDistLRL=new TH1F("hL1520massDistLRL","hL1520massDistLRL",1000,1200,2200);
+
+     TH1F *hDLmassDistLRL_L=new TH1F("hDLmassDistLRL_L","hDLmassDistLRL_L",1000,0,700);
+     TH1F *hL1520massDistLRL_L=new TH1F("hL1520massDistLRL_L","hL1520massDistLRL_L",1000,1200,2200);
      
      TH1F *hDLmassDistZL=new TH1F("hDLmassDistZL","hDLmassDistZL",1000,0,700);
      TH1F *hL1520massDistZL=new TH1F("hL1520massDistZL","hL1520massDistZL",1000,1200,2200);
 
      TH1F *hDLmassDistZLRL=new TH1F("hDLmassDistZLRL","hDLmassDistZLRL",1000,0,700);
      TH1F *hL1520massDistZLRL=new TH1F("hL1520massDistZLRL","hL1520massDistZLRL",1000,1200,2200);
+     TH1F *hDLmassDistZLRL_L=new TH1F("hDLmassDistZLRL_L","hDLmassDistZLRL_L",1000,0,700);
+     TH1F *hL1520massDistZLRL_L=new TH1F("hL1520massDistZLRL_L","hL1520massDistZLRL_L",1000,1200,2200);
+
+
      
      TH1F *hDLmassFinal=new TH1F("hDLmassFinal","hDLmassFinal",1000,0,700);
      TH1F *hL1520massFinal=new TH1F("hL1520massFinal","hL1520massFinal",1000,1200,2200);
@@ -266,8 +284,14 @@ Int_t fwdet_tests(HLoop * loop, const AnaParameters & anapars)
      TH1F *hDLmassFinalRL=new TH1F("hDLmassFinalRL","hDLmassFinalRL",1000,0,700);
      TH1F *hL1520massFinalRL=new TH1F("hL1520massFinalRL","hL1520massFinalRL",1000,1200,2200);
 
+     TH1F *hDLmassFinalRL_L=new TH1F("hDLmassFinalRL_L","hDLmassFinalRL_L",1000,0,700);
+     TH1F *hL1520massFinalRL_L=new TH1F("hL1520massFinalRL_L","hL1520massFinalRL_L",1000,1200,2200);
+     
      
      TH1F *hL1520massFinalRLpi0=new TH1F("hL1520massFinalRLpi0","hL1520massFinalRLpi0",1000,1200,2200);
+     TH1F *hL1520massFinalRLpi0_L=new TH1F("hL1520massFinalRLpi0_L","hL1520massFinalRLpi0_L",1000,1200,2200);
+
+
      TH1F *hL1520massFinalpi0=new TH1F("hL1520massFinalpi0","hL1520massFinalpi0",1000,1200,2200);
      TH1F *hL1520massDistZLpi0=new TH1F("hL1520massDistZLpi0","hL1520massDistZLpi0",1000,1200,2200);
      
@@ -304,6 +328,8 @@ Int_t fwdet_tests(HLoop * loop, const AnaParameters & anapars)
 
      TH1F *hDLmassFTDistZLRL=new TH1F("hDLmassFTDistZLRL","hDLmassFTDistZLRL",1000,0,700);
      TH1F *hL1520massFTDistZLRL=new TH1F("hL1520massFTDistZLRL","hL1520massFTDistZLRL",1000,1200,2200);
+     TH1F *hL1520massFTDistZLRLpi0=new TH1F("hL1520massFTDistZLRLpi0","hL1520massFTDistZLRLpi0",1000,1200,2200);
+
      TH1F *hL1520massFTDistZLpi0=new TH1F("hL1520massFTDistZLpi0","hL1520massFTDistZLpi0",1000,1200,2200);
     
      TH1F *hDLmassFTFinal=new TH1F("hDLmassFTFinal","hDLmassFTFinal",1000,0,700);
@@ -315,8 +341,157 @@ Int_t fwdet_tests(HLoop * loop, const AnaParameters & anapars)
      TH1F *hL1520massFTFinalRLpi0=new TH1F("hL1520massFTFinalRLpi0","hL1520massFTFinalRLpi0",1000,1200,2200);
      TH1F *hL1520massFTFinalpi0=new TH1F("hL1520massFTFinalpi0","hL1520massFTFinalpi0",1000,1200,2200);
 
+     TH1F *hL1520massDistZLRLpi0_L=new TH1F("hL1520massDistZLRLpi0_L","hL1520massDistZLRLpi0_L",1000,1200,2200);
+     TH1F *hL1520massDistZLRLpi0=new TH1F("hL1520massDistZLRLpi0","hL1520massDistZLRLpi0",1000,1200,2200);
+   
+
+  
      
      //*****************************     
+    //**************************************************************************** 
+   
+     TH1F *hDLmassAll_epep=new TH1F("hDLmassAll_epep","hDLmassAll_epep",1000,0,700);
+     TH1F *hL1520massAll_epep=new TH1F("hL1520massAll_epep","hL1520massAll_epep",1000,1200,2200);
+
+     TH1F *hDLmassAllRL_epep=new TH1F("hDLmassAllRL_epep","hDLmassAllRL_epep",1000,0,700);
+     TH1F *hL1520massAllRL_epep=new TH1F("hL1520massAllRL_epep","hL1520massAllRL_epep",1000,1200,2200);
+
+     TH1F *hDLmassAllRL_L_epep=new TH1F("hDLmassAllRL_L_epep","hDLmassAllRL_L_epep",1000,0,700);
+     TH1F *hL1520massAllRL_L_epep=new TH1F("hL1520massAllRL_L_epep","hL1520massAllRL_L_epep",1000,1200,2200);
+
+     
+     TH1F *hDLmassDist_epep=new TH1F("hDLmassDist_epep","hDLmassDist_epep",1000,0,700);
+     TH1F *hL1520massDist_epep=new TH1F("hL1520massDist_epep","hL1520massDist_epep",1000,1200,2200);
+
+     TH1F *hDLmassDistRL_epep=new TH1F("hDLmassDistRL_epep","hDLmassDistRL_epep",1000,0,700);
+     TH1F *hL1520massDistRL_epep=new TH1F("hL1520massDistRL_epep","hL1520massDistRL_epep",1000,1200,2200);
+
+     TH1F *hDLmassDistRL_L_epep=new TH1F("hDLmassDistRL_L_epep","hDLmassDistRL_L_epep",1000,0,700);
+     TH1F *hL1520massDistRL_L_epep=new TH1F("hL1520massDistRL_L_epep","hL1520massDistRL_L_epep",1000,1200,2200);
+     
+     TH1F *hDLmassDistZ_epep=new TH1F("hDLmassDistZ_epep","hDLmassDistZ_epep",1000,0,700);
+     TH1F *hL1520massDistZ_epep=new TH1F("hL1520massDistZ_epep","hL1520massDistZ_epep",1000,1200,2200);
+
+     TH1F *hDLmassDistZRL_epep=new TH1F("hDLmassDistZRL_epep","hDLmassDistZRL_epep",1000,0,700);
+     TH1F *hL1520massDistZRL_epep=new TH1F("hL1520massDistZRL_epep","hL1520massDistZRL_epep",1000,1200,2200);
+
+     TH1F *hDLmassDistZRL_L_epep=new TH1F("hDLmassDistZRL_L_epep","hDLmassDistZRL_L_epep",1000,0,700);
+     TH1F *hL1520massDistZRL_L_epep=new TH1F("hL1520massDistZRL_L_epep","hL1520massDistZRL_L_epep",1000,1200,2200);
+
+     
+     TH1F *hDLmassDistL_epep=new TH1F("hDLmassDistL_epep","hDLmassDistL_epep",1000,0,700);
+     TH1F *hL1520massDistL_epep=new TH1F("hL1520massDistL_epep","hL1520massDistL_epep",1000,1200,2200);
+
+     TH1F *hDLmassDistLRL_epep=new TH1F("hDLmassDistLRL_epep","hDLmassDistLRL_epep",1000,0,700);
+     TH1F *hL1520massDistLRL_epep=new TH1F("hL1520massDistLRL_epep","hL1520massDistLRL_epep",1000,1200,2200);
+
+     TH1F *hDLmassDistLRL_L_epep=new TH1F("hDLmassDistLRL_L_epep","hDLmassDistLRL_L_epep",1000,0,700);
+     TH1F *hL1520massDistLRL_L_epep=new TH1F("hL1520massDistLRL_L_epep","hL1520massDistLRL_L_epep",1000,1200,2200);
+     
+     TH1F *hDLmassDistZL_epep=new TH1F("hDLmassDistZL_epep","hDLmassDistZL_epep",1000,0,700);
+     TH1F *hL1520massDistZL_epep=new TH1F("hL1520massDistZL_epep","hL1520massDistZL_epep",1000,1200,2200);
+
+     TH1F *hDLmassDistZLRL_epep=new TH1F("hDLmassDistZLRL_epep","hDLmassDistZLRL_epep",1000,0,700);
+     TH1F *hL1520massDistZLRL_epep=new TH1F("hL1520massDistZLRL_epep","hL1520massDistZLRL_epep",1000,1200,2200);
+     TH1F *hDLmassDistZLRL_L_epep=new TH1F("hDLmassDistZLRL_L_epep","hDLmassDistZLRL_L_epep",1000,0,700);
+     TH1F *hL1520massDistZLRL_L_epep=new TH1F("hL1520massDistZLRL_L_epep","hL1520massDistZLRL_L_epep",1000,1200,2200);
+
+
+     
+     TH1F *hDLmassFinal_epep=new TH1F("hDLmassFinal_epep","hDLmassFinal_epep",1000,0,700);
+     TH1F *hL1520massFinal_epep=new TH1F("hL1520massFinal_epep","hL1520massFinal_epep",1000,1200,2200);
+
+     TH1F *hDLmassFinalRL_epep=new TH1F("hDLmassFinalRL_epep","hDLmassFinalRL_epep",1000,0,700);
+     TH1F *hL1520massFinalRL_epep=new TH1F("hL1520massFinalRL_epep","hL1520massFinalRL_epep",1000,1200,2200);
+
+     TH1F *hDLmassFinalRL_L_epep=new TH1F("hDLmassFinalRL_L_epep","hDLmassFinalRL_L_epep",1000,0,700);
+     TH1F *hL1520massFinalRL_L_epep=new TH1F("hL1520massFinalRL_L_epep","hL1520massFinalRL_L_epep",1000,1200,2200);
+     
+     
+     TH1F *hL1520massFinalRLpi0_epep=new TH1F("hL1520massFinalRLpi0_epep","hL1520massFinalRLpi0_epep",1000,1200,2200);
+
+     TH1F *hL1520massFinalRLpi0_L_epep=new TH1F("hL1520massFinalRLpi0_L_epep","hL1520massFinalRLpi0_L_epep",1000,1200,2200);
+
+
+     TH1F *hL1520massFinalpi0_epep=new TH1F("hL1520massFinalpi0_epep","hL1520massFinalpi0_epep",1000,1200,2200);
+     TH1F *hL1520massDistZLpi0_epep=new TH1F("hL1520massDistZLpi0_epep","hL1520massDistZLpi0_epep",1000,1200,2200);
+     
+
+     
+     //**************************************************************************** 
+
+    //**************************************************************************** 
+   
+     TH1F *hDLmassAll_emem=new TH1F("hDLmassAll_emem","hDLmassAll_emem",1000,0,700);
+     TH1F *hL1520massAll_emem=new TH1F("hL1520massAll_emem","hL1520massAll_emem",1000,1200,2200);
+
+     TH1F *hDLmassAllRL_emem=new TH1F("hDLmassAllRL_emem","hDLmassAllRL_emem",1000,0,700);
+     TH1F *hL1520massAllRL_emem=new TH1F("hL1520massAllRL_emem","hL1520massAllRL_emem",1000,1200,2200);
+
+     TH1F *hDLmassAllRL_L_emem=new TH1F("hDLmassAllRL_L_emem","hDLmassAllRL_L_emem",1000,0,700);
+     TH1F *hL1520massAllRL_L_emem=new TH1F("hL1520massAllRL_L_emem","hL1520massAllRL_L_emem",1000,1200,2200);
+
+     
+     TH1F *hDLmassDist_emem=new TH1F("hDLmassDist_emem","hDLmassDist_emem",1000,0,700);
+     TH1F *hL1520massDist_emem=new TH1F("hL1520massDist_emem","hL1520massDist_emem",1000,1200,2200);
+
+     TH1F *hDLmassDistRL_emem=new TH1F("hDLmassDistRL_emem","hDLmassDistRL_emem",1000,0,700);
+     TH1F *hL1520massDistRL_emem=new TH1F("hL1520massDistRL_emem","hL1520massDistRL_emem",1000,1200,2200);
+
+     TH1F *hDLmassDistRL_L_emem=new TH1F("hDLmassDistRL_L_emem","hDLmassDistRL_L_emem",1000,0,700);
+     TH1F *hL1520massDistRL_L_emem=new TH1F("hL1520massDistRL_L_emem","hL1520massDistRL_L_emem",1000,1200,2200);
+     
+     TH1F *hDLmassDistZ_emem=new TH1F("hDLmassDistZ_emem","hDLmassDistZ_emem",1000,0,700);
+     TH1F *hL1520massDistZ_emem=new TH1F("hL1520massDistZ_emem","hL1520massDistZ_emem",1000,1200,2200);
+
+     TH1F *hDLmassDistZRL_emem=new TH1F("hDLmassDistZRL_emem","hDLmassDistZRL_emem",1000,0,700);
+     TH1F *hL1520massDistZRL_emem=new TH1F("hL1520massDistZRL_emem","hL1520massDistZRL_emem",1000,1200,2200);
+
+     TH1F *hDLmassDistZRL_L_emem=new TH1F("hDLmassDistZRL_L_emem","hDLmassDistZRL_L_emem",1000,0,700);
+     TH1F *hL1520massDistZRL_L_emem=new TH1F("hL1520massDistZRL_L_emem","hL1520massDistZRL_L_emem",1000,1200,2200);
+
+     
+     TH1F *hDLmassDistL_emem=new TH1F("hDLmassDistL_emem","hDLmassDistL_emem",1000,0,700);
+     TH1F *hL1520massDistL_emem=new TH1F("hL1520massDistL_emem","hL1520massDistL_emem",1000,1200,2200);
+
+     TH1F *hDLmassDistLRL_emem=new TH1F("hDLmassDistLRL_emem","hDLmassDistLRL_emem",1000,0,700);
+     TH1F *hL1520massDistLRL_emem=new TH1F("hL1520massDistLRL_emem","hL1520massDistLRL_emem",1000,1200,2200);
+
+     TH1F *hDLmassDistLRL_L_emem=new TH1F("hDLmassDistLRL_L_emem","hDLmassDistLRL_L_emem",1000,0,700);
+     TH1F *hL1520massDistLRL_L_emem=new TH1F("hL1520massDistLRL_L_emem","hL1520massDistLRL_L_emem",1000,1200,2200);
+     
+     TH1F *hDLmassDistZL_emem=new TH1F("hDLmassDistZL_emem","hDLmassDistZL_emem",1000,0,700);
+     TH1F *hL1520massDistZL_emem=new TH1F("hL1520massDistZL_emem","hL1520massDistZL_emem",1000,1200,2200);
+
+     TH1F *hDLmassDistZLRL_emem=new TH1F("hDLmassDistZLRL_emem","hDLmassDistZLRL_emem",1000,0,700);
+     TH1F *hL1520massDistZLRL_emem=new TH1F("hL1520massDistZLRL_emem","hL1520massDistZLRL_emem",1000,1200,2200);
+     TH1F *hDLmassDistZLRL_L_emem=new TH1F("hDLmassDistZLRL_L_emem","hDLmassDistZLRL_L_emem",1000,0,700);
+     TH1F *hL1520massDistZLRL_L_emem=new TH1F("hL1520massDistZLRL_L_emem","hL1520massDistZLRL_L_emem",1000,1200,2200);
+
+
+     
+     TH1F *hDLmassFinal_emem=new TH1F("hDLmassFinal_emem","hDLmassFinal_emem",1000,0,700);
+     TH1F *hL1520massFinal_emem=new TH1F("hL1520massFinal_emem","hL1520massFinal_emem",1000,1200,2200);
+
+     TH1F *hDLmassFinalRL_emem=new TH1F("hDLmassFinalRL_emem","hDLmassFinalRL_emem",1000,0,700);
+     TH1F *hL1520massFinalRL_emem=new TH1F("hL1520massFinalRL_emem","hL1520massFinalRL_emem",1000,1200,2200);
+
+     TH1F *hDLmassFinalRL_L_emem=new TH1F("hDLmassFinalRL_L_emem","hDLmassFinalRL_L_emem",1000,0,700);
+     TH1F *hL1520massFinalRL_L_emem=new TH1F("hL1520massFinalRL_L_emem","hL1520massFinalRL_L_emem",1000,1200,2200);
+     
+     
+     TH1F *hL1520massFinalRLpi0_emem=new TH1F("hL1520massFinalRLpi0_emem","hL1520massFinalRLpi0_emem",1000,1200,2200);
+
+     TH1F *hL1520massFinalRLpi0_L_emem=new TH1F("hL1520massFinalRLpi0_L_emem","hL1520massFinalRLpi0_L_emem",1000,1200,2200);
+
+
+     TH1F *hL1520massFinalpi0_emem=new TH1F("hL1520massFinalpi0_emem","hL1520massFinalpi0_emem",1000,1200,2200);
+     TH1F *hL1520massDistZLpi0_emem=new TH1F("hL1520massDistZLpi0_emem","hL1520massDistZLpi0_emem",1000,1200,2200);
+     
+
+     
+     //**************************************************************************** 
+
      //**************************************
    
      TH1F *hinvMass_HHemem=new TH1F("hinvMass_HHemem","hinvMass_HHemem",1000,0,700);
@@ -325,12 +500,25 @@ Int_t fwdet_tests(HLoop * loop, const AnaParameters & anapars)
      TH1F *hinvMass_HFTemem=new TH1F("hinvMass_HFTemem","hinvMass_HFTemem",1000,0,700);
      TH1F *hinvMass_HFTepep=new TH1F("hinvMass_HFTepep","hinvMass_HFTepep",1000,0,700);
 
+     TH1F *hinvMass_emem_L=new TH1F("hinvMass_emem_L","hinvMass_emem_L",1000,0,700);
+     TH1F *hinvMass_epep_L=new TH1F("hinvMass_epep_L","hinvMass_epep_L",1000,0,700);
+
+     TH1F *hinvMass_emem=new TH1F("hinvMass_emem","hinvMass_emem",1000,0,700);
+     TH1F *hinvMass_epep=new TH1F("hinvMass_epep","hinvMass_epep",1000,0,700);
+
      TH1F *hL1520mass_HFTemem=new TH1F("hL1520mass_HFTemem","hL1520mass_HFTemem",1000,1200,2200);
      TH1F *hL1520mass_HFTepep=new TH1F("hL1520mass_HFTepep","hL1520mass_HFTepep",1000,1200,2200);
 
      TH1F *hL1520mass_HHemem=new TH1F("hL1520mass_HHemem","hL1520mass_HHemem",1000,1200,2200);
      TH1F *hL1520mass_HHepep=new TH1F("hL1520mass_HHepep","hL1520mass_HHepep",1000,1200,2200);
 
+     TH1F *hL1520mass_emem=new TH1F("hL1520mass_emem","hL1520mass_emem",1000,1200,2200);
+     TH1F *hL1520mass_epep=new TH1F("hL1520mass_epep","hL1520mass_epep",1000,1200,2200);
+    
+     TH1F *hL1520mass_emem_L=new TH1F("hL1520mass_emem_L","hL1520mass_emem_L",1000,1200,2200);
+     TH1F *hL1520mass_epep_L=new TH1F("hL1520mass_epep_L","hL1520mass_epep_L",1000,1200,2200);
+
+     
 
      TH1F *hinvMass_ememOA=new TH1F("hinvMass_ememOA","hinvMass_ememOA",1000,0,700);
      TH1F *hinvMass_epepOA=new TH1F("hinvMass_epepOA","hinvMass_epepOA",1000,0,700);
@@ -540,7 +728,8 @@ Int_t fwdet_tests(HLoop * loop, const AnaParameters & anapars)
 	      h2Eleptondet->Fill(partH->getPhi(),partH->getTheta());
 	      //flagdil=1;
 	      //h2IIleptonsInAcceptance->Fill(partH->getMomentum(),partH->getTheta());
-	      //cout<<"e+"<<endl;
+	      //cout<<"e+ "<<evnb<<" "<<partH->getGeantParentPID()<<" "<<partH->getGeantParentTrackNum()<<" "<<partH->getGeantGrandParentPID()<<endl;
+	      //dobre pary: 0,-1
 	    }
 	    //e-		  
 	    if(partH->getGeantPID()==3){
@@ -550,6 +739,10 @@ Int_t fwdet_tests(HLoop * loop, const AnaParameters & anapars)
 	      hEleptonsdet->Fill(partH->getTheta());
 	      //if(flagdil)
 		h2Eleptondet->Fill(partH->getPhi(),partH->getTheta());
+		
+		// cout<<"e- "<<evnb<<" "<<partH->getGeantParentPID()<<" "<<partH->getGeantParentTrackNum()<<" "<<partH->getGeantGrandParentPID()<<endl;
+	   
+
 	    }
 	  }
 	  
@@ -729,13 +922,115 @@ Int_t fwdet_tests(HLoop * loop, const AnaParameters & anapars)
 		    double oa = tool.getOpeningAngle(ep[s],ep[ss]);
 		    double mass_1520=(lvLambda+lvDiLepton).M();
 
-		    if(oa>5.)hinvMass_epepOA->Fill(lvDiLepton.M(),ww);  
+		    int flagDil2=0;
+		    //if(ep[s]->getGeantParentPID()==7 && ep[ss]->getGeantParentPID()==7)flagDil2=1;
+		    if(ep[s]->getGeantParentTrackNum()==0 && ep[ss]->getGeantParentTrackNum()==0 && ep[ss]->getGeantGrandParentPID()==-1 && ep[s]->getGeantGrandParentPID()==-1) flagDil2=1;
 
+		    
+		    //***************************************
+
+		    if(oa>5.){
+		      hinvMass_epepOA->Fill(lvDiLepton.M(),ww);  
+
+		      
+		      hDLmassAll_epep->Fill(lvDiLepton.M(),ww);
+		      hL1520massAll_epep->Fill(mass_1520,ww);
+
+		    if(pimH[j]->getGeantParentPID()==18 && pH[k]->getGeantParentPID()==18){
+
+		      hDLmassAllRL_epep->Fill(lvDiLepton.M(),ww);
+		      hL1520massAllRL_epep->Fill(mass_1520,ww);
+		      
+		      if(flagDil2){
+			hDLmassAllRL_L_epep->Fill(lvDiLepton.M(),ww);
+			hL1520massAllRL_L_epep->Fill(mass_1520,ww);
+			
+		      }
+		      
+		      
+		    }
+
+		    if(flagHFTL1){
+
+		      hDLmassDist_epep->Fill(lvDiLepton.M(),ww);
+		      hL1520massDist_epep->Fill(mass_1520,ww);
+
+		      if(pimH[j]->getGeantParentPID()==18 && pH[k]->getGeantParentPID()==18){
+			hDLmassDistRL_epep->Fill(lvDiLepton.M(),ww);
+			hL1520massDistRL_epep->Fill(mass_1520,ww);
+
+			if(flagDil2){
+			  hDLmassDistRL_L_epep->Fill(lvDiLepton.M(),ww);
+			  hL1520massDistRL_L_epep->Fill(mass_1520,ww);
+
+			}
+      
+		      }
+
+		    }
+
+		    if(flagHFTL2){
+		      hDLmassDistZ_epep->Fill(lvDiLepton.M(),ww);
+		      hL1520massDistZ_epep->Fill(mass_1520,ww);
+
+		      if(pimH[j]->getGeantParentPID()==18 && pH[k]->getGeantParentPID()==18){
+			hDLmassDistZRL_epep->Fill(lvDiLepton.M(),ww);
+			hL1520massDistZRL_epep->Fill(mass_1520,ww);
+
+			if(flagDil2){
+			  hDLmassDistZRL_L_epep->Fill(lvDiLepton.M(),ww);
+			  hL1520massDistZRL_L_epep->Fill(mass_1520,ww);
+			  
+			}
+
+			
+
+		      }
+		    }
+
+
+		    
+		    if(flagHFTL3){
+
+		      hDLmassDistL_epep->Fill(lvDiLepton.M(),ww);
+		      hL1520massDistL_epep->Fill(mass_1520,ww);
+
+		      if(pimH[j]->getGeantParentPID()==18 && pH[k]->getGeantParentPID()==18){
+
+			hDLmassDistLRL_epep->Fill(lvDiLepton.M(),ww);
+			hL1520massDistLRL_epep->Fill(mass_1520,ww);
+
+			if(flagDil2){
+			  hDLmassDistLRL_L_epep->Fill(lvDiLepton.M(),ww);
+			  hL1520massDistLRL_L_epep->Fill(mass_1520,ww);
+			}
+			
+		      }
+
+
+
+		    }
+
+		    		    
+		    }//oa
+
+		    //***************************************
+
+	    
 		    if(flagHHL4 && oa>5){
 
 		      hL1520mass_HHepep->Fill(mass_1520,ww);		      
 		      if(mass_1520>1450 && mass_1520<1550)hinvMass_HHepep->Fill(lvDiLepton.M(),ww);
-		 
+
+		      if(flagDil2){
+
+			hL1520mass_epep_L->Fill(mass_1520,ww);		      
+			if(mass_1520>1450 && mass_1520<1550)hinvMass_epep_L->Fill(lvDiLepton.M(),ww);
+		      
+
+		      }
+
+		      
 		    }
 		    
 		  }
@@ -749,21 +1044,119 @@ Int_t fwdet_tests(HLoop * loop, const AnaParameters & anapars)
 		    double oa = tool.getOpeningAngle(em[s],em[ss]);
 		    double mass_1520=(lvLambda+lvDiLepton).M();
 
-		    if(oa>5.)hinvMass_ememOA->Fill(lvDiLepton.M(),ww);  
+		    int flagDil1=0;
+		    //if(em[s]->getGeantParentPID()==7 && em[ss]->getGeantParentPID()==7)flagDil1=1;
+		    if(em[s]->getGeantParentTrackNum()==0 && em[ss]->getGeantParentTrackNum()==0 && em[ss]->getGeantGrandParentPID()==-1 && em[s]->getGeantGrandParentPID()==-1) flagDil1=1;
 
+		    
+		    //***************************************
+
+		    if(oa>5.){
+		      hinvMass_ememOA->Fill(lvDiLepton.M(),ww);  
+
+		      
+		      hDLmassAll_emem->Fill(lvDiLepton.M(),ww);
+		      hL1520massAll_emem->Fill(mass_1520,ww);
+
+		    if(pimH[j]->getGeantParentPID()==18 && pH[k]->getGeantParentPID()==18){
+
+		      hDLmassAllRL_emem->Fill(lvDiLepton.M(),ww);
+		      hL1520massAllRL_emem->Fill(mass_1520,ww);
+		      
+		      if(flagDil1){
+			hDLmassAllRL_L_emem->Fill(lvDiLepton.M(),ww);
+			hL1520massAllRL_L_emem->Fill(mass_1520,ww);
+			
+		      }
+		      
+		      
+		    }
+
+		    if(flagHFTL1){
+
+		      hDLmassDist_emem->Fill(lvDiLepton.M(),ww);
+		      hL1520massDist_emem->Fill(mass_1520,ww);
+
+		      if(pimH[j]->getGeantParentPID()==18 && pH[k]->getGeantParentPID()==18){
+			hDLmassDistRL_emem->Fill(lvDiLepton.M(),ww);
+			hL1520massDistRL_emem->Fill(mass_1520,ww);
+
+			if(flagDil1){
+			  hDLmassDistRL_L_emem->Fill(lvDiLepton.M(),ww);
+			  hL1520massDistRL_L_emem->Fill(mass_1520,ww);
+
+			}
+      
+		      }
+
+		    }
+
+		    if(flagHFTL2){
+		      hDLmassDistZ_emem->Fill(lvDiLepton.M(),ww);
+		      hL1520massDistZ_emem->Fill(mass_1520,ww);
+
+		      if(pimH[j]->getGeantParentPID()==18 && pH[k]->getGeantParentPID()==18){
+			hDLmassDistZRL_emem->Fill(lvDiLepton.M(),ww);
+			hL1520massDistZRL_emem->Fill(mass_1520,ww);
+
+			if(flagDil1){
+			  hDLmassDistZRL_L_emem->Fill(lvDiLepton.M(),ww);
+			  hL1520massDistZRL_L_emem->Fill(mass_1520,ww);
+			  
+			}
+
+			
+
+		      }
+		    }
+
+
+		    
+		    if(flagHFTL3){
+
+		      hDLmassDistL_emem->Fill(lvDiLepton.M(),ww);
+		      hL1520massDistL_emem->Fill(mass_1520,ww);
+
+		      if(pimH[j]->getGeantParentPID()==18 && pH[k]->getGeantParentPID()==18){
+
+			hDLmassDistLRL_emem->Fill(lvDiLepton.M(),ww);
+			hL1520massDistLRL_emem->Fill(mass_1520,ww);
+
+			if(flagDil1){
+			  hDLmassDistLRL_L_emem->Fill(lvDiLepton.M(),ww);
+			  hL1520massDistLRL_L_emem->Fill(mass_1520,ww);
+			}
+			
+		      }
+
+
+
+		    }
+
+		    		    
+		    }//oa
+
+		    //***************************************
+		    
 		    if(flagHHL4 && oa>5){
 	
-		      hL1520mass_HHemem->Fill(mass_1520,ww);		      
-		      if(mass_1520>1450 && mass_1520<1550)hinvMass_HHemem->Fill(lvDiLepton.M(),ww);
-		 
+		      hL1520mass_emem->Fill(mass_1520,ww);		      
+		      if(mass_1520>1450 && mass_1520<1550)hinvMass_emem->Fill(lvDiLepton.M(),ww);
+
+		      if(flagDil1){
+
+			hL1520mass_emem_L->Fill(mass_1520,ww);		      
+			if(mass_1520>1450 && mass_1520<1550)hinvMass_emem_L->Fill(lvDiLepton.M(),ww);
+		      
+			
+		      }
+		      
+		      
 		    }
-		    
 		    
 		  }
 		}
-
-
-
+		
 	      }
 	
 
@@ -776,9 +1169,11 @@ Int_t fwdet_tests(HLoop * loop, const AnaParameters & anapars)
 		    
 		    //em[ss]->calc4vectorProperties(HPhysicsConstants::mass(em[ss]->getGeantPID()));
 		    //ep[s]->calc4vectorProperties(HPhysicsConstants::mass(ep[s]->getGeantPID()));
+		    int flagDil=0;
+		    //if(ep[s]->getGeantParentTrackNum()==0 && em[ss]->getGeantParentTrackNum()==0 && em[ss]->getGeantGrandParentPID()=-1 && ep[s]->getGeantParentTrackNum()==0) flagDil=1;
+		    if(ep[s]->getGeantParentTrackNum()==0 && em[ss]->getGeantParentTrackNum()==0 && ep[s]->getGeantGrandParentPID()==-1 && em[ss]->getGeantGrandParentPID()==-1) flagDil=1;
 
 		    
-
 		    TLorentzVector lvLambda=*pH[k]+*pimH[j];
 		    TLorentzVector lvDiLepton=*ep[s]+*em[ss];
 
@@ -811,8 +1206,12 @@ Int_t fwdet_tests(HLoop * loop, const AnaParameters & anapars)
 		    if(pimH[j]->getGeantParentPID()==18 && pH[k]->getGeantParentPID()==18){
 		      hDLmassAllRL->Fill(invMepem,ww);
 		      hL1520massAllRL->Fill(mass_1520,ww);
-		  
 
+		      if(flagDil){
+			hDLmassAllRL_L->Fill(invMepem,ww);
+			hL1520massAllRL_L->Fill(mass_1520,ww);
+		      
+			}
 		      }
 		    
 		    if(flagHHL1){
@@ -821,7 +1220,13 @@ Int_t fwdet_tests(HLoop * loop, const AnaParameters & anapars)
 		      if(pimH[j]->getGeantParentPID()==18 && pH[k]->getGeantParentPID()==18){
 			hDLmassDistRL->Fill(invMepem,ww);
 			hL1520massDistRL->Fill(mass_1520,ww);
-		     
+
+			if(flagDil){
+			  hDLmassDistRL_L->Fill(invMepem,ww);
+			  hL1520massDistRL_L->Fill(mass_1520,ww);
+
+			}
+			
 		      }
 		    }
 
@@ -835,6 +1240,13 @@ Int_t fwdet_tests(HLoop * loop, const AnaParameters & anapars)
 			hDLmassDistZRL->Fill(invMepem,ww);
 			hL1520massDistZRL->Fill(mass_1520,ww);
 
+			if(flagDil){
+			  hDLmassDistZRL_L->Fill(invMepem,ww);
+			  hL1520massDistZRL_L->Fill(mass_1520,ww);
+			  
+			}
+
+			
 		      }
 
 		    }
@@ -850,7 +1262,10 @@ Int_t fwdet_tests(HLoop * loop, const AnaParameters & anapars)
 
 			hDLmassDistLRL->Fill(invMepem,ww);
 			hL1520massDistLRL->Fill(mass_1520,ww);
-
+			if(flagDil){
+			  hDLmassDistLRL_L->Fill(invMepem,ww);
+			  hL1520massDistLRL_L->Fill(mass_1520,ww);
+			}
 			
 		      }
 
@@ -867,8 +1282,15 @@ Int_t fwdet_tests(HLoop * loop, const AnaParameters & anapars)
 
 			hDLmassDistZLRL->Fill(invMepem,ww);
 			hL1520massDistZLRL->Fill(mass_1520,ww);
-
-			
+			if(invMepem>140.)hL1520massDistZLRLpi0->Fill(mass_1520,ww);
+		   
+			if(flagDil){
+			  
+			  hDLmassDistZLRL_L->Fill(invMepem,ww);
+			  hL1520massDistZLRL_L->Fill(mass_1520,ww);
+			  if(invMepem>140.)hL1520massDistZLRLpi0_L->Fill(mass_1520,ww);
+		   
+			}
 		      }
 		      
 		      //if(oa>min_angle){
@@ -886,7 +1308,14 @@ Int_t fwdet_tests(HLoop * loop, const AnaParameters & anapars)
 			      hL1520massFinalRL->Fill(mass_1520,ww);
 			      if(invMepem>140.)hL1520massFinalRLpi0->Fill(mass_1520,ww);
 
-			      
+			      if(flagDil){
+
+				hDLmassFinalRL_L->Fill(invMepem,ww);
+				hL1520massFinalRL_L->Fill(mass_1520,ww);
+				if(invMepem>140.)hL1520massFinalRLpi0_L->Fill(mass_1520,ww);
+			    
+				
+			      }
 			    }
 
 			    
@@ -1083,12 +1512,115 @@ Int_t fwdet_tests(HLoop * loop, const AnaParameters & anapars)
 		    double oa = tool.getOpeningAngle(ep[s],ep[ss]);
 		    double mass_1520=(lvLambda+lvDiLepton).M();
 
-		    if(oa>5.)hinvMass_epepOA->Fill(lvDiLepton.M(),ww);  
-		
-		    if(flagHFTL4 && oa>5){
+		    int flagDil2=0;
+		    //if(ep[s]->getGeantParentPID()==7 && ep[ss]->getGeantParentPID()==7)flagDil2=1;
+		    if(ep[s]->getGeantParentTrackNum()==0 && ep[ss]->getGeantParentTrackNum()==0 && ep[ss]->getGeantGrandParentPID()==-1 && ep[s]->getGeantGrandParentPID()==-1) flagDil2=1;
 
-		      hL1520mass_HFTepep->Fill(mass_1520,ww);		      
-		      if(mass_1520>1450 && mass_1520<1550)hinvMass_HFTepep->Fill(lvDiLepton.M(),ww);
+
+
+		    //***************************************
+
+		    if(oa>5.){
+		      hinvMass_epepOA->Fill(lvDiLepton.M(),ww);  
+
+		      
+		      hDLmassAll_epep->Fill(lvDiLepton.M(),ww);
+		      hL1520massAll_epep->Fill(mass_1520,ww);
+
+		    if(pimH[k]->getGeantParentPID()==18 && pFT[j]->getGeantParentPID()==18){
+
+		      hDLmassAllRL_epep->Fill(lvDiLepton.M(),ww);
+		      hL1520massAllRL_epep->Fill(mass_1520,ww);
+		      
+		      if(flagDil2){
+			hDLmassAllRL_L_epep->Fill(lvDiLepton.M(),ww);
+			hL1520massAllRL_L_epep->Fill(mass_1520,ww);
+			
+		      }
+		      
+		      
+		    }
+
+		    if(flagHFTL1){
+
+		      hDLmassDist_epep->Fill(lvDiLepton.M(),ww);
+		      hL1520massDist_epep->Fill(mass_1520,ww);
+
+		      if(pimH[k]->getGeantParentPID()==18 && pFT[j]->getGeantParentPID()==18){
+			hDLmassDistRL_epep->Fill(lvDiLepton.M(),ww);
+			hL1520massDistRL_epep->Fill(mass_1520,ww);
+
+			if(flagDil2){
+			  hDLmassDistRL_L_epep->Fill(lvDiLepton.M(),ww);
+			  hL1520massDistRL_L_epep->Fill(mass_1520,ww);
+
+			}
+      
+		      }
+
+		    }
+
+		    if(flagHFTL2){
+		      hDLmassDistZ_epep->Fill(lvDiLepton.M(),ww);
+		      hL1520massDistZ_epep->Fill(mass_1520,ww);
+
+		      if(pimH[k]->getGeantParentPID()==18 && pFT[j]->getGeantParentPID()==18){
+			hDLmassDistZRL_epep->Fill(lvDiLepton.M(),ww);
+			hL1520massDistZRL_epep->Fill(mass_1520,ww);
+
+			if(flagDil2){
+			  hDLmassDistZRL_L_epep->Fill(lvDiLepton.M(),ww);
+			  hL1520massDistZRL_L_epep->Fill(mass_1520,ww);
+			  
+			}
+
+
+		      }
+		    }
+
+
+		    
+		    if(flagHFTL3){
+
+		      hDLmassDistL_epep->Fill(lvDiLepton.M(),ww);
+		      hL1520massDistL_epep->Fill(mass_1520,ww);
+
+		      if(pimH[k]->getGeantParentPID()==18 && pFT[j]->getGeantParentPID()==18){
+
+			hDLmassDistLRL_epep->Fill(lvDiLepton.M(),ww);
+			hL1520massDistLRL_epep->Fill(mass_1520,ww);
+
+			if(flagDil2){
+			  hDLmassDistLRL_L_epep->Fill(lvDiLepton.M(),ww);
+			  hL1520massDistLRL_L_epep->Fill(mass_1520,ww);
+			}
+			
+		      }
+
+
+
+		    }
+
+		    		    
+		    }//oa
+
+		    //***************************************
+
+		    
+		    if(flagHFTL4 && oa>5){
+		      
+		      hL1520mass_epep->Fill(mass_1520,ww);
+  		      if(mass_1520>1450 && mass_1520<1550)hinvMass_epep->Fill(lvDiLepton.M(),ww);
+
+		      if(flagDil2){
+			
+
+			hL1520mass_epep_L->Fill(mass_1520,ww);
+			if(mass_1520>1450 && mass_1520<1550)hinvMass_epep_L->Fill(lvDiLepton.M(),ww);
+		      
+
+		      }
+
 		 
 		    }
 		    
@@ -1103,15 +1635,122 @@ Int_t fwdet_tests(HLoop * loop, const AnaParameters & anapars)
 		    TLorentzVector lvDiLepton=*em[s]+*em[ss];
 		    double oa = tool.getOpeningAngle(em[s],em[ss]);
 		    double mass_1520=(lvLambda+lvDiLepton).M();
+		    
+		    int flagDil1=0;
+		    if(em[s]->getGeantParentTrackNum()==0 && em[ss]->getGeantParentTrackNum()==0 && em[s]->getGeantGrandParentPID()==-1 && em[ss]->getGeantGrandParentPID()==-1) flagDil1=1;
 
-		    if(oa>5.)hinvMass_ememOA->Fill(lvDiLepton.M(),ww);  
-		
+		    //if(em[s]->getGeantParentPID()==7 && em[ss]->getGeantParentPID()==7)flagDil1=1;
+
+
+		    
+
+
+
+		    //***************************************
+
+		    if(oa>5.){
+		      hinvMass_ememOA->Fill(lvDiLepton.M(),ww);  
+		      
+		      hDLmassAll_emem->Fill(lvDiLepton.M(),ww);
+		      hL1520massAll_emem->Fill(mass_1520,ww);
+
+		    if(pimH[k]->getGeantParentPID()==18 && pFT[j]->getGeantParentPID()==18){
+
+		      hDLmassAllRL_emem->Fill(lvDiLepton.M(),ww);
+		      hL1520massAllRL_emem->Fill(mass_1520,ww);
+		      
+		      if(flagDil1){
+			hDLmassAllRL_L_emem->Fill(lvDiLepton.M(),ww);
+			hL1520massAllRL_L_emem->Fill(mass_1520,ww);
+			
+		      }
+		      
+		      
+		    }
+
+		    if(flagHFTL1){
+
+		      hDLmassDist_emem->Fill(lvDiLepton.M(),ww);
+		      hL1520massDist_emem->Fill(mass_1520,ww);
+
+		      if(pimH[k]->getGeantParentPID()==18 && pFT[j]->getGeantParentPID()==18){
+			hDLmassDistRL_emem->Fill(lvDiLepton.M(),ww);
+			hL1520massDistRL_emem->Fill(mass_1520,ww);
+
+			if(flagDil1){
+			  hDLmassDistRL_L_emem->Fill(lvDiLepton.M(),ww);
+			  hL1520massDistRL_L_emem->Fill(mass_1520,ww);
+
+			}
+      
+		      }
+
+		    }
+
+		    if(flagHFTL2){
+		      hDLmassDistZ_emem->Fill(lvDiLepton.M(),ww);
+		      hL1520massDistZ_emem->Fill(mass_1520,ww);
+
+		      if(pimH[k]->getGeantParentPID()==18 && pFT[j]->getGeantParentPID()==18){
+			hDLmassDistZRL_emem->Fill(lvDiLepton.M(),ww);
+			hL1520massDistZRL_emem->Fill(mass_1520,ww);
+
+			if(flagDil1){
+			  hDLmassDistZRL_L_emem->Fill(lvDiLepton.M(),ww);
+			  hL1520massDistZRL_L_emem->Fill(mass_1520,ww);
+			  
+			}
+
+			
+
+		      }
+		    }
+
+
+		    
+		    if(flagHFTL3){
+
+		      hDLmassDistL_emem->Fill(lvDiLepton.M(),ww);
+		      hL1520massDistL_emem->Fill(mass_1520,ww);
+
+		      if(pimH[k]->getGeantParentPID()==18 && pFT[j]->getGeantParentPID()==18){
+
+			hDLmassDistLRL_emem->Fill(lvDiLepton.M(),ww);
+			hL1520massDistLRL_emem->Fill(mass_1520,ww);
+
+			if(flagDil1){
+			  hDLmassDistLRL_L_emem->Fill(lvDiLepton.M(),ww);
+			  hL1520massDistLRL_L_emem->Fill(mass_1520,ww);
+			}
+			
+		      }
+
+
+
+		    }
+
+		    		    
+		    }//oa
+
+		    //***************************************
+
+		    
 		    
 		    if(flagHFTL4 && oa>5.){
 	
-		      hL1520mass_HFTemem->Fill(mass_1520,ww);		      
-		      if(mass_1520>1450 && mass_1520<1550)hinvMass_HFTemem->Fill(lvDiLepton.M(),ww);
+		      hL1520mass_emem->Fill(mass_1520,ww);		      
+		      if(mass_1520>1450 && mass_1520<1550)hinvMass_emem->Fill(lvDiLepton.M(),ww);
 		 
+		      if(flagDil1){
+
+			hL1520mass_emem_L->Fill(mass_1520,ww);		      
+			if(mass_1520>1450 && mass_1520<1550)hinvMass_emem_L->Fill(lvDiLepton.M(),ww);
+		      
+
+		      }
+
+
+
 		    }
 		    
 		    
@@ -1128,7 +1767,12 @@ Int_t fwdet_tests(HLoop * loop, const AnaParameters & anapars)
 
 			      //em[ss]->calc4vectorProperties(HPhysicsConstants::mass(em[ss]->getGeantPID()));
 			      //ep[s]->calc4vectorProperties(HPhysicsConstants::mass(ep[s]->getGeantPID()));
-		      
+		    int flagDil=0;
+		    //if(ep[s]->getGeantParentPID()==7 && em[ss]->getGeantParentPID()==7)flagDil=1;
+		    if(ep[s]->getGeantParentTrackNum()==0 && ep[ss]->getGeantParentTrackNum()==0 && em[s]->getGeantGrandParentPID()==-1 && em[ss]->getGeantGrandParentPID()==-1) flagDil=1;
+
+
+			      
 			      TLorentzVector lvLambda=*pFT[j]+*pimH[k];
 			      TLorentzVector lvDiLepton=*ep[s]+*em[ss];
 
@@ -1160,6 +1804,12 @@ Int_t fwdet_tests(HLoop * loop, const AnaParameters & anapars)
 		      hDLmassFTAllRL->Fill(invMepem,ww);
 		      hL1520massFTAllRL->Fill(mass_1520,ww);
 
+		      if(flagDil){
+			hDLmassAllRL_L->Fill(invMepem,ww);
+			hL1520massAllRL_L->Fill(mass_1520,ww);
+		      
+			}
+ 
 		      
 		    }
 
@@ -1171,7 +1821,12 @@ Int_t fwdet_tests(HLoop * loop, const AnaParameters & anapars)
 		      if(pimH[k]->getGeantParentPID()==18 && pFT[j]->getGeantParentPID()==18){
 			hDLmassFTDistRL->Fill(invMepem,ww);
 			hL1520massFTDistRL->Fill(mass_1520,ww);
-			
+
+			if(flagDil){
+			  hDLmassDistRL_L->Fill(invMepem,ww);
+			  hL1520massDistRL_L->Fill(mass_1520,ww);
+
+			}
       
 		      }
 		    }
@@ -1184,6 +1839,13 @@ Int_t fwdet_tests(HLoop * loop, const AnaParameters & anapars)
 		      if(pimH[k]->getGeantParentPID()==18 && pFT[j]->getGeantParentPID()==18){
 			hDLmassFTDistZRL->Fill(invMepem,ww);
 			hL1520massFTDistZRL->Fill(mass_1520,ww);
+
+			if(flagDil){
+			  hDLmassDistZRL_L->Fill(invMepem,ww);
+			  hL1520massDistZRL_L->Fill(mass_1520,ww);
+			  
+			}
+
 			
 
 		      }
@@ -1201,6 +1863,11 @@ Int_t fwdet_tests(HLoop * loop, const AnaParameters & anapars)
 			hDLmassFTDistLRL->Fill(invMepem,ww);
 			hL1520massFTDistLRL->Fill(mass_1520,ww);
 
+			if(flagDil){
+			  hDLmassDistLRL_L->Fill(invMepem,ww);
+			  hL1520massDistLRL_L->Fill(mass_1520,ww);
+			}
+			
 		      }
 
 
@@ -1217,7 +1884,15 @@ Int_t fwdet_tests(HLoop * loop, const AnaParameters & anapars)
 
 			hDLmassFTDistZLRL->Fill(invMepem,ww);
 			hL1520massFTDistZLRL->Fill(mass_1520,ww);
-
+			if(invMepem>140.)hL1520massFTDistZLRLpi0->Fill(mass_1520,ww);
+			if(flagDil){
+			  
+			  hDLmassDistZLRL_L->Fill(invMepem,ww);
+			  hL1520massDistZLRL_L->Fill(mass_1520,ww);
+			  if(invMepem>140.)hL1520massDistZLRLpi0_L->Fill(mass_1520,ww);
+		   
+			}
+	
 		      }
 		   
 			
@@ -1231,7 +1906,19 @@ Int_t fwdet_tests(HLoop * loop, const AnaParameters & anapars)
 			    hL1520massFTFinalRL->Fill(mass_1520,ww);
 			    hDLmassFTFinalRL->Fill(invMepem,ww);
 			    if(invMepem>140.)hL1520massFTFinalRLpi0->Fill(mass_1520,ww);
-			
+
+			    if(flagDil){
+			      
+			      hDLmassFinalRL_L->Fill(invMepem,ww);
+			      hL1520massFinalRL_L->Fill(mass_1520,ww);
+			      if(invMepem>140.)hL1520massFinalRLpi0_L->Fill(mass_1520,ww);
+			      
+				
+			    }
+
+
+
+			    
 			  }
 			  /*		  
 			  if (ep.size() || em.size()){
@@ -1587,9 +2274,114 @@ Int_t fwdet_tests(HLoop * loop, const AnaParameters & anapars)
   hL1520mass_HFTemem->Write();
   hL1520mass_HFTepep->Write();
 
-
+  hL1520mass_epep->Write();
+  hL1520mass_emem->Write();
+  
+ 
+  hDLmassAllRL_L->Write();
+  hL1520massAllRL_L->Write();
+  hDLmassDistRL_L->Write();
+  hL1520massDistRL_L->Write();
+  hDLmassDistZRL_L->Write();
+  hL1520massDistZRL_L->Write();
+  hDLmassDistLRL_L->Write();
+  hL1520massDistLRL_L->Write();
+  hDLmassDistZLRL_L->Write();
+  hL1520massDistZLRL_L->Write();
+  hL1520massDistZLRLpi0_L->Write();
+  hDLmassFinalRL_L->Write();
+  hL1520massFinalRL_L->Write();
+  hL1520massFinalRLpi0_L->Write();
+  hinvMass_epep_L->Write();
+  hinvMass_emem_L->Write();
+  
+   //**************************************************************************** 
+ 
+      hDLmassAll_epep->Write();
+      hL1520massAll_epep->Write();
+      hDLmassAllRL_epep->Write();
+      hL1520massAllRL_epep->Write();
+      hDLmassAllRL_L_epep->Write();
+      hL1520massAllRL_L_epep->Write();
+      hDLmassDist_epep->Write();
+      hL1520massDist_epep->Write();
+      hDLmassDistRL_epep->Write();
+      hL1520massDistRL_epep->Write();
+      hDLmassDistRL_L_epep->Write();
+      hL1520massDistRL_L_epep->Write();
+      hDLmassDistZ_epep->Write();
+      hL1520massDistZ_epep->Write();
+      hDLmassDistZRL_epep->Write();
+      hL1520massDistZRL_epep->Write();
+      hDLmassDistZRL_L_epep->Write();
+      hL1520massDistZRL_L_epep->Write();
+      hDLmassDistL_epep->Write();
+      hL1520massDistL_epep->Write();
+      hDLmassDistLRL_epep->Write();
+      hL1520massDistLRL_epep->Write();
+      hDLmassDistLRL_L_epep->Write();
+      hL1520massDistLRL_L_epep->Write();
+      hDLmassDistZL_epep->Write();
+      hL1520massDistZL_epep->Write();
+      hDLmassDistZLRL_epep->Write();
+      hL1520massDistZLRL_epep->Write();
+      hDLmassDistZLRL_L_epep->Write();
+      hL1520massDistZLRL_L_epep->Write();
+      hDLmassFinal_epep->Write();
+      hL1520massFinal_epep->Write();
+      hDLmassFinalRL_epep->Write();
+      hL1520massFinalRL_epep->Write();
+      hDLmassFinalRL_L_epep->Write();
+      hL1520massFinalRL_L_epep->Write();
+      hL1520massFinalRLpi0_epep->Write();
+      hL1520massFinalRLpi0_L_epep->Write();
+      hL1520massFinalpi0_epep->Write();
+      hL1520massDistZLpi0_epep->Write();
+    
   
   //********************************
+      hDLmassAll_emem->Write();
+      hL1520massAll_emem->Write();
+      hDLmassAllRL_emem->Write();
+      hL1520massAllRL_emem->Write();
+      hDLmassAllRL_L_emem->Write();
+      hL1520massAllRL_L_emem->Write();
+      hDLmassDist_emem->Write();
+      hL1520massDist_emem->Write();
+      hDLmassDistRL_emem->Write();
+      hL1520massDistRL_emem->Write();
+      hDLmassDistRL_L_emem->Write();
+      hL1520massDistRL_L_emem->Write();
+      hDLmassDistZ_emem->Write();
+      hL1520massDistZ_emem->Write();
+      hDLmassDistZRL_emem->Write();
+      hL1520massDistZRL_emem->Write();
+      hDLmassDistZRL_L_emem->Write();
+      hL1520massDistZRL_L_emem->Write();
+      hDLmassDistL_emem->Write();
+      hL1520massDistL_emem->Write();
+      hDLmassDistLRL_emem->Write();
+      hL1520massDistLRL_emem->Write();
+      hDLmassDistLRL_L_emem->Write();
+      hL1520massDistLRL_L_emem->Write();
+      hDLmassDistZL_emem->Write();
+      hL1520massDistZL_emem->Write();
+      hDLmassDistZLRL_emem->Write();
+      hL1520massDistZLRL_emem->Write();
+      hDLmassDistZLRL_L_emem->Write();
+      hL1520massDistZLRL_L_emem->Write();
+      hDLmassFinal_emem->Write();
+      hL1520massFinal_emem->Write();
+      hDLmassFinalRL_emem->Write();
+      hL1520massFinalRL_emem->Write();
+      hDLmassFinalRL_L_emem->Write();
+      hL1520massFinalRL_L_emem->Write();
+      hL1520massFinalRLpi0_emem->Write();
+      hL1520massFinalRLpi0_L_emem->Write();
+      hL1520massFinalpi0_emem->Write();
+      hL1520massDistZLpi0_emem->Write();
+  
+      //********************************
     cEff->Divide(4,3);
     cEff->cd(1);
     hEprotons4Pi->Draw();
