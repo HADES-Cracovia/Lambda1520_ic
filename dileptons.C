@@ -10,17 +10,18 @@ int dileptons()
   std::string file;
   std::string directory="/lustre/nyx/hades/user/iciepal/Lambda1520_ic/withSec2/";//directory comon for all files
   int n=0;
-  
+    
   float scale[]={
-    130.*7.8e-5,
-    130./5.34,
     1840.,
     300. ,
-    200,
     100.,
     20.,
-    7.};//ub
-
+    7.,
+    130.*7.8e-5,
+    130./5.34,
+    200,
+  };//ub
+  
   TH1F *hDLmassDist[fn];
   TH1F *hDLmassFTDist[fn];
   TH1F *hDLmassDistL[fn];;
@@ -37,6 +38,7 @@ int dileptons()
   TH1F *hinvMass_HFTemem[fn];
   TH1F *hL1520mass_HHemem[fn];
   TH1F *hL1520mass_HFTemem[fn];
+  
   //read file wth list of histograms
   if(!infile)
     {
@@ -150,27 +152,39 @@ int dileptons()
     }
 
   TLegend *legend = new TLegend(0.1,0.2,0.99,0.9);
-  legend->AddEntry(hDLmassDist[0],"p K+ #Lambda(1520)[#Lambda(1115) e+ e-] 130#mub","l");
+  legend->AddEntry(hDLmassDist[5],"p K+ #Lambda(1520)[#Lambda(1115) e+ e-] 130#mub","l");
 
-  legend->AddEntry(hDLmassDist[5],"p K+ #Lambda(1115) #pi^{0}  100#mub","l");
-  legend->AddEntry(hDLmassDist[6],"p K+ #Lambda(1115) 2#pi^{0} 20#mub","l");
-  legend->AddEntry(hDLmassDist[7],"p K+ #Lambda(1115) 3#pi^{0} 7#mub","l");
+  legend->AddEntry(hDLmassDist[2],"p K+ #Lambda(1115) #pi^{0}  100#mub","l");
+  legend->AddEntry(hDLmassDist[3],"p K+ #Lambda(1115) 2#pi^{0} 20#mub","l");
+  legend->AddEntry(hDLmassDist[4],"p K+ #Lambda(1115) 3#pi^{0} 7#mub","l");
 
-  legend->AddEntry(hDLmassDist[2],"p p #pi^{+} #pi^{-} #pi^{0} 1840#mub","l");
-  legend->AddEntry(hDLmassDist[3],"p p #pi^{+} #pi^{-} 2#pi^{0} 300#mub","l");
-  legend->AddEntry(hDLmassDist[4],"p n 2#pi^{+} #pi^{-} #pi^{0} 200#mub","l");
-  legend->AddEntry(hDLmassDist[1],"L1520 decays 50#mub","l");
+  legend->AddEntry(hDLmassDist[0],"p p #pi^{+} #pi^{-} #pi^{0} 1840#mub","l");
+  legend->AddEntry(hDLmassDist[1],"p p #pi^{+} #pi^{-} 2#pi^{0} 300#mub","l");
+  legend->AddEntry(hDLmassDist[7],"p n 2#pi^{+} #pi^{-} #pi^{0} 200#mub","l");
+  legend->AddEntry(hDLmassDist[6],"L1520 decays 130#mub","l");
 
   TCanvas *cEpEm = new TCanvas("L1520dileptons","L1520dileptons",1400,500);
+
   cEpEm->Divide(3,2);
   double ymin=1e-3; //min value for y axis  
+
+  TH1F *background_sum;
+  int x_sig=5; //no. of signall channel
+
   
   cEpEm->cd(1);
   gPad->SetLogy();
   hDLmassDist[0]->GetYaxis()->SetRangeUser(ymin,10e5);
+  background_sum=(TH1F*)hDLmassDist[0]->Clone();
+
   for(int x=0;x<n;x++)
-    hDLmassDist[x]->Draw("same");
-      
+    {
+      hDLmassDist[x]->Draw("same");
+      if(x!=x_sig && x>0)
+	background_sum->Add(hDLmassDist[x]);
+    }
+  background_sum->Draw("same");
+  
   cEpEm->cd(2);
   gPad->SetLogy();
   hDLmassDistL[0]->GetYaxis()->SetRangeUser(ymin,10e4);

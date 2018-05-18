@@ -13,14 +13,15 @@ int Lambda()
 
   
   float scale[]={
-    130.*7.8e-5,
-    130./5.34,
     1840.,
     300. ,
-    200,
     100.,
     20.,
-    7.};//ub
+    7.,
+    130.*7.8e-5,
+    130./5.34,
+    200,
+  };//ub
 
   TH1F *hL1520massDist[fn];
   TH1F *hL1520massFTDist[fn];
@@ -45,6 +46,9 @@ int Lambda()
   TH1F *hL1520mass_HHepep[fn];
   TH1F *hL1520mass_HFTemem[fn];
   TH1F *hL1520mass_HFTepep[fn];
+
+  TH1F *hL1520massFinalRLpi0_L[fn];
+  TH1F *hL1520massDistZLRLpi0_L[fn];
   
   //read file wth list of histograms
   if(!infile)
@@ -92,7 +96,11 @@ int Lambda()
       hL1520mass_HFTemem[n]= (TH1F*)hist_file->Get("hL1520mass_HFTemem")->Clone();
       hL1520mass_HFTepep[n]= (TH1F*)hist_file->Get("hL1520mass_HFTepep")->Clone();
 
-      n++;
+
+      //hL1520massFinalRLpi0_L[n]=(TH1F*)hist_file->Get("hL1520massFinalRLpi0_L")->Clone();
+      //hL1520massDistZLRLpi0_L[n]=(TH1F*)hist_file->Get("hL1520massDistZLRLpi0_L")->Clone();
+	
+     n++;
     }
   //end of reading histograms*************************************************************************
 
@@ -123,8 +131,7 @@ int Lambda()
       hL1520mass_HHepep[k]->SetLineColor(k+1);
       hL1520mass_HFTemem[k]->SetLineColor(k+1);
       hL1520mass_HFTepep[k]->SetLineColor(k+1);
-
-      
+     
       //sum FW with HADES
       hL1520massDist[k]->Add(hL1520massFTDist[k]);
       hL1520massDistL[k]->Add(hL1520massFTDistL[k]);
@@ -140,7 +147,7 @@ int Lambda()
       hL1520mass_HHepep[k]->Add(hL1520mass_HFTepep[k]);
       
       //rebin histograms
-      int bins=30;
+      int bins=25;
       
       hL1520massDist[k]->Rebin(bins);
       hL1520massDistL[k]->Rebin(bins);
@@ -168,20 +175,26 @@ int Lambda()
       hL1520mass_HHemem[k]->Scale(scale[k]);
       hL1520mass_HHepep[k]->Scale(scale[k]);
       
-    }
-
+      cout<<"End of scaling"<<endl;
+      //hL1520massFinalRLpi0_L[k]->SetLineStyle(2);
+      //hL1520massDistZLRLpi0_L[k]->SetLineStyle(2);
+      //hL1520massFinalRLpi0_L[k]->Rebin(bins);
+      //hL1520massDistZLRLpi0_L[k]->Rebin(bins);
+      //hL1520massFinalRLpi0_L[k]->Scale(scale[k]);
+      //hL1520massDistZLRLpi0_L[k]->Scale(scale[k]);
+    }  
   TLegend *legend = new TLegend(0.1,0.2,0.99,0.9);
-  legend->AddEntry(hL1520massDist[0],"p K+ #Lambda(1520)[#Lambda(1115) e+ e-] 50#mub","l");
+  legend->AddEntry(hL1520massDist[5],"p K+ #Lambda(1520)[#Lambda(1115) e+ e-] 130#mub","l");
 
-  legend->AddEntry(hL1520massDist[5],"p K+ #Lambda(1115) #pi^{0}  100#mub","l");
-  legend->AddEntry(hL1520massDist[6],"p K+ #Lambda(1115) 2#pi^{0} 20#mub","l");
-  legend->AddEntry(hL1520massDist[7],"p K+ #Lambda(1115) 3#pi^{0} 7#mub","l");
+  legend->AddEntry(hL1520massDist[2],"p K+ #Lambda(1115) #pi^{0}  100#mub","l");
+  legend->AddEntry(hL1520massDist[3],"p K+ #Lambda(1115) 2#pi^{0} 20#mub","l");
+  legend->AddEntry(hL1520massDist[4],"p K+ #Lambda(1115) 3#pi^{0} 7#mub","l");
 
-  legend->AddEntry(hL1520massDist[2],"p p #pi^{+} #pi^{-} #pi^{0} 1840#mub","l");
-  legend->AddEntry(hL1520massDist[3],"p p #pi^{+} #pi^{-} 2#pi^{0} 300#mub","l");
-  legend->AddEntry(hL1520massDist[4],"p n 2#pi^{+} #pi^{-} #pi^{0} 200#mub","l");
-  legend->AddEntry(hL1520massDist[1],"L1520 decays 50#mub","l");
-  
+  legend->AddEntry(hL1520massDist[0],"p p #pi^{+} #pi^{-} #pi^{0} 1840#mub","l");
+  legend->AddEntry(hL1520massDist[1],"p p #pi^{+} #pi^{-} 2#pi^{0} 300#mub","l");
+  legend->AddEntry(hL1520massDist[7],"p n 2#pi^{+} #pi^{-} #pi^{0} 200#mub","l");
+  legend->AddEntry(hL1520massDist[6],"L1520 decays 130#mub","l");
+
   TCanvas *cEpEm = new TCanvas("cEpEm","cEpEm");
 
   cEpEm->Divide(4,3);
@@ -189,51 +202,53 @@ int Lambda()
   
   cEpEm->cd(1);
   gPad->SetLogy();
-  hL1520massDist[0]->GetYaxis()->SetRangeUser(ymin,10e5);
+  hL1520massDist[0]->GetYaxis()->SetRangeUser(ymin,10e6);
   for(int x=0;x<n;x++)
     hL1520massDist[x]->Draw("same");
       
   cEpEm->cd(2);
   gPad->SetLogy();
-  hL1520massDistL[0]->GetYaxis()->SetRangeUser(ymin,10e4);
+  hL1520massDistL[0]->GetYaxis()->SetRangeUser(ymin,10e6);
   for(int x=0;x<n;x++)
     hL1520massDistL[x]->Draw("same");
   
 
   cEpEm->cd(3);
   gPad->SetLogy();
-  hL1520massDistZL[0]->GetYaxis()->SetRangeUser(ymin,10e3);
+  hL1520massDistZL[0]->GetYaxis()->SetRangeUser(ymin,10e6);
   for(int x=0;x<n;x++)
     hL1520massDistZL[x]->Draw("same");
   
 
   cEpEm->cd(4);
   gPad->SetLogy();
-  hL1520massFinal[0]->GetYaxis()->SetRangeUser(1e-6,10e3);
+  hL1520massFinal[0]->GetYaxis()->SetRangeUser(1e-6,10e5);
   for(int x=0;x<n;x++)
     hL1520massFinal[x]->Draw("same");
   
   cEpEm->cd(5);
   gPad->SetLogy();
-  hL1520massDistZLpi0[0]->GetYaxis()->SetRangeUser(1e-6,10e3);
+  hL1520massDistZLpi0[0]->GetYaxis()->SetRangeUser(1e-6,10e5);
   for(int x=0;x<n;x++)
     hL1520massDistZLpi0[x]->Draw("same");
+  //hL1520massDistZLpi0_L[5]->Draw("same");
 
   cEpEm->cd(6);
   gPad->SetLogy();
-  hL1520massFinalRLpi0[0]->GetYaxis()->SetRangeUser(1e-6,10e3);
+  hL1520massFinalRLpi0[0]->GetYaxis()->SetRangeUser(1e-6,10e5);
   for(int x=0;x<n;x++)
     hL1520massFinalRLpi0[x]->Draw("same");
-
+  //hL1520massFinalRLpi0_L[5]->Draw("SAME");
+	 
   cEpEm->cd(7);
   gPad->SetLogy(7);
-  hL1520mass_HHemem[0]->GetYaxis()->SetRangeUser(1e-6,10e3);
+  hL1520mass_HHemem[0]->GetYaxis()->SetRangeUser(1e-6,10e4);
   for(int x=0;x<n;x++)
     hL1520mass_HHemem[x]->Draw("same");
 
   cEpEm->cd(8);
   gPad->SetLogy(8);
-  hL1520mass_HHepep[0]->GetYaxis()->SetRangeUser(1e-6,10e3);
+  hL1520mass_HHepep[0]->GetYaxis()->SetRangeUser(1e-6,10e4);
   for(int x=0;x<n;x++)
     hL1520mass_HHepep[x]->Draw("same");
 
