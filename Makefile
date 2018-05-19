@@ -6,7 +6,7 @@ INSTALL_DIR   := .
 USES_RFIO     := no
 USES_ORACLE   := yes
 USES_GFORTRAN := yes
-HOME:=/u/iciepal
+HOME:=/u/knowakow
 
 
 include $(HADDIR)/hades.def.mk
