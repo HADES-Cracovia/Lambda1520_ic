@@ -34,7 +34,7 @@ int L_pictures()
   const int fn=8;//number of files in "infile"
   std::ifstream infile("files_list_k.dat");//list of histograms
   std::string file;
-  std::string directory="/lustre/nyx/hades/user/iciepal/Lambda1520_ic/withSec5/";//directory comon for all files
+  std::string directory="/lustre/nyx/hades/user/iciepal/Lambda1520_ic/";//directory comon for all files
   int n=0;
 
   
@@ -58,11 +58,13 @@ int L_pictures()
   
   TH1F *hL1520massFinalRLpi0_L[fn];
   TH1F *hL1520massDistZLRLpi0_L[fn];
+  TH1F *hL1520massDistZLpi0_L[fn];
   
   TH1F *hDLmassFinalRL_L[fn];
   TH1F *hDLmassDistZLRL_L[fn];
   TH1F *hDLmassDistZL[fn];
   TH1F *hDLmassFTDistZL[fn];
+  
   TH1F *hL1520massDistZLpi0_emem[fn];
   TH1F *hL1520massDistZLpi0_epep[fn];
  
@@ -70,6 +72,8 @@ int L_pictures()
   TH1F *hL1520mass_background_L;
   TH1F *hDLmass_background;
   TH1F *hDLmass_background_L;
+  TH1F *hL1520mass_background_epep;
+  TH1F *hL1520mass_background_emem;
   
   //read file wth list of histograms
   if(!infile)
@@ -102,7 +106,8 @@ int L_pictures()
       hL1520massFTFinalpi0[n]= (TH1F*)hist_file->Get("hL1520massFTFinalpi0")->Clone();
       
       hL1520massFinalRLpi0_L[n]=(TH1F*)hist_file->Get("hL1520massFinalRLpi0_L")->Clone();
-      hL1520massDistZLRLpi0_L[n]=(TH1F*)hist_file->Get("hL1520massDistZLRLpi0_L")->Clone();
+      hL1520massDistZLRLpi0_L[n]=(TH1F*)hist_file->Get("hL1520massDistZLRLpi0_L")->Clone();//Get("hL1520massDistZLRL_L")->Clone(); //!!! inny histogra
+      hL1520massDistZLpi0_L[n]=(TH1F*)hist_file->Get("hL1520massDistZLpi0_L")->Clone();
 
       hDLmassFinalRL_L[n]=(TH1F*)hist_file->Get("hDLmassFinalRL_L")->Clone();
       hDLmassDistZLRL_L[n]=(TH1F*)hist_file->Get("hDLmassDistZLRL_L")->Clone();
@@ -127,6 +132,7 @@ int L_pictures()
       sethist(hL1520massFinalRLpi0_L[k],k+1,bins,2,scale[k]);
       sethist(hL1520massDistZLRLpi0_L[k],k+1,bins,2,scale[k]);
       sethist(hL1520massDistZLpi0[k],k+1,bins,1,scale[k]);
+      sethist(hL1520massDistZLpi0_L[k],k+1,bins,2,scale[k]);
       sethist(hL1520massFTDistZLpi0[k],k+1,bins,1,scale[k]);
       
       sethist(hDLmassFinalRL_L[k],k+1,bins,2,scale[k]);
@@ -148,9 +154,13 @@ int L_pictures()
 
   cout<<"attempt to create sum of background channels"<<endl;
   //calculate sum of all background channels
-  calcBg(hL1520mass_background, hL1520massDistZLpi0, 8, 2);
-  calcBg(hDLmass_background, hDLmassDistZL, 8, 2);
-  
+  calcBg(hL1520mass_background, hL1520massDistZLpi0, fn, 2);
+  calcBg(hDLmass_background, hDLmassDistZL, fn, 2);
+  calcBg(hL1520mass_background_L, hL1520massDistZLpi0_L, fn, 2);
+  //calcBg(hDLmass_background_L, hDLmassDistZL_L, fn, 2);
+  calcBg(hL1520mass_background_emem, hL1520massDistZLpi0_emem,fn,2);
+  calcBg(hL1520mass_background_epep, hL1520massDistZLpi0_epep,fn,2);
+
   cout<<"all histograms set"<<endl;
   
   TLegend *legend = new TLegend(0.1,0.2,0.99,0.9);
@@ -169,7 +179,7 @@ int L_pictures()
   TCanvas *cPictures = new TCanvas("cPictures","cPictures");
 
   cPictures->Divide(3,2);
-  double ymin=1e-4; //min value for y axis  
+  double ymin=1e-2; //min value for y axis  
   
   cPictures->cd(1);
   gPad->SetLogy();
@@ -183,14 +193,15 @@ int L_pictures()
   
   cPictures->cd(2);
   gPad->SetLogy();
-  hL1520massDistZLpi0[0]->GetYaxis()->SetRangeUser(ymin,10e4);
-  hL1520massDistZLRLpi0_L[0]->GetYaxis()->SetRangeUser(ymin,10e4);
+  //hL1520massDistZLpi0[0]->GetYaxis()->SetRangeUser(ymin,10e8);
+  hL1520massDistZLpi0_L[0]->GetYaxis()->SetRangeUser(ymin,10e3);
   for(int x=0;x<n;x++)
     {
       hL1520massDistZLpi0[x]->Draw("same");
-      hL1520massDistZLRLpi0_L[x]->Draw("same");
+      //hL1520massDistZLpi0_L[x]->Draw("same");
     }
-  hL1520mass_background->Draw("same");
+  //hL1520mass_background->Draw("same");
+  hL1520mass_background_L->Draw("same");
 
   cPictures->cd(3);
   gPad->SetLogy();
@@ -198,11 +209,12 @@ int L_pictures()
   hDLmassDistZLRL_L[0]->GetYaxis()->SetRangeUser(ymin,10e4);
   for(int x=0;x<n;x++)
     {
-      hDLmassDistZL[x]->Draw("same");
+      //hDLmassDistZL[x]->Draw("same");
       hDLmassDistZLRL_L[x]->Draw("same");
     }
-  hDLmass_background->Draw("same");
-
+  //hDLmass_background->Draw("same");
+  //hDLmass_background_L->Draw("same");
+  
   cPictures->cd(4);
   gPad->SetLogy();
   hL1520massDistZLpi0_epep[0]->GetYaxis()->SetRangeUser(ymin,10e4);
@@ -210,6 +222,7 @@ int L_pictures()
     {
       hL1520massDistZLpi0_epep[x]->Draw("same");
     }
+  hL1520mass_background_epep->Draw("same");
 
   cPictures->cd(5);
   gPad->SetLogy();
@@ -218,7 +231,8 @@ int L_pictures()
     {
       hL1520massDistZLpi0_emem[x]->Draw("same");
     }
-
+  hL1520mass_background_emem->Draw("same");
+  
   cPictures->cd(6);
   legend->Draw();
   double x_min=1500;
