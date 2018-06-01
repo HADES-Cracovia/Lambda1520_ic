@@ -1,0 +1,20 @@
+directory="/lustre/nyx/hades/user/iciepal/Lambda1520_ic/" #oryginal data directory
+fname="../files_list_k.dat" #file with list of expected files
+import subprocess
+print("Copy and hadd files from Iza directory")
+
+
+with open(fname) as f:
+    content = f.readlines()
+    # you may also want to remove whitespace characters like `\n` at the end of each line
+content = [x.strip() for x in content]
+#print(content)
+for k in content:
+    subdir=result = ''.join([i for i in k if i.isdigit()])
+    opendir=directory+"channel"+subdir+"/"
+    print(opendir)
+    #run hadd for all files from directory
+    bashCommand = "hadd -f "+k+" "+opendir+"*.root.out"
+    print(bashCommand)
+    process = subprocess.Popen(bashCommand.split(), stdout=subprocess.PIPE)
+    #output, error = process.communicate()

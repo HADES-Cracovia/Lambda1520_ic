@@ -154,6 +154,7 @@ int L_pictures()
 
   cout<<"attempt to create sum of background channels"<<endl;
   //calculate sum of all background channels
+
   calcBg(hL1520mass_background, hL1520massDistZLpi0, fn, 2);
   calcBg(hDLmass_background, hDLmassDistZL, fn, 2);
   calcBg(hL1520mass_background_L, hL1520massDistZLpi0_L, fn, 2);
@@ -188,17 +189,17 @@ int L_pictures()
   for(int x=0;x<n;x++)
     {
       hL1520massFinalpi0[x]->Draw("same");
-      hL1520massFinalRLpi0_L[x]->Draw("same");
+      //hL1520massFinalpi0_L[x]->Draw("same");
     }
   
   cPictures->cd(2);
   gPad->SetLogy();
-  //hL1520massDistZLpi0[0]->GetYaxis()->SetRangeUser(ymin,10e8);
-  hL1520massDistZLpi0_L[0]->GetYaxis()->SetRangeUser(ymin,10e3);
+  hL1520massDistZLpi0[0]->GetYaxis()->SetRangeUser(ymin,10e8);
+  //hL1520massDistZLpi0_L[0]->GetYaxis()->SetRangeUser(ymin,10e3);
   for(int x=0;x<n;x++)
     {
       hL1520massDistZLpi0[x]->Draw("same");
-      //hL1520massDistZLpi0_L[x]->Draw("same");
+      //hL1520massDistZRL_L[x]->Draw("same");
     }
   //hL1520mass_background->Draw("same");
   hL1520mass_background_L->Draw("same");
@@ -209,8 +210,8 @@ int L_pictures()
   hDLmassDistZLRL_L[0]->GetYaxis()->SetRangeUser(ymin,10e4);
   for(int x=0;x<n;x++)
     {
-      //hDLmassDistZL[x]->Draw("same");
-      hDLmassDistZLRL_L[x]->Draw("same");
+      hDLmassDistZL[x]->Draw("same");
+      //hDLmassDistZLRL_L[x]->Draw("same");
     }
   //hDLmass_background->Draw("same");
   //hDLmass_background_L->Draw("same");
