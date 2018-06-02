@@ -17,3 +17,7 @@ for k in content:   #take every name from vector content
     bashCommand = "hadd -f "+k+" "+ opendir +"*.root.out"
     print(bashCommand)
     os.system(bashCommand)
+
+print("coped following files:")
+for k in content:
+    print(k)
