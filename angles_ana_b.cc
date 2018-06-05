@@ -1292,7 +1292,7 @@ Int_t fwdet_tests(HLoop * loop, const AnaParameters & anapars)
 		      hDLmassDistL->Fill(invMepem,ww);
 		      hL1520massDistL->Fill(mass_1520,ww);
 		      if(flagDil){
-			hDLmassDistL_L->Fill(mass_1520,ww);
+			hDLmassDistL_L->Fill(invMepem,ww);
 		      }
 		      if(invMepem>140. && invMepem<420.)hL1520massDistLpi0->Fill(mass_1520,ww);
 
@@ -1314,7 +1314,7 @@ Int_t fwdet_tests(HLoop * loop, const AnaParameters & anapars)
 		      hDLmassDistZL->Fill(invMepem,ww);
 		      hL1520massDistZL->Fill(mass_1520,ww);
 		      if(flagDil){
-			hDLmassDistZL_L->Fill(mass_1520,ww);
+			hDLmassDistZL_L->Fill(invMepem,ww);
 		      }
 		      if(invMepem>140. && invMepem<420.){
 			hL1520massDistZLpi0->Fill(mass_1520,ww);
@@ -1823,9 +1823,8 @@ Int_t fwdet_tests(HLoop * loop, const AnaParameters & anapars)
 		int flagDil=0;
 
 		//if(ep[s]->getGeantParentTrackNum()==0 && em[ss]->getGeantParentTrackNum()==0 && ep[s]->getGeantGrandParentPID()==-1 && em[ss]->getGeantGrandParentPID()==-1) flagDil=1;
-		if(ep[s]->getGeantParentTrackNum()==em[ss]->getGeantParentTrackNum() && em[s]->getGeantParentPID()==7) flagDil=1;
-
-
+		if(ep[s]->getGeantParentTrackNum()==em[ss]->getGeantParentTrackNum() && em[s]->getGeantParentPID()==7)
+		  flagDil=1;
 			      
 		TLorentzVector lvLambda=*pFT[j]+*pimH[k];
 		TLorentzVector lvDiLepton=*ep[s]+*em[ss];
@@ -1913,7 +1912,7 @@ Int_t fwdet_tests(HLoop * loop, const AnaParameters & anapars)
 		    hDLmassFTDistL->Fill(invMepem,ww);
 		    hL1520massFTDistL->Fill(mass_1520,ww);
 		    if(flagDil){
-			hDLmassDistL_L->Fill(mass_1520,ww);
+		      hDLmassDistL_L->Fill(invMepem,ww);
 		      }
 		    if(invMepem>140. && invMepem<420.)hL1520massFTDistLpi0->Fill(mass_1520,ww);
 
@@ -1938,7 +1937,7 @@ Int_t fwdet_tests(HLoop * loop, const AnaParameters & anapars)
 		    hDLmassFTDistZL->Fill(invMepem,ww);
 		    hL1520massFTDistZL->Fill(mass_1520,ww);
 		    if(flagDil){
-			hDLmassDistZL_L->Fill(mass_1520,ww);
+			hDLmassDistZL_L->Fill(invMepem,ww);
 		      }
 		    if(invMepem>140. && invMepem<420.){
 		      hL1520massDistZLpi0->Fill(mass_1520,ww);
