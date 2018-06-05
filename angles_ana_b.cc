@@ -261,7 +261,8 @@ Int_t fwdet_tests(HLoop * loop, const AnaParameters & anapars)
      
   TH1F *hDLmassDistL=new TH1F("hDLmassDistL","hDLmassDistL",1000,0,700);
   TH1F *hL1520massDistL=new TH1F("hL1520massDistL","hL1520massDistL",1000,1200,2200);
-
+  TH1F *hL1520massDistLpi0=new TH1F("hL1520massDistLpi0","hL1520massDistLpi0",1000,1200,2200);
+     
   TH1F *hDLmassDistLRL=new TH1F("hDLmassDistLRL","hDLmassDistLRL",1000,0,700);
   TH1F *hL1520massDistLRL=new TH1F("hL1520massDistLRL","hL1520massDistLRL",1000,1200,2200);
 
@@ -319,6 +320,7 @@ Int_t fwdet_tests(HLoop * loop, const AnaParameters & anapars)
      
   TH1F *hDLmassFTDistL=new TH1F("hDLmassFTDistL","hDLmassFTDistL",1000,0,700);
   TH1F *hL1520massFTDistL=new TH1F("hL1520massFTDistL","hL1520massFTDistL",1000,1200,2200);
+  TH1F *hL1520massFTDistLpi0=new TH1F("hL1520massFTDistLpi0","hL1520massFTDistLpi0",1000,1200,2200);
 
   TH1F *hDLmassFTDistLRL=new TH1F("hDLmassFTDistLRL","hDLmassFTDistLRL",1000,0,700);
   TH1F *hL1520massFTDistLRL=new TH1F("hL1520massFTDistLRL","hL1520massFTDistLRL",1000,1200,2200);
@@ -384,7 +386,8 @@ Int_t fwdet_tests(HLoop * loop, const AnaParameters & anapars)
      
   TH1F *hDLmassDistL_epep=new TH1F("hDLmassDistL_epep","hDLmassDistL_epep",1000,0,700);
   TH1F *hL1520massDistL_epep=new TH1F("hL1520massDistL_epep","hL1520massDistL_epep",1000,1200,2200);
-
+  TH1F *hL1520massDistLpi0_epep=new TH1F("hL1520massDistLpi0_epep","hL1520massDistLpi0_epep",1000,1200,2200);
+     
   TH1F *hDLmassDistLRL_epep=new TH1F("hDLmassDistLRL_epep","hDLmassDistLRL_epep",1000,0,700);
   TH1F *hL1520massDistLRL_epep=new TH1F("hL1520massDistLRL_epep","hL1520massDistLRL_epep",1000,1200,2200);
 
@@ -456,7 +459,8 @@ Int_t fwdet_tests(HLoop * loop, const AnaParameters & anapars)
      
   TH1F *hDLmassDistL_emem=new TH1F("hDLmassDistL_emem","hDLmassDistL_emem",1000,0,700);
   TH1F *hL1520massDistL_emem=new TH1F("hL1520massDistL_emem","hL1520massDistL_emem",1000,1200,2200);
-
+  TH1F *hL1520massDistLpi0_emem=new TH1F("hL1520massDistLpi0_emem","hL1520massDistLpi0_emem",1000,1200,2200);
+     
   TH1F *hDLmassDistLRL_emem=new TH1F("hDLmassDistLRL_emem","hDLmassDistLRL_emem",1000,0,700);
   TH1F *hL1520massDistLRL_emem=new TH1F("hL1520massDistLRL_emem","hL1520massDistLRL_emem",1000,1200,2200);
 
@@ -491,7 +495,8 @@ Int_t fwdet_tests(HLoop * loop, const AnaParameters & anapars)
   TH1F *hL1520massFinalpi0_emem=new TH1F("hL1520massFinalpi0_emem","hL1520massFinalpi0_emem",1000,1200,2200);
   TH1F *hL1520massDistZLpi0_emem=new TH1F("hL1520massDistZLpi0_emem","hL1520massDistZLpi0_emem",1000,1200,2200);
      
-
+  TH1F *hDLmassDistZL_L=new TH1F("hDLmassDistZL_L","hDLmassDistZL_L",1000,0,700);
+  TH1F *hDLmassDistL_L=new TH1F("hDLmassDistL_L","hDLmassDistL_L",1000,0,700);
      
   //**************************************************************************** 
 
@@ -611,7 +616,7 @@ Int_t fwdet_tests(HLoop * loop, const AnaParameters & anapars)
   int flagHFTL2=0;
   int flagHFTL3=0;
   int flagHFTL4=0;
- 
+  
 
 
   for (Long_t event=0; event<entries; event++) 
@@ -677,9 +682,9 @@ Int_t fwdet_tests(HLoop * loop, const AnaParameters & anapars)
       HGeomVector dirL1520,dirL1520_1;
 
 	
-      double min_dist_dl=10;
-      double min_dist_l=10;
-      double min_angle=4;
+      double min_dist_dl=20; //[mm]
+      double min_dist_l=20;
+      double min_angle=4;//e+ e- opening angle [deg]
 
       HGeomVector base_Tg, dir_Tg;
 			  
@@ -691,6 +696,9 @@ Int_t fwdet_tests(HLoop * loop, const AnaParameters & anapars)
       dir_Tg.setZ(1);
 
       HGeomVector ver_L1520Tg, ver_L1520TgFT, baseL1520, ver_LTg, ver_LTgFT;
+			 
+
+
 	
       if (hnum){
 	//cout<<"XXXXXXX"<<hnum<<endl;
@@ -698,19 +706,55 @@ Int_t fwdet_tests(HLoop * loop, const AnaParameters & anapars)
 	//HADES
 	for (int i=0;i<hnum;i++){
 	 
+	  // if(pid==9)thmom9_4pi->Fill(mom,th);
+	  //if(pid==14)thmom14_4pi->Fill(mom,th);
+	  //if(pid==2)thmom2_4pi->Fill(mom,th);
+	  //if(pid==3)thmom3_4pi->Fill(mom,th);
+	  //if(pid==9)thmom9_acc->Fill(mom,th,ae);
+	  //if(pid==14)thmom14_acc->Fill(mom,th,ae);
+
+	  
+	  
 	  partH=HCategoryManager::getObject(partH, particleCatSim,i);
-	  if(partH->getRichMatchingQuality()!=-1 && partH->isFlagBit(kIsUsed)){
+	
+	  //lep=HCategoryManager::getObject(lep, particleCatSim,i);
+	  //pion=HCategoryManager::getObject(pion, particleCatSim,i);
+	  //protonFT=HCategoryManager::getObject(protonFT,fwDetCatSim,i);
+
+	  
+	  //if(partH->getRichMatchingQuality()!=-1 && partH->getGeantParentTrackNum()==0 && partH->isFlagBit(kIsUsed)){
+
+	  float nerbyFit=0;
+	  float nerbyUnFit=0;
+	  
+	  //nerbyFit=fabs(partH->getAngleToNearbyFittedInner())*TMath::RadToDeg(); 
+	  //nerbyUnFit=fabs(partH->getAngleToNearbyUnfittedInner())*TMath::RadToDeg(); 
+	  nerbyFit=fabs(partH->getAngleToNearbyFittedInner()); 
+	  nerbyUnFit=fabs(partH->getAngleToNearbyUnfittedInner()); 
+
+	  //cout<<"---> "<<nerbyFit<<" "<<nerbyUnFit<<endl;
+
+
+	  
+	  
+	  if(partH->getRichMatchingQuality()!=-1 && partH->isFlagBit(kIsUsed) && nerbyFit>4.  && nerbyUnFit>4. ){
+	    //if(partH->getRichMatchingQuality()!=-1 && partH->isFlagBit(kIsUsed)){
+	    //if(partH->getRichMatchingQuality()!=-1 && partH->isFlagBit(kIsUsed) && nerbyFit>2.  && nerbyUnFit>2. ){
 
 
 	    int flagdil=0;
 	    //e+
-	    if(partH->getGeantPID()==2)
-	      {
-		partH->calc4vectorProperties(HPhysicsConstants::mass(2));
-		ep.push_back(partH);  
-		hEleptonsdet->Fill(partH->getTheta());
-		h2Eleptondet->Fill(partH->getPhi(),partH->getTheta());
-	      }
+	    if(partH->getGeantPID()==2) {
+	      
+	      partH->calc4vectorProperties(HPhysicsConstants::mass(2));
+	      ep.push_back(partH);  
+	      hEleptonsdet->Fill(partH->getTheta());
+	      h2Eleptondet->Fill(partH->getPhi(),partH->getTheta());
+	      //flagdil=1;
+	      //h2IIleptonsInAcceptance->Fill(partH->getMomentum(),partH->getTheta());
+	      //cout<<"e+ "<<evnb<<" "<<partH->getGeantParentPID()<<" "<<partH->getGeantParentTrackNum()<<" "<<partH->getGeantGrandParentPID()<<endl;
+	      //dobre pary: 0,-1
+	    }
 	    //e-		  
 	    if(partH->getGeantPID()==3){
 
@@ -719,32 +763,38 @@ Int_t fwdet_tests(HLoop * loop, const AnaParameters & anapars)
 	      hEleptonsdet->Fill(partH->getTheta());
 	      //if(flagdil)
 	      h2Eleptondet->Fill(partH->getPhi(),partH->getTheta());
+		
+	      //cout<<"e- "<<evnb<<" "<<partH->getGeantParentPID()<<" "<<partH->getGeantParentTrackNum()<<" "<<partH->getGeantGrandParentPID()<<endl;
+	   
 
 	    }
 	  }
 	  
 	  if(partH->getGeantPID()==9 && partH->isFlagBit(kIsUsed))// proton->getChi2()<10)
 	    {
-  	      partH->calc4vectorProperties(HPhysicsConstants::mass(9));
+  
+	      partH->calc4vectorProperties(HPhysicsConstants::mass(9));
 	      pimH.push_back(partH);  
 
 	      hEpionsdet->Fill(partH->getTheta());
 	      h2Epiondet->Fill(partH->getPhi(),partH->getTheta());
 
-	      if(partH->getGeantParentPID()==18)
-		hEFLpionsdet->Fill(partH->getTheta());
+	      if(partH->getGeantParentPID()==18) hEFLpionsdet->Fill(partH->getTheta());
+	   	      
 	    }
 
 	  if(partH->getGeantPID()==14 && partH->isFlagBit(kIsUsed))// proton->getChi2()<10)
 	    {
+	   
 	      partH->calc4vectorProperties(HPhysicsConstants::mass(14));
 	      pH.push_back(partH);  
+
 
 	      hEprotonsdet->Fill(partH->getTheta());
 	      h2Eprotondet->Fill(partH->getPhi(),partH->getTheta());
     
-	      if(partH->getGeantParentPID()==18)
-		hEFLpionsdet->Fill(partH->getTheta());
+	      if(partH->getGeantParentPID()==18) hEFLpionsdet->Fill(partH->getTheta());
+	   
 	    }
 
 	}		 
@@ -779,1034 +829,1268 @@ Int_t fwdet_tests(HLoop * loop, const AnaParameters & anapars)
 		
 	    if(partFT->getGeantParentPID()==18) hEFLpionsdet->Fill(partFT->getTheta());
 	  }
+	      
+	  //}
 	    
 	}
 	  
       }
-    
+
+      // cout<<":::::::::::epem "<<ep.size()<<" "<<em.size()<<endl;
+
+	     
       //**************
       //HADES-HADES
       //*************
       //cout<<"::::"<<pH.size()<<" "<<pimH.size()<<endl;
 
-      if (pH.size()>=1 && pimH.size()>=1)
-	{
-	  for (int k=0;k<pH.size();k++)
-	    {
-	      for (int j=0;j<pimH.size();j++)
-		{
-		  ww=0;
-		  ww=pimH[j]->getGeantGenweight();
-	      
-		  double lambdaM=(*pH[k]+*pimH[j]).M();
-		  double lambdaD=trackDistance(pH[k],pimH[j]);
-		  //cout<<"----------------->>> "<<lambdaM<<" "<<lambdaD<<endl;
-
-		  vertexL=trackVertex(pimH[j],pH[k]);
-		  dirL.setXYZ((*pimH[j]+*pH[k]).X(),(*pimH[j]+*pH[k]).Y(),(*pimH[j]+*pH[k]).Z());
-
-		  ver_LTg=tool.calcVertexAnalytical(base_Tg,dir_Tg,vertexL,dirL);
-		  double distLamZ=tool.calculateMinimumDistance(base_Tg, dir_Tg,vertexL,dirL);
-					  
-		  hZvertHHAll->Fill(vertexL.Z());//***
-	      
-		  hinvM_pmHpHAll->Fill(lambdaM,ww);
-		  hdist_pmHpHAll->Fill(lambdaD,ww);
-
-	      
-		  if(pimH[j]->getGeantParentPID()==18 && pH[k]->getGeantParentPID()==18)
-		    {
-		      hZvertHHRL->Fill(vertexL.Z());
-		      hLRdist->Fill(lambdaD,ww);
-		      hLRmass->Fill(lambdaM,ww);
-		    }
-
-
-		  flagHHL1=0;
-		  flagHHL2=0;
-		  flagHHL3=0;
-		  flagHHL4=0;
-
-	      
-
-		  if (lambdaD<min_dist_l)
-		    {
-		      flagHHL1=1;
-		      hinvM_pmHpHDist->Fill(lambdaM,ww);
-		      if(pimH[j]->getGeantParentPID()==18 && pH[k]->getGeantParentPID()==18) hLRmassDist->Fill(lambdaM,ww);
-		      //hLHmassDist->Fill(lambdaM,ww);
-
-		      h2LHvertex->Fill(vertexL.Z(),TMath::Sqrt(vertexL.X()*vertexL.X()+vertexL.Y()*vertexL.Y()));
-
-		    }
-
-		  if(lambdaD<min_dist_l && vertexL.Z()>0.)
-		    {
-		      flagHHL2=1;
-	
-		      hinvM_pmHpHDistZ->Fill(lambdaM,ww);
-		      if(pimH[j]->getGeantParentPID()==18 && pH[k]->getGeantParentPID()==18) hLRmassDistZ->Fill(lambdaM,ww);
-
-		    }
+      if (pH.size()>=1 && pimH.size()>=1){
 	  
-		  if(lambdaM>1105 && lambdaM<1125 && lambdaD<min_dist_l)
-		    {
-		      flagHHL3=1;
+	for (int k=0;k<pH.size();k++){
+	  for (int j=0;j<pimH.size();j++){
 
-		      hinvM_pmHpHDistL->Fill(lambdaM,ww);
-		      if(pimH[j]->getGeantParentPID()==18 && pH[k]->getGeantParentPID()==18) hLRmassDistL->Fill(lambdaM,ww);
-		
-		      hZvertLamHH->Fill(vertexL.Z());
-		      hdistTgLamHH->Fill(distLamZ);
-		      hZvertLamTgHH->Fill(ver_LTg.Z());
-	
-		    }
+	    //pimH[j]->calc4vectorProperties(HPhysicsConstants::mass(pimH[j]->getGeantPID()));
+	    //pH[k]->calc4vectorProperties(HPhysicsConstants::mass(14));
+	    ww=0;
+	    ww=pimH[j]->getGeantGenweight();
+	    //cout<<ww<<endl;
+ 
 	      
-		  if (lambdaM>1105 && lambdaM<1125 && lambdaD<min_dist_l && vertexL.Z()>0.)
-		    {
-		      flagHHL4=1;
-	      
-		      hinvM_pmHpHDistZL->Fill(lambdaM,ww);
-		      if(pimH[j]->getGeantParentPID()==18 && pH[k]->getGeantParentPID()==18) hLRmassDistZL->Fill(lambdaM,ww);
-		     
-		    }
+	    double lambdaM=(*pH[k]+*pimH[j]).M();
+	    double lambdaD=trackDistance(pH[k],pimH[j]);
+	    //cout<<"----------------->>> "<<lambdaM<<" "<<lambdaD<<endl;
 
-		  if (ep.size() || em.size())
-		    {
-		      for (int s=0;s<ep.size();s++)
-			{
-			  for (int ss=0;ss<ep.size();ss++)
-			    {
+	    vertexL=trackVertex(pimH[j],pH[k]);
+	    dirL.setXYZ((*pimH[j]+*pH[k]).X(),(*pimH[j]+*pH[k]).Y(),(*pimH[j]+*pH[k]).Z());
 
-			      TLorentzVector lvLambda=*pH[k]+*pimH[j];
-			      TLorentzVector lvDiLepton=*ep[s]+*ep[ss];
-			      double oa = tool.getOpeningAngle(ep[s],ep[ss]);
-			      double mass_1520=(lvLambda+lvDiLepton).M();
-
-			      int flagDil2=1;
-
-
-			      if(oa>5.)
-				{
-				  hinvMass_epepOA->Fill(lvDiLepton.M(),ww);  
-
-		      
-				  hDLmassAll_epep->Fill(lvDiLepton.M(),ww);
-				  hL1520massAll_epep->Fill(mass_1520,ww);
-
-				  if(pimH[j]->getGeantParentPID()==18 && pH[k]->getGeantParentPID()==18)
-				    {
-				      hDLmassAllRL_epep->Fill(lvDiLepton.M(),ww);
-				      hL1520massAllRL_epep->Fill(mass_1520,ww);
-		      
-				      if(flagDil2)
-					{
-					  hDLmassAllRL_L_epep->Fill(lvDiLepton.M(),ww);
-					  hL1520massAllRL_L_epep->Fill(mass_1520,ww);
-			
-					}
-				    }
-
-				  if(flagHFTL1)
-				    {
-
-				      hDLmassDist_epep->Fill(lvDiLepton.M(),ww);
-				      hL1520massDist_epep->Fill(mass_1520,ww);
-
-				      if(pimH[j]->getGeantParentPID()==18 && pH[k]->getGeantParentPID()==18)
-					{
-					  hDLmassDistRL_epep->Fill(lvDiLepton.M(),ww);
-					  hL1520massDistRL_epep->Fill(mass_1520,ww);
-
-					  if(flagDil2)
-					    {
-					      hDLmassDistRL_L_epep->Fill(lvDiLepton.M(),ww);
-					      hL1520massDistRL_L_epep->Fill(mass_1520,ww);
-
-					    }
-      
-					}
-
-				    }
-
-				  if(flagHFTL2)
-				    {
-				      hDLmassDistZ_epep->Fill(lvDiLepton.M(),ww);
-				      hL1520massDistZ_epep->Fill(mass_1520,ww);
-
-				      if(pimH[j]->getGeantParentPID()==18 && pH[k]->getGeantParentPID()==18)
-					{
-					  hDLmassDistZRL_epep->Fill(lvDiLepton.M(),ww);
-					  hL1520massDistZRL_epep->Fill(mass_1520,ww);
-
-					  if(flagDil2)
-					    {
-					      hDLmassDistZRL_L_epep->Fill(lvDiLepton.M(),ww);
-					      hL1520massDistZRL_L_epep->Fill(mass_1520,ww);
+	    ver_LTg=tool.calcVertexAnalytical(base_Tg,dir_Tg,vertexL,dirL);
+	    double distLamZ=tool.calculateMinimumDistance(base_Tg, dir_Tg,vertexL,dirL);
 			  
-					    }
-					}
-				    }
+			  
+	    hZvertHHAll->Fill(vertexL.Z());//***
+	    //hdistTgLamHH->Fill(distLamZ);
+	    //hZvertLamTgHH->Fill(ver_LTg.Z());
+	      
+	      
+	    hinvM_pmHpHAll->Fill(lambdaM,ww);
+	    hdist_pmHpHAll->Fill(lambdaD,ww);
+
+	      
+	    if(pimH[j]->getGeantParentPID()==18 && pH[k]->getGeantParentPID()==18)
+	      {
+		hZvertHHRL->Fill(vertexL.Z());
+		hLRdist->Fill(lambdaD,ww);
+		hLRmass->Fill(lambdaM,ww);
+		     
+	      }
+
+
+	    flagHHL1=0;
+	    flagHHL2=0;
+	    flagHHL3=0;
+	    flagHHL4=0;
+
+	      
+
+	    if (lambdaD<min_dist_l){
+
+	      flagHHL1=1;
+	
+	      hinvM_pmHpHDist->Fill(lambdaM,ww);
+	      if(pimH[j]->getGeantParentPID()==18 && pH[k]->getGeantParentPID()==18) hLRmassDist->Fill(lambdaM,ww);
+	      //hLHmassDist->Fill(lambdaM,ww);
+
+	      h2LHvertex->Fill(vertexL.Z(),TMath::Sqrt(vertexL.X()*vertexL.X()+vertexL.Y()*vertexL.Y()));
+
+	    }
+
+	    if (lambdaD<min_dist_l && vertexL.Z()>0.){
+
+	      flagHHL2=1;
+	
+	      hinvM_pmHpHDistZ->Fill(lambdaM,ww);
+	      if(pimH[j]->getGeantParentPID()==18 && pH[k]->getGeantParentPID()==18) hLRmassDistZ->Fill(lambdaM,ww);
+
+	    }
+	  
+	    if (lambdaM>1105 && lambdaM<1125 && lambdaD<min_dist_l){
+
+	      flagHHL3=1;
+
+	      hinvM_pmHpHDistL->Fill(lambdaM,ww);
+	      if(pimH[j]->getGeantParentPID()==18 && pH[k]->getGeantParentPID()==18) hLRmassDistL->Fill(lambdaM,ww);
+		
+	      hZvertLamHH->Fill(vertexL.Z());
+	      hdistTgLamHH->Fill(distLamZ);
+	      hZvertLamTgHH->Fill(ver_LTg.Z());
+	
+	    }
+
+	   
+	      
+	    if (lambdaM>1105 && lambdaM<1125 && lambdaD<min_dist_l && vertexL.Z()>0.){
+
+	      flagHHL4=1;
+	      
+	      hinvM_pmHpHDistZL->Fill(lambdaM,ww);
+	      if(pimH[j]->getGeantParentPID()==18 && pH[k]->getGeantParentPID()==18) hLRmassDistZL->Fill(lambdaM,ww);
+		     
+	    }
+
+	    if (ep.size() || em.size()){
+	      for (int s=0;s<ep.size();s++){
+		for (int ss=0;ss<ep.size();ss++){
+
+		  TLorentzVector lvLambda=*pH[k]+*pimH[j];
+		  TLorentzVector lvDiLepton=*ep[s]+*ep[ss];
+		  double oa = tool.getOpeningAngle(ep[s],ep[ss]);
+		  double mass_1520=(lvLambda+lvDiLepton).M();
+
+		  int flagDil2=1;
+
+		  //if(ep[s]->getGeantParentTrackNum()==0 && ep[ss]->getGeantParentTrackNum()==0 && ep[ss]->getGeantGrandParentPID()==-1 && ep[s]->getGeantGrandParentPID()==-1) flagDil2=1;
+		  //if(ep[s]->getGeantParentTrackNum()== ep[ss]->getGeantParentTrackNum()) flagDil2=1;
+
 		    
-				  if(flagHFTL3){
+		  //***************************************
 
-				    hDLmassDistL_epep->Fill(lvDiLepton.M(),ww);
-				    hL1520massDistL_epep->Fill(mass_1520,ww);
+		  if(oa>min_angle){
+		    hinvMass_epepOA->Fill(lvDiLepton.M(),ww);  
+		      
+		    hDLmassAll_epep->Fill(lvDiLepton.M(),ww);
+		    hL1520massAll_epep->Fill(mass_1520,ww);
 
-				    if(pimH[j]->getGeantParentPID()==18 && pH[k]->getGeantParentPID()==18){
+		    if(pimH[j]->getGeantParentPID()==18 && pH[k]->getGeantParentPID()==18){
 
-				      hDLmassDistLRL_epep->Fill(lvDiLepton.M(),ww);
-				      hL1520massDistLRL_epep->Fill(mass_1520,ww);
-
-				      if(flagDil2){
-					hDLmassDistLRL_L_epep->Fill(lvDiLepton.M(),ww);
-					hL1520massDistLRL_L_epep->Fill(mass_1520,ww);
-				      }
+		      hDLmassAllRL_epep->Fill(lvDiLepton.M(),ww);
+		      hL1520massAllRL_epep->Fill(mass_1520,ww);
+		      
+		      if(flagDil2){
+			hDLmassAllRL_L_epep->Fill(lvDiLepton.M(),ww);
+			hL1520massAllRL_L_epep->Fill(mass_1520,ww);
 			
-				    }
-				  }
-				}//oa
+		      }
+		      
+		      
+		    }
 
-			      //***************************************
+		    if(flagHFTL1){
+
+		      hDLmassDist_epep->Fill(lvDiLepton.M(),ww);
+		      hL1520massDist_epep->Fill(mass_1520,ww);
+
+		      if(pimH[j]->getGeantParentPID()==18 && pH[k]->getGeantParentPID()==18){
+			hDLmassDistRL_epep->Fill(lvDiLepton.M(),ww);
+			hL1520massDistRL_epep->Fill(mass_1520,ww);
+
+			if(flagDil2){
+			  hDLmassDistRL_L_epep->Fill(lvDiLepton.M(),ww);
+			  hL1520massDistRL_L_epep->Fill(mass_1520,ww);
+
+			}
+      
+		      }
+
+		    }
+
+		    if(flagHFTL2){
+		      hDLmassDistZ_epep->Fill(lvDiLepton.M(),ww);
+		      hL1520massDistZ_epep->Fill(mass_1520,ww);
+
+		      if(pimH[j]->getGeantParentPID()==18 && pH[k]->getGeantParentPID()==18){
+			hDLmassDistZRL_epep->Fill(lvDiLepton.M(),ww);
+			hL1520massDistZRL_epep->Fill(mass_1520,ww);
+
+			if(flagDil2){
+			  hDLmassDistZRL_L_epep->Fill(lvDiLepton.M(),ww);
+			  hL1520massDistZRL_L_epep->Fill(mass_1520,ww);
+			  
+			}
+
+			
+
+		      }
+		    }
+
+
+		    
+		    if(flagHFTL3){
+
+		      hDLmassDistL_epep->Fill(lvDiLepton.M(),ww);
+		      hL1520massDistL_epep->Fill(mass_1520,ww);
+		      if(lvDiLepton.M()>140. && lvDiLepton.M()>420.)hL1520massDistLpi0_epep->Fill(mass_1520,ww);
+
+		      if(pimH[j]->getGeantParentPID()==18 && pH[k]->getGeantParentPID()==18){
+
+			hDLmassDistLRL_epep->Fill(lvDiLepton.M(),ww);
+			hL1520massDistLRL_epep->Fill(mass_1520,ww);
+
+			if(flagDil2){
+			  hDLmassDistLRL_L_epep->Fill(lvDiLepton.M(),ww);
+			  hL1520massDistLRL_L_epep->Fill(mass_1520,ww);
+			}
+			
+		      }
+
+
+
+		    }
+
+		    		    
+		  }//oa
+
+		  //***************************************
 
 	    
-			      if(flagHHL4 && oa>5)
-				{
-				  hL1520mass_HHepep->Fill(mass_1520,ww);		      
-				  if(mass_1520>1450 && mass_1520<1550)hinvMass_HHepep->Fill(lvDiLepton.M(),ww);
+		  if(flagHHL4 && oa>min_angle){
 
-				  if(flagDil2)
-				    {
-				      hL1520mass_epep_L->Fill(mass_1520,ww);		      
-				      if(mass_1520>1450 && mass_1520<1550)hinvMass_epep_L->Fill(lvDiLepton.M(),ww);
-				      if(lvDiLepton.M()>140.)
-					hL1520massDistZLpi0_epep->Fill(mass_1520,ww);
+		    hDLmassDistZL_epep->Fill(lvDiLepton.M(),ww);
+
+		    hL1520mass_HHepep->Fill(mass_1520,ww);		      
+		    if(mass_1520>1450 && mass_1520<1550)hinvMass_HHepep->Fill(lvDiLepton.M(),ww);
+
+		    if(flagDil2){
+
+		      hL1520mass_epep_L->Fill(mass_1520,ww);		      
+		      if(mass_1520>1450 && mass_1520<1550)hinvMass_epep_L->Fill(lvDiLepton.M(),ww);
+		      if(lvDiLepton.M()>140. && lvDiLepton.M()<420.)
+			hL1520massDistZLpi0_epep->Fill(mass_1520,ww);
 		      
-				    } 
-				}  
-			    }
-			}
-		
-		      for (int s=0;s<em.size();s++)
-			{
-			  for (int ss=0;ss<em.size();ss++)
-			    {
 
-			      TLorentzVector lvLambda=*pH[k]+*pimH[j];
-			      TLorentzVector lvDiLepton=*em[s]+*em[ss];
-			      double oa = tool.getOpeningAngle(em[s],em[ss]);
-			      double mass_1520=(lvLambda+lvDiLepton).M();
-
-			      int flagDil1=1;
-		    
-			      if(oa>5.)
-				{
-				  hinvMass_ememOA->Fill(lvDiLepton.M(),ww);  
-
-		      
-				  hDLmassAll_emem->Fill(lvDiLepton.M(),ww);
-				  hL1520massAll_emem->Fill(mass_1520,ww);
-
-				  if(pimH[j]->getGeantParentPID()==18 && pH[k]->getGeantParentPID()==18)
-				    {
-				      hDLmassAllRL_emem->Fill(lvDiLepton.M(),ww);
-				      hL1520massAllRL_emem->Fill(mass_1520,ww);
-		      
-				      if(flagDil1)
-					{
-					  hDLmassAllRL_L_emem->Fill(lvDiLepton.M(),ww);
-					  hL1520massAllRL_L_emem->Fill(mass_1520,ww);
-			
-					}
-		      
-		      
-				    }
-
-				  if(flagHFTL1)
-				    {
-				      hDLmassDist_emem->Fill(lvDiLepton.M(),ww);
-				      hL1520massDist_emem->Fill(mass_1520,ww);
-
-				      if(pimH[j]->getGeantParentPID()==18 && pH[k]->getGeantParentPID()==18)
-					{
-					  hDLmassDistRL_emem->Fill(lvDiLepton.M(),ww);
-					  hL1520massDistRL_emem->Fill(mass_1520,ww);
-
-					  if(flagDil1)
-					    {
-					      hDLmassDistRL_L_emem->Fill(lvDiLepton.M(),ww);
-					      hL1520massDistRL_L_emem->Fill(mass_1520,ww);
-
-					    }
-      
-					}
-
-				    }
-
-				  if(flagHFTL2){
-				    hDLmassDistZ_emem->Fill(lvDiLepton.M(),ww);
-				    hL1520massDistZ_emem->Fill(mass_1520,ww);
-
-				    if(pimH[j]->getGeantParentPID()==18 && pH[k]->getGeantParentPID()==18){
-				      hDLmassDistZRL_emem->Fill(lvDiLepton.M(),ww);
-				      hL1520massDistZRL_emem->Fill(mass_1520,ww);
-
-				      if(flagDil1){
-					hDLmassDistZRL_L_emem->Fill(lvDiLepton.M(),ww);
-					hL1520massDistZRL_L_emem->Fill(mass_1520,ww);
-			  
-				      }
-				    }
-				  }
-		    
-				  if(flagHFTL3)
-				    {
-				      hDLmassDistL_emem->Fill(lvDiLepton.M(),ww);
-				      hL1520massDistL_emem->Fill(mass_1520,ww);
-
-				      if(pimH[j]->getGeantParentPID()==18 && pH[k]->getGeantParentPID()==18)
-					{
-					  hDLmassDistLRL_emem->Fill(lvDiLepton.M(),ww);
-					  hL1520massDistLRL_emem->Fill(mass_1520,ww);
-
-					  if(flagDil1){
-					    hDLmassDistLRL_L_emem->Fill(lvDiLepton.M(),ww);
-					    hL1520massDistLRL_L_emem->Fill(mass_1520,ww);
-					  }
-			
-					}
-				    }
-				}//oa
-
-			      //***************************************
-		    
-			      if(flagHHL4 && oa>5){
-	
-				hL1520mass_emem->Fill(mass_1520,ww);		      
-				if(mass_1520>1450 && mass_1520<1550)hinvMass_emem->Fill(lvDiLepton.M(),ww);
-
-				if(flagDil1){
-
-				  hL1520mass_emem_L->Fill(mass_1520,ww);		      
-				  if(mass_1520>1450 && mass_1520<1550)hinvMass_emem_L->Fill(lvDiLepton.M(),ww);
-
-				  //hL1520massFinalpi0_emem
-				  if(lvDiLepton.M()>140.)
-				    hL1520massDistZLpi0_emem->Fill(mass_1520,ww);
-
-			
-				}
-		      
-		      
-			      }
-		    
-			    }
-			}
-		
 		    }
-	
 
-	      
-		  if (ep.size() && em.size())
-		    {
-		      //cout<<":::::::::::epem "<<ep.size()<<" "<<em.size()<<endl;
-		      for (int s=0;s<ep.size();s++)
-			{
-			  for (int ss=0;ss<em.size();ss++)
-			    {
-
-			      int flagDil=0;
+		      
+		  }
 		    
-			      if(ep[s]->getGeantParentTrackNum()== em[ss]->getGeantParentTrackNum())
-				flagDil=1;
-		    
-			      TLorentzVector lvLambda=*pH[k]+*pimH[j];
-			      TLorentzVector lvDiLepton=*ep[s]+*em[ss];
-
-			      vertexDL=trackVertex(ep[s],em[ss]);
-			      dirDL.setXYZ((*ep[s]+*em[ss]).X(),(*ep[s]+*em[ss]).Y(),(*ep[s]+*em[ss]).Z());
-
-		    
-
-			      double mass_1520=(lvLambda+lvDiLepton).M();
-			      //min dist between dilepton and Lam1115
-			      double distance_1520=tool.calculateMinimumDistance(vertexL,dirL,vertexDL,dirDL);
-		    
-			      //double invMdilLam=lvLambda.M();
-			      double invMepem= lvDiLepton.M(); 
-
-			      int oaFlag=0;		  
-			      double oa = tool.getOpeningAngle(ep[s],em[ss]);
-			      double dilTrDist=trackDistance(ep[s],em[ss]);
-			      if(oa>5.)
-				oaFlag=1;
-
-			      if(oaFlag)
-				{
-				  hinvMass_epemOA->Fill(invMepem,ww);  
-
-				  hDLmassAll->Fill(invMepem,ww);
-				  hL1520massAll->Fill(mass_1520,ww);
-				  //if(lambdaD<min_dist_l){
-				  //hDLmassDist->Fill(invMepem,ww);
-				  //}
-				  if(pimH[j]->getGeantParentPID()==18 && pH[k]->getGeantParentPID()==18)
-				    {
-				      hDLmassAllRL->Fill(invMepem,ww);
-				      hL1520massAllRL->Fill(mass_1520,ww);
-
-				      if(flagDil)
-					{
-					  hDLmassAllRL_L->Fill(invMepem,ww);
-					  hL1520massAllRL_L->Fill(mass_1520,ww);
-					}
-				    }
-		    
-				  if(flagHHL1)
-				    {
-				      hDLmassDist->Fill(invMepem,ww);
-				      hL1520massDist->Fill(mass_1520,ww);
-				      if(pimH[j]->getGeantParentPID()==18 && pH[k]->getGeantParentPID()==18)
-					{
-					  hDLmassDistRL->Fill(invMepem,ww);
-					  hL1520massDistRL->Fill(mass_1520,ww);
-
-					  if(flagDil)
-					    {
-					      hDLmassDistRL_L->Fill(invMepem,ww);
-					      hL1520massDistRL_L->Fill(mass_1520,ww);
-
-					    }
-			
-					}
-				    }
-				  if(flagHHL2)
-				    {
-				      hDLmassDistZ->Fill(invMepem,ww);
-				      hL1520massDistZ->Fill(mass_1520,ww);
-
-				      if(pimH[j]->getGeantParentPID()==18 && pH[k]->getGeantParentPID()==18)
-					{
-					  hDLmassDistZRL->Fill(invMepem,ww);
-					  hL1520massDistZRL->Fill(mass_1520,ww);
-
-					  if(flagDil)
-					    {
-					      hDLmassDistZRL_L->Fill(invMepem,ww);
-					      hL1520massDistZRL_L->Fill(mass_1520,ww);
-					    }
-
-					}
-
-				    }
-
-
-				  if(flagHHL3)
-				    {
-		      		      hDLmassDistL->Fill(invMepem,ww);
-				      hL1520massDistL->Fill(mass_1520,ww);
-				      if(pimH[j]->getGeantParentPID()==18 && pH[k]->getGeantParentPID()==18)
-					{
-					  hDLmassDistLRL->Fill(invMepem,ww);
-					  hL1520massDistLRL->Fill(mass_1520,ww);
-					  if(flagDil)
-					    {
-					      hDLmassDistLRL_L->Fill(invMepem,ww);
-					      hL1520massDistLRL_L->Fill(mass_1520,ww);
-					    }	
-					}
-				    }
-		    
-				  if(flagHHL4)
-				    {
-				      hDLmassDistZL->Fill(invMepem,ww);
-				      hL1520massDistZL->Fill(mass_1520,ww);
-				      if(invMepem>140.){
-					hL1520massDistZLpi0->Fill(mass_1520,ww);
-					if(flagDil){
-					  hL1520massDistZLpi0_L->Fill(mass_1520,ww);
-					  //cout<<"xxxx: "<<mass_1520<<endl;
-					}
-				      }
-				      if(pimH[j]->getGeantParentPID()==18 && pH[k]->getGeantParentPID()==18)
-					{
-					  hDLmassDistZLRL->Fill(invMepem,ww);
-					  hL1520massDistZLRL->Fill(mass_1520,ww);
-					  if(invMepem>140.)hL1520massDistZLRLpi0->Fill(mass_1520,ww);
-		   
-					  if(flagDil)
-					    {
-					      hDLmassDistZLRL_L->Fill(invMepem,ww);
-					      hL1520massDistZLRL_L->Fill(mass_1520,ww);
-					      if(invMepem>140.)hL1520massDistZLRLpi0_L->Fill(mass_1520,ww);
-		   
-					    }
-					}
-		     
-				      if(mass_1520>1450 && mass_1520<1550){
-
-					hDLmassFinal->Fill(invMepem,ww);
-					hL1520massFinal->Fill(mass_1520,ww);
-					if(invMepem>140.)hL1520massFinalpi0->Fill(mass_1520,ww);
-
-					if(pimH[j]->getGeantParentPID()==18 && pH[k]->getGeantParentPID()==18){
-
-					  hDLmassFinalRL->Fill(invMepem,ww);
-					  hL1520massFinalRL->Fill(mass_1520,ww);
-					  if(invMepem>140.)hL1520massFinalRLpi0->Fill(mass_1520,ww);
-
-					  if(flagDil){
-
-					    hDLmassFinalRL_L->Fill(invMepem,ww);
-					    hL1520massFinalRL_L->Fill(mass_1520,ww);
-					    if(invMepem>140.){hL1520massFinalRLpi0_L->Fill(mass_1520,ww);
-					      //cout<<"xxxxx"<<endl;
-					    }
-				
-					  }
-					}
-					h2L1520vertex->Fill(vertexL1520.Z(),TMath::Sqrt(vertexL1520.X()*vertexL1520.X()+vertexL1520.Y()*vertexL1520.Y()));
-	  
-					TLorentzVector lvLam1520=lvLambda+lvDiLepton;
-					//HParticleCandSim *tr;
-					HParticleTool p_tool, tool,tool1;
-
-					double distance_1520=tool1.calculateMinimumDistance(vertexL,dirL,vertexDL,dirDL);
-		
-					vertexL1520=tool.calcVertexAnalytical(vertexL,dirL,vertexDL,dirDL);
-					dirL1520.setXYZ((*ep[s]+*em[ss]+*pimH[j]+*pH[k]).X(),(*ep[s]+*em[ss]+*pimH[j]+*pH[k]).Y(),(*ep[s]+*em[ss]+*pimH[j]+*pH[k]).Z());
-
-					ver_L1520Tg=tool.calcVertexAnalytical(base_Tg,dir_Tg,vertexL1520,dirL1520);
-		  
-					double distLam1520Z=tool.calculateMinimumDistance(base_Tg, dir_Tg,vertexL1520,dirL1520);
-					//cout<<"distLam1520Z: "<<distLam1520Z<<endl;
-			  
-					hZvertLam1520HH->Fill(vertexL1520.Z());
-					hZvertLam1520TgHH->Fill(ver_L1520Tg.Z());
-					hdistTgLam1520HH->Fill(distLam1520Z);
-			  
-				      }
-				    }//flagHHL4
-				}//oa
-	
-			    }
-			}
-		    }
 		}
+	      }
+		
+	      for (int s=0;s<em.size();s++){
+		for (int ss=0;ss<em.size();ss++){
+
+		  TLorentzVector lvLambda=*pH[k]+*pimH[j];
+		  TLorentzVector lvDiLepton=*em[s]+*em[ss];
+		  double oa = tool.getOpeningAngle(em[s],em[ss]);
+		  double mass_1520=(lvLambda+lvDiLepton).M();
+
+		  int flagDil1=1;
+		  //if(em[s]->getGeantParentTrackNum()==0 && em[ss]->getGeantParentTrackNum()==0 && em[ss]->getGeantGrandParentPID()==-1 && em[s]->getGeantGrandParentPID()==-1) flagDil1=1;
+		  //if(em[s]->getGeantParentTrackNum()== em[ss]->getGeantParentTrackNum()) flagDil1=1;
+
+		    
+		  //***************************************
+
+		  if(oa>min_angle){
+		    hinvMass_ememOA->Fill(lvDiLepton.M(),ww);  
+		      
+		    hDLmassAll_emem->Fill(lvDiLepton.M(),ww);
+		    hL1520massAll_emem->Fill(mass_1520,ww);
+
+		    if(pimH[j]->getGeantParentPID()==18 && pH[k]->getGeantParentPID()==18){
+
+		      hDLmassAllRL_emem->Fill(lvDiLepton.M(),ww);
+		      hL1520massAllRL_emem->Fill(mass_1520,ww);
+		      
+		      if(flagDil1){
+			hDLmassAllRL_L_emem->Fill(lvDiLepton.M(),ww);
+			hL1520massAllRL_L_emem->Fill(mass_1520,ww);
+			
+		      }
+		      
+		    }
+
+		    if(flagHFTL1){
+
+		      hDLmassDist_emem->Fill(lvDiLepton.M(),ww);
+		      hL1520massDist_emem->Fill(mass_1520,ww);
+
+		      if(pimH[j]->getGeantParentPID()==18 && pH[k]->getGeantParentPID()==18){
+			hDLmassDistRL_emem->Fill(lvDiLepton.M(),ww);
+			hL1520massDistRL_emem->Fill(mass_1520,ww);
+
+			if(flagDil1){
+			  hDLmassDistRL_L_emem->Fill(lvDiLepton.M(),ww);
+			  hL1520massDistRL_L_emem->Fill(mass_1520,ww);
+
+			}
+      
+		      }
+
+		    }
+
+		    if(flagHFTL2){
+		      hDLmassDistZ_emem->Fill(lvDiLepton.M(),ww);
+		      hL1520massDistZ_emem->Fill(mass_1520,ww);
+
+		      if(pimH[j]->getGeantParentPID()==18 && pH[k]->getGeantParentPID()==18){
+			hDLmassDistZRL_emem->Fill(lvDiLepton.M(),ww);
+			hL1520massDistZRL_emem->Fill(mass_1520,ww);
+
+			if(flagDil1){
+			  hDLmassDistZRL_L_emem->Fill(lvDiLepton.M(),ww);
+			  hL1520massDistZRL_L_emem->Fill(mass_1520,ww);
+			  
+			}
+
+			
+
+		      }
+		    }
+
+
+		    
+		    if(flagHFTL3){
+
+		      hDLmassDistL_emem->Fill(lvDiLepton.M(),ww);
+		      hL1520massDistL_emem->Fill(mass_1520,ww);
+		      if(lvDiLepton.M()>140.&& lvDiLepton.M()<420.)hL1520massDistLpi0_emem->Fill(mass_1520,ww);
+
+		      if(pimH[j]->getGeantParentPID()==18 && pH[k]->getGeantParentPID()==18){
+
+			hDLmassDistLRL_emem->Fill(lvDiLepton.M(),ww);
+			hL1520massDistLRL_emem->Fill(mass_1520,ww);
+
+			if(flagDil1){
+			  hDLmassDistLRL_L_emem->Fill(lvDiLepton.M(),ww);
+			  hL1520massDistLRL_L_emem->Fill(mass_1520,ww);
+			}
+			
+		      }
+
+
+
+		    }
+
+		    		    
+		  }//oa
+
+		  //***************************************
+		    
+		  if(flagHHL4 && oa>min_angle){
+		    hDLmassDistZL_emem->Fill(lvDiLepton.M(),ww);
+
+		    hL1520mass_emem->Fill(mass_1520,ww);		      
+		    if(mass_1520>1450 && mass_1520<1550)hinvMass_emem->Fill(lvDiLepton.M(),ww);
+
+		    if(flagDil1){
+
+		      hL1520mass_emem_L->Fill(mass_1520,ww);		      
+		      if(mass_1520>1450 && mass_1520<1550)hinvMass_emem_L->Fill(lvDiLepton.M(),ww);
+
+		      //hL1520massFinalpi0_emem
+		      if(lvDiLepton.M()>140. && lvDiLepton.M()<420.)
+			hL1520massDistZLpi0_emem->Fill(mass_1520,ww);
+
+			
+		    }
+		      
+		      
+		  }
+		    
+		}
+	      }
+		
+	    }
+	
+
+	      
+	    if (ep.size() && em.size()){
+	      //cout<<":::::::::::epem "<<ep.size()<<" "<<em.size()<<endl;
+	      for (int s=0;s<ep.size();s++){
+		for (int ss=0;ss<em.size();ss++){
+
+ 
+		  //em[ss]->calc4vectorProperties(HPhysicsConstants::mass(em[ss]->getGeantPID()));
+		  //ep[s]->calc4vectorProperties(HPhysicsConstants::mass(ep[s]->getGeantPID()));
+		  int flagDil=0;
+		    
+		  //if(ep[s]->getGeantParentTrackNum()==0 && em[ss]->getGeantParentTrackNum()==0 && ep[s]->getGeantGrandParentPID()==-1 && em[ss]->getGeantGrandParentPID()==-1) flagDil=1;
+		  if(ep[s]->getGeantParentTrackNum()== em[ss]->getGeantParentTrackNum() && em[s]->getGeantParentPID()==7) flagDil=1;
+		  //cout<<"yyy "<<   ep[s]->getGeantParentTrackNum()<<" "<< em[ss]->getGeantParentTrackNum()<<endl;
+		   
+		    
+		  TLorentzVector lvLambda=*pH[k]+*pimH[j];
+		  TLorentzVector lvDiLepton=*ep[s]+*em[ss];
+
+		  vertexDL=trackVertex(ep[s],em[ss]);
+		  dirDL.setXYZ((*ep[s]+*em[ss]).X(),(*ep[s]+*em[ss]).Y(),(*ep[s]+*em[ss]).Z());
+
+		    
+
+		  double mass_1520=(lvLambda+lvDiLepton).M();
+		  //min dist between dilepton and Lam1115
+		  double distance_1520=tool.calculateMinimumDistance(vertexL,dirL,vertexDL,dirDL);
+		    
+		  //double invMdilLam=lvLambda.M();
+		  double invMepem= lvDiLepton.M(); 
+
+		  int oaFlag=0;		  
+		  double oa = tool.getOpeningAngle(ep[s],em[ss]);
+		  double dilTrDist=trackDistance(ep[s],em[ss]);
+		  if(oa>min_angle)oaFlag=1;
+
+
+		  if(oaFlag){
+		    hinvMass_epemOA->Fill(invMepem,ww);  
+
+		    hDLmassAll->Fill(invMepem,ww);
+		    hL1520massAll->Fill(mass_1520,ww);
+		    //if(lambdaD<min_dist_l){
+		    //hDLmassDist->Fill(invMepem,ww);
+		    //}
+		    if(pimH[j]->getGeantParentPID()==18 && pH[k]->getGeantParentPID()==18){
+		      hDLmassAllRL->Fill(invMepem,ww);
+		      hL1520massAllRL->Fill(mass_1520,ww);
+
+		      if(flagDil){
+			hDLmassAllRL_L->Fill(invMepem,ww);
+			hL1520massAllRL_L->Fill(mass_1520,ww);
+		      
+		      }
+		    }
+		    
+		    if(flagHHL1){
+		      hDLmassDist->Fill(invMepem,ww);
+		      hL1520massDist->Fill(mass_1520,ww);
+		      if(pimH[j]->getGeantParentPID()==18 && pH[k]->getGeantParentPID()==18){
+			hDLmassDistRL->Fill(invMepem,ww);
+			hL1520massDistRL->Fill(mass_1520,ww);
+
+			if(flagDil){
+			  hDLmassDistRL_L->Fill(invMepem,ww);
+			  hL1520massDistRL_L->Fill(mass_1520,ww);
+
+			}
+			
+		      }
+		    }
+
+
+		    if(flagHHL2){
+		      hDLmassDistZ->Fill(invMepem,ww);
+		      hL1520massDistZ->Fill(mass_1520,ww);
+
+		      if(pimH[j]->getGeantParentPID()==18 && pH[k]->getGeantParentPID()==18){
+
+			hDLmassDistZRL->Fill(invMepem,ww);
+			hL1520massDistZRL->Fill(mass_1520,ww);
+
+			if(flagDil){
+			  hDLmassDistZRL_L->Fill(invMepem,ww);
+			  hL1520massDistZRL_L->Fill(mass_1520,ww);
+			  
+			}
+
+			
+		      }
+
+		    }
+
+
+		    if(flagHHL3){
+		      
+		      hDLmassDistL->Fill(invMepem,ww);
+		      hL1520massDistL->Fill(mass_1520,ww);
+		      if(flagDil){
+			hDLmassDistL_L->Fill(mass_1520,ww);
+		      }
+		      if(invMepem>140. && invMepem<420.)hL1520massDistLpi0->Fill(mass_1520,ww);
+
+		      if(pimH[j]->getGeantParentPID()==18 && pH[k]->getGeantParentPID()==18){
+
+			hDLmassDistLRL->Fill(invMepem,ww);
+			hL1520massDistLRL->Fill(mass_1520,ww);
+			if(flagDil){
+			  hDLmassDistLRL_L->Fill(invMepem,ww);
+			  hL1520massDistLRL_L->Fill(mass_1520,ww);
+			}
+			
+		      }
+
+		    }
+		    
+		    if(flagHHL4){
+		      
+		      hDLmassDistZL->Fill(invMepem,ww);
+		      hL1520massDistZL->Fill(mass_1520,ww);
+		      if(flagDil){
+			hDLmassDistZL_L->Fill(mass_1520,ww);
+		      }
+		      if(invMepem>140. && invMepem<420.){
+			hL1520massDistZLpi0->Fill(mass_1520,ww);
+			if(flagDil){
+			  hL1520massDistZLpi0_L->Fill(mass_1520,ww);
+			  //cout<<"xxxx: "<<mass_1520<<endl;
+			}
+		      }
+		      if(pimH[j]->getGeantParentPID()==18 && pH[k]->getGeantParentPID()==18){
+
+			hDLmassDistZLRL->Fill(invMepem,ww);
+			hL1520massDistZLRL->Fill(mass_1520,ww);
+			if(invMepem>140. && invMepem<420.)hL1520massDistZLRLpi0->Fill(mass_1520,ww);
+		   
+			if(flagDil){
+			  
+			  hDLmassDistZLRL_L->Fill(invMepem,ww);
+			  hL1520massDistZLRL_L->Fill(mass_1520,ww);
+			  if(invMepem>140. && invMepem<420.)hL1520massDistZLRLpi0_L->Fill(mass_1520,ww);
+		   
+			}
+		      }
+		      
+		      //if(oa>min_angle){
+		      // hL1520massDistOAL->Fill(mass_1520,ww);
+			  
+		      if(mass_1520>1450 && mass_1520<1550){
+
+			hDLmassFinal->Fill(invMepem,ww);
+			hL1520massFinal->Fill(mass_1520,ww);
+			if(invMepem>140. && invMepem<420.)hL1520massFinalpi0->Fill(mass_1520,ww);
+
+			if(pimH[j]->getGeantParentPID()==18 && pH[k]->getGeantParentPID()==18){
+
+			  hDLmassFinalRL->Fill(invMepem,ww);
+			  hL1520massFinalRL->Fill(mass_1520,ww);
+			  if(invMepem>140. && invMepem<420.)hL1520massFinalRLpi0->Fill(mass_1520,ww);
+
+			  if(flagDil){
+
+			    hDLmassFinalRL_L->Fill(invMepem,ww);
+			    hL1520massFinalRL_L->Fill(mass_1520,ww);
+			    if(invMepem>140. && invMepem<420.){hL1520massFinalRLpi0_L->Fill(mass_1520,ww);
+			      //cout<<"xxxxx"<<endl;
+			    }
+				
+			  }
+			}
+
+			    
+			  
+			
+			  
+
+			h2L1520vertex->Fill(vertexL1520.Z(),TMath::Sqrt(vertexL1520.X()*vertexL1520.X()+vertexL1520.Y()*vertexL1520.Y()));
+
+
+			  
+			TLorentzVector lvLam1520=lvLambda+lvDiLepton;
+			//HParticleCandSim *tr;
+			HParticleTool p_tool, tool,tool1;
+
+
+			//tr=ep[s]+em[ss]+pimH[j]+pH[k];
+
+			double distance_1520=tool1.calculateMinimumDistance(vertexL,dirL,vertexDL,dirDL);
+		
+			vertexL1520=tool.calcVertexAnalytical(vertexL,dirL,vertexDL,dirDL);
+			dirL1520.setXYZ((*ep[s]+*em[ss]+*pimH[j]+*pH[k]).X(),(*ep[s]+*em[ss]+*pimH[j]+*pH[k]).Y(),(*ep[s]+*em[ss]+*pimH[j]+*pH[k]).Z());
+			//dirL1520.setXYZ(lvLam1520.X(),lvLam1520.Y(),lvLam1520.Z());
+			
+			//p_tool.calcSegVector(tr->getZ(),tr->getR(),TMath::DegToRad()*tr->getPhi(),TMath::DegToRad()*tr->getTheta(),baseL1520,dirL1520_1);
+			  	  
+			//ver_L1520Tg = p_tool.calcVertexAnalytical(base_Tg,dir_Tg,baseL1520,dirL1520);
+			ver_L1520Tg=tool.calcVertexAnalytical(base_Tg,dir_Tg,vertexL1520,dirL1520);
+
+			//if(vertexL1520.Z()>0){
+			//cout<<"----------------->>1 "<<s<<" "<<ss<<" "<<vertexL1520.Z()<<endl;
+			//cout<<"----------------->>2 "<<s<<" "<<ss<<" "<<ver_L1520Tg.Z()<<endl;
+			  		  
+			double distLam1520Z=tool.calculateMinimumDistance(base_Tg, dir_Tg,vertexL1520,dirL1520);
+			//cout<<"distLam1520Z: "<<distLam1520Z<<endl;
+			  
+			hZvertLam1520HH->Fill(vertexL1520.Z());
+			hZvertLam1520TgHH->Fill(ver_L1520Tg.Z());
+			hdistTgLam1520HH->Fill(distLam1520Z);
+			  
+			//}
+			  
+			  
+			//if(invMdilLam>1400 && invMdilLam<1700)hDLmassDistOALcut->Fill(invMepem);	    
+			  
+			  
+		      }
+		    }//flagHHL4
+		  }//oa
+	
+		}
+	      }
+		
+		
+	    }
+	  }
 	    
-	    }//end of Hades-Hades
-	}
+	}//end of Hades-Hades
+      }
       //************** HADES - FT ********************
       //cout<<"::: "<<pimH.size()<<" "<<pFT.size()<<endl;
 	
-      if (pimH.size()>=1 && pFT.size()>=1)
-	{
-          for (int k=0;k<pimH.size();k++)
-	    {
-	      for (int j=0;j<pFT.size();j++)
-		{
+      if (pimH.size()>=1 && pFT.size()>=1){
+	for (int k=0;k<pimH.size();k++){
+	  for (int j=0;j<pFT.size();j++){
 
-		  ww=0.;
-		  ww=pimH[k]->getGeantGenweight();
+	    ww=0.;
+	    ww=pimH[k]->getGeantGenweight();
+	    //cout<<ww<<endl;
+
+	    //pimH[k]->calc4vectorProperties(HPhysicsConstants::mass(pimH[k]->getGeantPID()));
+	    //pFT[j]->calc4vectorProperties(HPhysicsConstants::mass(14));
+	    //if (pFT[j]->getGeantPID()==9)pFT[j]->calc4vectorProperties(HPhysicsConstants::mass(14)); 
+	    //cout<<(*pFT[j]).M()<<" "<<pFT[j]->getGeantPID()<<endl;
 	      
-		  double lambdaM=(*pimH[k]+*pFT[j]).M();
-		  double lambdaD=trackDistance(pimH[k],pFT[j]);
+	    double lambdaM=(*pimH[k]+*pFT[j]).M();
+	    double lambdaD=trackDistance(pimH[k],pFT[j]);
 	      
-		  vertexL=trackVertex(pimH[k],pFT[j]);
-		  dirL.setXYZ((*pimH[k]+*pFT[j]).X(),(*pimH[k]+*pFT[j]).Y(),(*pimH[k]+*pFT[j]).Z());
+	    vertexL=trackVertex(pimH[k],pFT[j]);
+	    dirL.setXYZ((*pimH[k]+*pFT[j]).X(),(*pimH[k]+*pFT[j]).Y(),(*pimH[k]+*pFT[j]).Z());
 			      
-		  hinvM_pmHpFTAll->Fill(lambdaM,ww);
-		  hdist_pmHpFTAll->Fill(lambdaD,ww);
+	    hinvM_pmHpFTAll->Fill(lambdaM,ww);
+	    hdist_pmHpFTAll->Fill(lambdaD,ww);
 
-		  hZvertFTAll->Fill(vertexL.Z());
-
-		  if(pFT[j]->getGeantParentPID()==18 && pimH[k]->getGeantParentPID()==18)//proton and pion from L(1115)
-		    {
-		      hZvertFTRL->Fill(vertexL.Z());
-		      hLRmassFT->Fill(lambdaM,ww);
-		      hLRdistFT->Fill(lambdaD,ww);
-		    }
-
-		  flagHFTL1=0;
-		  flagHFTL2=0;
-		  flagHFTL3=0;
-		  flagHFTL4=0;
+	    hZvertFTAll->Fill(vertexL.Z());
 		    
-		  if(lambdaD<min_dist_l)
-		    {
-		      flagHFTL1=1;
-		      hinvM_pmHpFTDist->Fill(lambdaM,ww);
+	    //cout<<"::: "<<pimH.size()<<" "<<pFT.size()<<endl;
+	    //cout<<"::: "<<lambdaM<<endl;
+
+	    /*
+	    //recognize proton from FT origin------------
+	    //int tn=pFT[j]->getTrack();
+	    int tn;
+	    int kineID=-1;
+	    int kineparentID=-1;
+	    for(int p=0;p<knum;p++)
+	    {
+	    kine=HCategoryManager::getObject(kine, fCatGeantKine,p);
+	    int kineT=kine->getTrack();
+	    if(kineT==tn)
+	    {
+	    kineID=kine->getID();
+	    kineparentID=getMotherIndex(kine);
+	    break;
+	    }
+	    }
+	    if(kineID==14 && kineparentID==18)
+	    hFDdistanceLambda->Fill(lambdaD);
+
+	    if(kineID==14 && kineparentID!=18)
+	    hFDdistanceBg->Fill(lambdaD);
+	    //---------------------------------------
+	    */
+
+
+	    if(pFT[j]->getGeantParentPID()==18 && pimH[k]->getGeantParentPID()==18)//proton and pion from L(1115)
+	      {
+		hZvertFTRL->Fill(vertexL.Z());
+		hLRmassFT->Fill(lambdaM,ww);
+		hLRdistFT->Fill(lambdaD,ww);
+	      }
+
+	    flagHFTL1=0;
+	    flagHFTL2=0;
+	    flagHFTL3=0;
+	    flagHFTL4=0;
+
+
+		    
+	    if(lambdaD<min_dist_l){
 		      
-		      if(pimH[k]->getGeantParentPID()==18 && pFT[j]->getGeantParentPID()==18) hLRmassFTDist->Fill(lambdaM,ww);
-		    }
+	      flagHFTL1=1;
+		      
+	      hinvM_pmHpFTDist->Fill(lambdaM,ww);
+	      //h2Lvertex->Fill(vertexL.Z(),TMath::Sqrt(vertexL.X()*vertexL.X()+vertexL.Y()*vertexL.Y()));
+	      if(pimH[k]->getGeantParentPID()==18 && pFT[j]->getGeantParentPID()==18) hLRmassFTDist->Fill(lambdaM,ww);
+		
+		      
+	    }
 
 
-		  if (lambdaD<min_dist_l && vertexL.Z()>0.)
-		    {
-		      flagHFTL2=1;
+	    if (lambdaD<min_dist_l && vertexL.Z()>0.){
+		      
+	      flagHFTL2=1;
 	
-		      hinvM_pmHpFTDistZ->Fill(lambdaM,ww);
-		      if(pimH[k]->getGeantParentPID()==18 && pFT[j]->getGeantParentPID()==18)hLRmassFTDistZ->Fill(lambdaM,ww);
+	      hinvM_pmHpFTDistZ->Fill(lambdaM,ww);
+	      if(pimH[k]->getGeantParentPID()==18 && pFT[j]->getGeantParentPID()==18)hLRmassFTDistZ->Fill(lambdaM,ww);
 
-		    }
+	    }
 
-	    
-		  ver_LTg=tool.calcVertexAnalytical(base_Tg,dir_Tg,vertexL,dirL);
-		  double distLamZ=tool.calculateMinimumDistance(base_Tg, dir_Tg,vertexL,dirL);
-	    
-		  if (lambdaM>1105 && lambdaM<1125 && lambdaD<min_dist_l)
-		    {
-		      flagHFTL3=1;
 		    
-		      hinvM_pmHpFTDistL->Fill(lambdaM,ww);
-		      if(pimH[k]->getGeantParentPID()==18 && pFT[j]->getGeantParentPID()==18) hLRmassFTDistL->Fill(lambdaM,ww);
+		   
+		    
+	    ver_LTg=tool.calcVertexAnalytical(base_Tg,dir_Tg,vertexL,dirL);
+	    double distLamZ=tool.calculateMinimumDistance(base_Tg, dir_Tg,vertexL,dirL);
+		    
+
+		    
+	    if (lambdaM>1105 && lambdaM<1125 && lambdaD<min_dist_l){
+
+	      flagHFTL3=1;
+		    
+	      hinvM_pmHpFTDistL->Fill(lambdaM,ww);
+	      if(pimH[k]->getGeantParentPID()==18 && pFT[j]->getGeantParentPID()==18) hLRmassFTDistL->Fill(lambdaM,ww);
 		      
-		      hZvertLamFT->Fill(vertexL.Z());
-		      hZvertLamTgFT->Fill(ver_LTg.Z());
-		      hdistTgLamFT->Fill(distLamZ);
+	      hZvertLamFT->Fill(vertexL.Z());
+	      hZvertLamTgFT->Fill(ver_LTg.Z());
+	      hdistTgLamFT->Fill(distLamZ);
 		      		      
+	    }
+
+
+	    if (lambdaM>1105 && lambdaM<1125 && lambdaD<min_dist_l && vertexL.Z()>0.){
+		      
+	      flagHFTL4=1;
+		      
+	      hinvM_pmHpFTDistZL->Fill(lambdaM,ww);
+	      if(pimH[k]->getGeantParentPID()==18 && pFT[j]->getGeantParentPID()==18) hLRmassFTDistZL->Fill(lambdaM,ww);
+		      
+	    }
+
+
+
+
+	    if (ep.size() || em.size()){
+	      for (int s=0;s<ep.size();s++){
+		for (int ss=0;ss<ep.size();ss++){
+
+		  TLorentzVector lvLambda=*pFT[j]+*pimH[k];
+		  TLorentzVector lvDiLepton=*ep[s]+*ep[ss];
+
+		
+		
+		  double oa = tool.getOpeningAngle(ep[s],ep[ss]);
+		  double mass_1520=(lvLambda+lvDiLepton).M();
+
+		  int flagDil2=1;
+		    
+		  //if(ep[s]->getGeantParentTrackNum()==0 && ep[ss]->getGeantParentTrackNum()==0 && ep[ss]->getGeantGrandParentPID()==-1 && ep[s]->getGeantGrandParentPID()==-1) flagDil2=1;
+		  //if(ep[s]->getGeantParentTrackNum()== ep[ss]->getGeantParentTrackNum()) flagDil2=1;
+
+
+
+		  //***************************************
+
+		  if(oa>min_angle){
+		    hinvMass_epepOA->Fill(lvDiLepton.M(),ww);  
+
+		      
+		    hDLmassAll_epep->Fill(lvDiLepton.M(),ww);
+		    hL1520massAll_epep->Fill(mass_1520,ww);
+
+		    if(pimH[k]->getGeantParentPID()==18 && pFT[j]->getGeantParentPID()==18){
+
+		      hDLmassAllRL_epep->Fill(lvDiLepton.M(),ww);
+		      hL1520massAllRL_epep->Fill(mass_1520,ww);
+		      
+		      if(flagDil2){
+			hDLmassAllRL_L_epep->Fill(lvDiLepton.M(),ww);
+			hL1520massAllRL_L_epep->Fill(mass_1520,ww);
+			
+		      }
+		      
+		      
 		    }
-		  if (lambdaM>1105 && lambdaM<1125 && lambdaD<min_dist_l && vertexL.Z()>0.){
+
+		    if(flagHFTL1){
+
+		      hDLmassDist_epep->Fill(lvDiLepton.M(),ww);
+		      hL1520massDist_epep->Fill(mass_1520,ww);
+
+		      if(pimH[k]->getGeantParentPID()==18 && pFT[j]->getGeantParentPID()==18){
+			hDLmassDistRL_epep->Fill(lvDiLepton.M(),ww);
+			hL1520massDistRL_epep->Fill(mass_1520,ww);
+
+			if(flagDil2){
+			  hDLmassDistRL_L_epep->Fill(lvDiLepton.M(),ww);
+			  hL1520massDistRL_L_epep->Fill(mass_1520,ww);
+
+			}
+      
+		      }
+
+		    }
+
+		    if(flagHFTL2){
+		      hDLmassDistZ_epep->Fill(lvDiLepton.M(),ww);
+		      hL1520massDistZ_epep->Fill(mass_1520,ww);
+
+		      if(pimH[k]->getGeantParentPID()==18 && pFT[j]->getGeantParentPID()==18){
+			hDLmassDistZRL_epep->Fill(lvDiLepton.M(),ww);
+			hL1520massDistZRL_epep->Fill(mass_1520,ww);
+
+			if(flagDil2){
+			  hDLmassDistZRL_L_epep->Fill(lvDiLepton.M(),ww);
+			  hL1520massDistZRL_L_epep->Fill(mass_1520,ww);
+			  
+			}
+
+
+		      }
+		    }
+
+
+		    
+		    if(flagHFTL3){
+
+		      hDLmassDistL_epep->Fill(lvDiLepton.M(),ww);
+		      hL1520massDistL_epep->Fill(mass_1520,ww);
+		      if(lvDiLepton.M()>140. && lvDiLepton.M()<420.)hL1520massDistLpi0_epep->Fill(mass_1520,ww);
+
+		      if(pimH[k]->getGeantParentPID()==18 && pFT[j]->getGeantParentPID()==18){
+
+			hDLmassDistLRL_epep->Fill(lvDiLepton.M(),ww);
+			hL1520massDistLRL_epep->Fill(mass_1520,ww);
+
+			if(flagDil2){
+			  hDLmassDistLRL_L_epep->Fill(lvDiLepton.M(),ww);
+			  hL1520massDistLRL_L_epep->Fill(mass_1520,ww);
+			}
+			
+		      }
+
+
+
+		    }
+
+		    		    
+		  }//oa
+
+		  //***************************************
+
+		    
+		  if(flagHFTL4 && oa>min_angle){
 		      
-		    flagHFTL4=1;
+		    hDLmassDistZL_epep->Fill(lvDiLepton.M(),ww);
 		      
-		    hinvM_pmHpFTDistZL->Fill(lambdaM,ww);
-		    if(pimH[k]->getGeantParentPID()==18 && pFT[j]->getGeantParentPID()==18) hLRmassFTDistZL->Fill(lambdaM,ww);
+		    hL1520mass_epep->Fill(mass_1520,ww);
+		    if(mass_1520>1450 && mass_1520<1550)hinvMass_epep->Fill(lvDiLepton.M(),ww);
+
+		    if(flagDil2){
+		
+		      hL1520mass_epep_L->Fill(mass_1520,ww);
+		      if(mass_1520>1450 && mass_1520<1550)hinvMass_epep_L->Fill(lvDiLepton.M(),ww);
+		      if(lvDiLepton.M()>140. && lvDiLepton.M()<420.)
+			hL1520massDistZLpi0_epep->Fill(mass_1520,ww);
+		      
+
+		    }
+
+		 
+		  }
+		    
+		}
+	      }
+	
+
+	      for (int s=0;s<em.size();s++){
+		for (int ss=0;ss<em.size();ss++){
+
+		  TLorentzVector lvLambda=*pFT[j]+*pimH[k];
+		  TLorentzVector lvDiLepton=*em[s]+*em[ss];
+		  double oa = tool.getOpeningAngle(em[s],em[ss]);
+		  double mass_1520=(lvLambda+lvDiLepton).M();
+		    
+		  int flagDil1=1;
+		   
+		  //if(em[s]->getGeantParentTrackNum()==0 && em[ss]->getGeantParentTrackNum()==0 && em[s]->getGeantGrandParentPID()==-1 && em[ss]->getGeantGrandParentPID()==-1) flagDil1=1;
+		  //if(em[s]->getGeantParentTrackNum()== em[ss]->getGeantParentTrackNum()) flagDil1=1;
+
+		  //***************************************
+
+		  if(oa>min_angle){
+		    hinvMass_ememOA->Fill(lvDiLepton.M(),ww);  
+		      
+		    hDLmassAll_emem->Fill(lvDiLepton.M(),ww);
+		    hL1520massAll_emem->Fill(mass_1520,ww);
+
+		    if(pimH[k]->getGeantParentPID()==18 && pFT[j]->getGeantParentPID()==18){
+
+		      hDLmassAllRL_emem->Fill(lvDiLepton.M(),ww);
+		      hL1520massAllRL_emem->Fill(mass_1520,ww);
+		      
+		      if(flagDil1){
+			hDLmassAllRL_L_emem->Fill(lvDiLepton.M(),ww);
+			hL1520massAllRL_L_emem->Fill(mass_1520,ww);
+			
+		      }
+		      
+		      
+		    }
+
+		    if(flagHFTL1){
+
+		      hDLmassDist_emem->Fill(lvDiLepton.M(),ww);
+		      hL1520massDist_emem->Fill(mass_1520,ww);
+
+		      if(pimH[k]->getGeantParentPID()==18 && pFT[j]->getGeantParentPID()==18){
+			hDLmassDistRL_emem->Fill(lvDiLepton.M(),ww);
+			hL1520massDistRL_emem->Fill(mass_1520,ww);
+
+			if(flagDil1){
+			  hDLmassDistRL_L_emem->Fill(lvDiLepton.M(),ww);
+			  hL1520massDistRL_L_emem->Fill(mass_1520,ww);
+
+			}
+      
+		      }
+
+		    }
+
+		    if(flagHFTL2){
+		      hDLmassDistZ_emem->Fill(lvDiLepton.M(),ww);
+		      hL1520massDistZ_emem->Fill(mass_1520,ww);
+
+		      if(pimH[k]->getGeantParentPID()==18 && pFT[j]->getGeantParentPID()==18){
+			hDLmassDistZRL_emem->Fill(lvDiLepton.M(),ww);
+			hL1520massDistZRL_emem->Fill(mass_1520,ww);
+
+			if(flagDil1){
+			  hDLmassDistZRL_L_emem->Fill(lvDiLepton.M(),ww);
+			  hL1520massDistZRL_L_emem->Fill(mass_1520,ww);
+			  
+			}
+
+			
+
+		      }
+		    }
+
+
+		    
+		    if(flagHFTL3){
+
+		      hDLmassDistL_emem->Fill(lvDiLepton.M(),ww);
+		      hL1520massDistL_emem->Fill(mass_1520,ww);
+		      if(lvDiLepton.M()>140. && lvDiLepton.M()<420.)hL1520massDistLpi0_emem->Fill(mass_1520,ww);
+
+		      if(pimH[k]->getGeantParentPID()==18 && pFT[j]->getGeantParentPID()==18){
+
+			hDLmassDistLRL_emem->Fill(lvDiLepton.M(),ww);
+			hL1520massDistLRL_emem->Fill(mass_1520,ww);
+
+			if(flagDil1){
+			  hDLmassDistLRL_L_emem->Fill(lvDiLepton.M(),ww);
+			  hL1520massDistLRL_L_emem->Fill(mass_1520,ww);
+			}
+			
+		      }
+
+
+
+		    }
+
+		    		    
+		  }//oa
+
+		  //***************************************
+
+		    
+		    
+		  if(flagHFTL4 && oa>min_angle){
+
+		       
+		    hDLmassDistZL_emem->Fill(lvDiLepton.M(),ww);
+		    hL1520mass_emem->Fill(mass_1520,ww);		      
+		    if(mass_1520>1450 && mass_1520<1550)hinvMass_emem->Fill(lvDiLepton.M(),ww);
+		 
+		    if(flagDil1){
+
+		      hL1520mass_emem_L->Fill(mass_1520,ww);		      
+		      if(mass_1520>1450 && mass_1520<1550)hinvMass_emem_L->Fill(lvDiLepton.M(),ww);
+
+		      if(lvDiLepton.M()>140. && lvDiLepton.M()<420.)
+			hL1520massDistZLpi0_emem->Fill(mass_1520,ww);
+		      
+
+		    }
+
+
+
+		  }
+		    
+		    
+		}
+	      }
+
+
+	    }
+
+
+		
+	    for (int s=0;s<ep.size();s++){
+	      for (int ss=0;ss<em.size();ss++){	     
+
+		//em[ss]->calc4vectorProperties(HPhysicsConstants::mass(em[ss]->getGeantPID()));
+		//ep[s]->calc4vectorProperties(HPhysicsConstants::mass(ep[s]->getGeantPID()));
+
+		int flagDil=0;
+
+		//if(ep[s]->getGeantParentTrackNum()==0 && em[ss]->getGeantParentTrackNum()==0 && ep[s]->getGeantGrandParentPID()==-1 && em[ss]->getGeantGrandParentPID()==-1) flagDil=1;
+		if(ep[s]->getGeantParentTrackNum()==em[ss]->getGeantParentTrackNum() && em[s]->getGeantParentPID()==7) flagDil=1;
+
+
+			      
+		TLorentzVector lvLambda=*pFT[j]+*pimH[k];
+		TLorentzVector lvDiLepton=*ep[s]+*em[ss];
+
+		vertexDL=trackVertex(ep[s],em[ss]);
+		dirDL.setXYZ((*ep[s]+*em[ss]).X(),(*ep[s]+*em[ss]).Y(),(*ep[s]+*em[ss]).Z());
+
+			    
+		double mass_1520=(lvLambda+lvDiLepton).M();
+		//min dist between dilepton and Lam1115
+		double distance_1520=tool.calculateMinimumDistance(vertexL,dirL,vertexDL,dirDL);
+		double invMepem= lvDiLepton.M(); 
+		double oa = tool.getOpeningAngle(ep[s],em[ss]);
+		double dilTrDist=trackDistance(ep[s],em[ss]);
+
+		int oaFlag=0;
+		    
+		if(oa>min_angle)oaFlag=1;
+		    
+		if(oaFlag){
+		  hinvMass_epemOA->Fill(invMepem,ww);  
+
+		    
+		  hDLdistanceFT->Fill(distance_1520);
+
+		  hDLmassFTAll->Fill(invMepem,ww);
+		  hL1520massFTAll->Fill(mass_1520,ww);
+
+		  if(pimH[k]->getGeantParentPID()==18 && pFT[j]->getGeantParentPID()==18){
+
+		    hDLmassFTAllRL->Fill(invMepem,ww);
+		    hL1520massFTAllRL->Fill(mass_1520,ww);
+
+		    if(flagDil){
+		      hDLmassAllRL_L->Fill(invMepem,ww);
+		      hL1520massAllRL_L->Fill(mass_1520,ww);
+		      
+		    }
+ 
 		      
 		  }
 
-
-
-
-		  if (ep.size() || em.size())
-		    {
-		      for (int s=0;s<ep.size();s++)
-			{
-			  for (int ss=0;ss<ep.size();ss++)
-			    {
-
-			      TLorentzVector lvLambda=*pFT[j]+*pimH[k];
-			      TLorentzVector lvDiLepton=*ep[s]+*ep[ss];
-
-		
-		
-			      double oa = tool.getOpeningAngle(ep[s],ep[ss]);
-			      double mass_1520=(lvLambda+lvDiLepton).M();
-
-			      int flagDil2=1;
 		    
-			      if(oa>5.)
-				{
-				  hinvMass_epepOA->Fill(lvDiLepton.M(),ww);  
+		  if(flagHFTL1){
+		    hDLmassFTDist->Fill(invMepem,ww);
+		    hL1520massFTDist->Fill(mass_1520,ww);
 
-		      
-				  hDLmassAll_epep->Fill(lvDiLepton.M(),ww);
-				  hL1520massAll_epep->Fill(mass_1520,ww);
+		    if(pimH[k]->getGeantParentPID()==18 && pFT[j]->getGeantParentPID()==18){
+		      hDLmassFTDistRL->Fill(invMepem,ww);
+		      hL1520massFTDistRL->Fill(mass_1520,ww);
 
-				  if(pimH[k]->getGeantParentPID()==18 && pFT[j]->getGeantParentPID()==18)
-				    {
+		      if(flagDil){
+			hDLmassDistRL_L->Fill(invMepem,ww);
+			hL1520massDistRL_L->Fill(mass_1520,ww);
 
-				      hDLmassAllRL_epep->Fill(lvDiLepton.M(),ww);
-				      hL1520massAllRL_epep->Fill(mass_1520,ww);
-		      
-				      if(flagDil2)
-					{
-					  hDLmassAllRL_L_epep->Fill(lvDiLepton.M(),ww);
-					  hL1520massAllRL_L_epep->Fill(mass_1520,ww);
-					}		      
-				    }
+		      }
+      
+		    }
+		  }
 
-				  if(flagHFTL1)
-				    {
-				      hDLmassDist_epep->Fill(lvDiLepton.M(),ww);
-				      hL1520massDist_epep->Fill(mass_1520,ww);
 
-				      if(pimH[k]->getGeantParentPID()==18 && pFT[j]->getGeantParentPID()==18)
-					{
-					  hDLmassDistRL_epep->Fill(lvDiLepton.M(),ww);
-					  hL1520massDistRL_epep->Fill(mass_1520,ww);
+		  if(flagHFTL2){
+		    hDLmassFTDistZ->Fill(invMepem,ww);
+		    hL1520massFTDistZ->Fill(mass_1520,ww);
 
-					  if(flagDil2)
-					    {
-					      hDLmassDistRL_L_epep->Fill(lvDiLepton.M(),ww);
-					      hL1520massDistRL_L_epep->Fill(mass_1520,ww);
-					    }
-					}
-				    }
+		    if(pimH[k]->getGeantParentPID()==18 && pFT[j]->getGeantParentPID()==18){
+		      hDLmassFTDistZRL->Fill(invMepem,ww);
+		      hL1520massFTDistZRL->Fill(mass_1520,ww);
 
-				  if(flagHFTL2)
-				    {
-				      hDLmassDistZ_epep->Fill(lvDiLepton.M(),ww);
-				      hL1520massDistZ_epep->Fill(mass_1520,ww);
-
-				      if(pimH[k]->getGeantParentPID()==18 && pFT[j]->getGeantParentPID()==18)
-					{
-					  hDLmassDistZRL_epep->Fill(lvDiLepton.M(),ww);
-					  hL1520massDistZRL_epep->Fill(mass_1520,ww);
-
-					  if(flagDil2)
-					    {
-					      hDLmassDistZRL_L_epep->Fill(lvDiLepton.M(),ww);
-					      hL1520massDistZRL_L_epep->Fill(mass_1520,ww);
+		      if(flagDil){
+			hDLmassDistZRL_L->Fill(invMepem,ww);
+			hL1520massDistZRL_L->Fill(mass_1520,ww);
 			  
-					    }
-					}
-				    }
+		      }
 
-
-		    
-				  if(flagHFTL3)
-				    {
-				      hDLmassDistL_epep->Fill(lvDiLepton.M(),ww);
-				      hL1520massDistL_epep->Fill(mass_1520,ww);
-
-				      if(pimH[k]->getGeantParentPID()==18 && pFT[j]->getGeantParentPID()==18)
-					{
-					  hDLmassDistLRL_epep->Fill(lvDiLepton.M(),ww);
-					  hL1520massDistLRL_epep->Fill(mass_1520,ww);
-
-					  if(flagDil2)
-					    {
-					      hDLmassDistLRL_L_epep->Fill(lvDiLepton.M(),ww);
-					      hL1520massDistLRL_L_epep->Fill(mass_1520,ww);
-					    }
 			
-					}
-				    }	    
-				}//oa
 
-			      //***************************************
+		    }
+		  }
+
 
 		    
-			      if(flagHFTL4 && oa>5)
-				{
-				  hL1520mass_epep->Fill(mass_1520,ww);
-				  if(mass_1520>1450 && mass_1520<1550)
-				    hinvMass_epep->Fill(lvDiLepton.M(),ww);
+		  if(flagHFTL3){
 
-				  if(flagDil2)
-				    {
-				      hL1520mass_epep_L->Fill(mass_1520,ww);
-				      if(mass_1520>1450 && mass_1520<1550)
-					hinvMass_epep_L->Fill(lvDiLepton.M(),ww);
-				      if(lvDiLepton.M()>140.)
-					hL1520massDistZLpi0_epep->Fill(mass_1520,ww);
-				    }
-				}  
-			    }
-			}
-	
+		    hDLmassFTDistL->Fill(invMepem,ww);
+		    hL1520massFTDistL->Fill(mass_1520,ww);
+		    if(flagDil){
+			hDLmassDistL_L->Fill(mass_1520,ww);
+		      }
+		    if(invMepem>140. && invMepem<420.)hL1520massFTDistLpi0->Fill(mass_1520,ww);
 
-		      for(int s=0;s<em.size();s++)
-			{
-			  for(int ss=0;ss<em.size();ss++)
-			    {
+		    if(pimH[k]->getGeantParentPID()==18 && pFT[j]->getGeantParentPID()==18){
 
-			      TLorentzVector lvLambda=*pFT[j]+*pimH[k];
-			      TLorentzVector lvDiLepton=*em[s]+*em[ss];
-			      double oa = tool.getOpeningAngle(em[s],em[ss]);
-			      double mass_1520=(lvLambda+lvDiLepton).M();
-		    
-			      int flagDil1=1;
-		   
-			      //if(em[s]->getGeantParentTrackNum()==0 && em[ss]->getGeantParentTrackNum()==0 && em[s]->getGeantGrandParentPID()==-1 && em[ss]->getGeantGrandParentPID()==-1) flagDil1=1;
-			      //if(em[s]->getGeantParentTrackNum()== em[ss]->getGeantParentTrackNum()) flagDil1=1;
+		      hDLmassFTDistLRL->Fill(invMepem,ww);
+		      hL1520massFTDistLRL->Fill(mass_1520,ww);
 
-			      //***************************************
-
-			      if(oa>5.)
-				{
-				  hinvMass_ememOA->Fill(lvDiLepton.M(),ww);  
-				  hDLmassAll_emem->Fill(lvDiLepton.M(),ww);
-				  hL1520massAll_emem->Fill(mass_1520,ww);
-
-				  if(pimH[k]->getGeantParentPID()==18 && pFT[j]->getGeantParentPID()==18)
-				    {
-				      hDLmassAllRL_emem->Fill(lvDiLepton.M(),ww);
-				      hL1520massAllRL_emem->Fill(mass_1520,ww);
-		      
-				      if(flagDil1)
-					{
-					  hDLmassAllRL_L_emem->Fill(lvDiLepton.M(),ww);
-					  hL1520massAllRL_L_emem->Fill(mass_1520,ww);
-					}
-				    }
-
-				  if(flagHFTL1)
-				    {
-				      hDLmassDist_emem->Fill(lvDiLepton.M(),ww);
-				      hL1520massDist_emem->Fill(mass_1520,ww);
-
-				      if(pimH[k]->getGeantParentPID()==18 && pFT[j]->getGeantParentPID()==18)
-					{
-					  hDLmassDistRL_emem->Fill(lvDiLepton.M(),ww);
-					  hL1520massDistRL_emem->Fill(mass_1520,ww);
-
-					  if(flagDil1)
-					    {
-					      hDLmassDistRL_L_emem->Fill(lvDiLepton.M(),ww);
-					      hL1520massDistRL_L_emem->Fill(mass_1520,ww);
-
-					    }
-					}
-				    }
-
-				  if(flagHFTL2){
-				    hDLmassDistZ_emem->Fill(lvDiLepton.M(),ww);
-				    hL1520massDistZ_emem->Fill(mass_1520,ww);
-
-				    if(pimH[k]->getGeantParentPID()==18 && pFT[j]->getGeantParentPID()==18)
-				      {
-					hDLmassDistZRL_emem->Fill(lvDiLepton.M(),ww);
-					hL1520massDistZRL_emem->Fill(mass_1520,ww);
-
-					if(flagDil1)
-					  {
-					    hDLmassDistZRL_L_emem->Fill(lvDiLepton.M(),ww);
-					    hL1520massDistZRL_L_emem->Fill(mass_1520,ww);
-					  }
-				      }
-				  }
-		    
-				  if(flagHFTL3)
-				    {
-				      hDLmassDistL_emem->Fill(lvDiLepton.M(),ww);
-				      hL1520massDistL_emem->Fill(mass_1520,ww);
-
-				      if(pimH[k]->getGeantParentPID()==18 && pFT[j]->getGeantParentPID()==18)
-					{
-					  hDLmassDistLRL_emem->Fill(lvDiLepton.M(),ww);
-					  hL1520massDistLRL_emem->Fill(mass_1520,ww);
-
-					  if(flagDil1)
-					    {
-					      hDLmassDistLRL_L_emem->Fill(lvDiLepton.M(),ww);
-					      hL1520massDistLRL_L_emem->Fill(mass_1520,ww);
-					    }
+		      if(flagDil){
+			hDLmassDistLRL_L->Fill(invMepem,ww);
+			hL1520massDistLRL_L->Fill(mass_1520,ww);
+		      }
 			
-					}
-				    }
-				}//oa
-
-			      //***************************************
-	    
-			      if(flagHFTL4 && oa>5.){
-	
-				hL1520mass_emem->Fill(mass_1520,ww);		      
-				if(mass_1520>1450 && mass_1520<1550)hinvMass_emem->Fill(lvDiLepton.M(),ww);
-		 
-				if(flagDil1){
-
-				  hL1520mass_emem_L->Fill(mass_1520,ww);		      
-				  if(mass_1520>1450 && mass_1520<1550)hinvMass_emem_L->Fill(lvDiLepton.M(),ww);
-
-				  if(lvDiLepton.M()>140.)
-				    hL1520massDistZLpi0_emem->Fill(mass_1520,ww);
-				}
-			      }
-			    }
-			}
 		    }
 
 
-		
-		  for (int s=0;s<ep.size();s++){
-		    for (int ss=0;ss<em.size();ss++){	     
 
-		      //em[ss]->calc4vectorProperties(HPhysicsConstants::mass(em[ss]->getGeantPID()));
-		      //ep[s]->calc4vectorProperties(HPhysicsConstants::mass(ep[s]->getGeantPID()));
-
-		      int flagDil=0;
-
-		      //if(ep[s]->getGeantParentTrackNum()==0 && em[ss]->getGeantParentTrackNum()==0 && ep[s]->getGeantGrandParentPID()==-1 && em[ss]->getGeantGrandParentPID()==-1) flagDil=1;
-		      if(ep[s]->getGeantParentTrackNum()==em[ss]->getGeantParentTrackNum()) flagDil=1;
-
-
-			      
-		      TLorentzVector lvLambda=*pFT[j]+*pimH[k];
-		      TLorentzVector lvDiLepton=*ep[s]+*em[ss];
-
-		      vertexDL=trackVertex(ep[s],em[ss]);
-		      dirDL.setXYZ((*ep[s]+*em[ss]).X(),(*ep[s]+*em[ss]).Y(),(*ep[s]+*em[ss]).Z());
-
-			    
-		      double mass_1520=(lvLambda+lvDiLepton).M();
-		      //min dist between dilepton and Lam1115
-		      double distance_1520=tool.calculateMinimumDistance(vertexL,dirL,vertexDL,dirDL);
-		      double invMepem= lvDiLepton.M(); 
-		      double oa = tool.getOpeningAngle(ep[s],em[ss]);
-		      double dilTrDist=trackDistance(ep[s],em[ss]);
-
-		      int oaFlag=0;
+		  }
 		    
-		      if(oa>5.)oaFlag=1;
-		      if(oaFlag){
-			hinvMass_epemOA->Fill(invMepem,ww);  
+		  if(flagHFTL4){
 
-		    
-			hDLdistanceFT->Fill(distance_1520);
-
-			hDLmassFTAll->Fill(invMepem,ww);
-			hL1520massFTAll->Fill(mass_1520,ww);
-
-			if(pimH[k]->getGeantParentPID()==18 && pFT[j]->getGeantParentPID()==18){
-
-			  hDLmassFTAllRL->Fill(invMepem,ww);
-			  hL1520massFTAllRL->Fill(mass_1520,ww);
-
-			  if(flagDil){
-			    hDLmassAllRL_L->Fill(invMepem,ww);
-			    hL1520massAllRL_L->Fill(mass_1520,ww);
+		    hDLmassFTDistZL->Fill(invMepem,ww);
+		    hL1520massFTDistZL->Fill(mass_1520,ww);
+		    if(flagDil){
+			hDLmassDistZL_L->Fill(mass_1520,ww);
+		      }
+		    if(invMepem>140. && invMepem<420.){
+		      hL1520massDistZLpi0->Fill(mass_1520,ww);
+		      if(flagDil)hL1520massDistZLpi0_L->Fill(mass_1520,ww);
+		    }
 		      
-			  }
- 
-		      
-			}
+		    if(pimH[k]->getGeantParentPID()==18 && pFT[j]->getGeantParentPID()==18){
 
-		    
-			if(flagHFTL1){
-			  hDLmassFTDist->Fill(invMepem,ww);
-			  hL1520massFTDist->Fill(mass_1520,ww);
-
-			  if(pimH[k]->getGeantParentPID()==18 && pFT[j]->getGeantParentPID()==18){
-			    hDLmassFTDistRL->Fill(invMepem,ww);
-			    hL1520massFTDistRL->Fill(mass_1520,ww);
-
-			    if(flagDil){
-			      hDLmassDistRL_L->Fill(invMepem,ww);
-			      hL1520massDistRL_L->Fill(mass_1520,ww);
-
-			    }
-      
-			  }
-			}
-
-
-			if(flagHFTL2){
-			  hDLmassFTDistZ->Fill(invMepem,ww);
-			  hL1520massFTDistZ->Fill(mass_1520,ww);
-
-			  if(pimH[k]->getGeantParentPID()==18 && pFT[j]->getGeantParentPID()==18){
-			    hDLmassFTDistZRL->Fill(invMepem,ww);
-			    hL1520massFTDistZRL->Fill(mass_1520,ww);
-
-			    if(flagDil){
-			      hDLmassDistZRL_L->Fill(invMepem,ww);
-			      hL1520massDistZRL_L->Fill(mass_1520,ww);
+		      hDLmassFTDistZLRL->Fill(invMepem,ww);
+		      hL1520massFTDistZLRL->Fill(mass_1520,ww);
+		      if(invMepem>140. && invMepem<420.)hL1520massFTDistZLRLpi0->Fill(mass_1520,ww);
+		      if(flagDil){
 			  
-			    }
-
-			
-
-			  }
-			}
-
-
-		    
-			if(flagHFTL3){
-
-			  hDLmassFTDistL->Fill(invMepem,ww);
-			  hL1520massFTDistL->Fill(mass_1520,ww);
-
-			  if(pimH[k]->getGeantParentPID()==18 && pFT[j]->getGeantParentPID()==18){
-
-			    hDLmassFTDistLRL->Fill(invMepem,ww);
-			    hL1520massFTDistLRL->Fill(mass_1520,ww);
-
-			    if(flagDil){
-			      hDLmassDistLRL_L->Fill(invMepem,ww);
-			      hL1520massDistLRL_L->Fill(mass_1520,ww);
-			    }
-			
-			  }
-
-
-
-			}
-		    
-			if(flagHFTL4){
-
-			  hDLmassFTDistZL->Fill(invMepem,ww);
-			  hL1520massFTDistZL->Fill(mass_1520,ww);
-			  if(invMepem>140.){
-			    hL1520massDistZLpi0->Fill(mass_1520,ww);
-			    if(flagDil)hL1520massDistZLpi0_L->Fill(mass_1520,ww);
-			  }
-		      
-			  if(pimH[k]->getGeantParentPID()==18 && pFT[j]->getGeantParentPID()==18){
-
-			    hDLmassFTDistZLRL->Fill(invMepem,ww);
-			    hL1520massFTDistZLRL->Fill(mass_1520,ww);
-			    if(invMepem>140.)hL1520massFTDistZLRLpi0->Fill(mass_1520,ww);
-			    if(flagDil){
-			  
-			      hDLmassDistZLRL_L->Fill(invMepem,ww);
-			      hL1520massDistZLRL_L->Fill(mass_1520,ww);
-			      if(invMepem>140.)hL1520massDistZLRLpi0_L->Fill(mass_1520,ww);
+			hDLmassDistZLRL_L->Fill(invMepem,ww);
+			hL1520massDistZLRL_L->Fill(mass_1520,ww);
+			if(invMepem>140. && invMepem<420.)hL1520massDistZLRLpi0_L->Fill(mass_1520,ww);
 		   
-			    }
+		      }
 	
-			  }
-			  if(mass_1520>1450 && mass_1520<1550){
-
-			    hL1520massFTFinal->Fill(mass_1520,ww);
-			    hDLmassFTFinal->Fill(invMepem,ww);
-			    if(invMepem>140.)hL1520massFTFinalpi0->Fill(mass_1520,ww);
-
-			    if(pimH[k]->getGeantParentPID()==18 && pFT[j]->getGeantParentPID()==18){
-			      hL1520massFTFinalRL->Fill(mass_1520,ww);
-			      hDLmassFTFinalRL->Fill(invMepem,ww);
-			      if(invMepem>140.)hL1520massFTFinalRLpi0->Fill(mass_1520,ww);
-
-			      if(flagDil){
-			      
-				hDLmassFinalRL_L->Fill(invMepem,ww);
-				hL1520massFinalRL_L->Fill(mass_1520,ww);
-				if(invMepem>140.){hL1520massFinalRLpi0_L->Fill(mass_1520,ww);
-				  //cout<<"xxxxx "<<mass_1520<<" "<<ww<<endl;
+		    }
+		   
 			
-				}
-			      }
-			    }
+		    if(mass_1520>1450 && mass_1520<1550){
+
+		      hL1520massFTFinal->Fill(mass_1520,ww);
+		      hDLmassFTFinal->Fill(invMepem,ww);
+		      if(invMepem>140. && invMepem<420.)hL1520massFTFinalpi0->Fill(mass_1520,ww);
+
+		      if(pimH[k]->getGeantParentPID()==18 && pFT[j]->getGeantParentPID()==18){
+			hL1520massFTFinalRL->Fill(mass_1520,ww);
+			hDLmassFTFinalRL->Fill(invMepem,ww);
+			if(invMepem>140. && invMepem<420.)hL1520massFTFinalRLpi0->Fill(mass_1520,ww);
+
+			if(flagDil){
+			      
+			  hDLmassFinalRL_L->Fill(invMepem,ww);
+			  hL1520massFinalRL_L->Fill(mass_1520,ww);
+			  if(invMepem>140. && invMepem<420.){hL1520massFinalRLpi0_L->Fill(mass_1520,ww);
+			    //cout<<"xxxxx "<<mass_1520<<" "<<ww<<endl;
+			
 			  }
-						  
-			  TLorentzVector lvLam1520=lvLambda+lvDiLepton;
-			  //HParticleCandSim *tr;
-			  HGeomVector base_Tg, dir_Tg, ver_L1520Tg, baseL1520, vertexL1520;
-			  HParticleTool p_tool, tool,tool1;
-
-
-			  //tr=ep[s]+em[ss]+pimH[j]+pH[k];
-
-			  double distance_1520=tool1.calculateMinimumDistance(vertexL,dirL,vertexDL,dirDL);
-		
-			  vertexL1520=tool.calcVertexAnalytical(vertexL,dirL,vertexDL,dirDL);
-
-			  ver_L1520Tg=tool.calcVertexAnalytical(base_Tg,dir_Tg,vertexL1520,dirL1520);
-		     	  
-			  double distLam1520Z=tool.calculateMinimumDistance(base_Tg, dir_Tg,vertexL1520,dirL1520);
-			 
-
-			  hZvertLam1520FT->Fill(vertexL1520.Z());
-			  hZvertLam1520TgFT->Fill(ver_L1520Tg.Z());
-			  hdistTgLam1520FT->Fill(distLam1520Z);
-			  
-			  //}
-			  //if(invMdilLam>1400 && invMdilLam<1700)hDLmassDistOALcut->Fill(invMepem);	    
 			}
-		      }//oa
-			    	      
-		    }//em
+
+
+
 			    
-		  }//ep
+		      }
+		      /*		  
+					  if (ep.size() || em.size()){
+					  for (int s=0;s<ep.size();s++){
+					  for (int ss=0;ss<ep.size();ss++){
+
+					  TLorentzVector lvDiLepton=*ep[s]+*ep[ss];
+
+					  hinvMass_epep->Fill(lvDiLepton.M(),ww);
+	      
+					  }
+					  }
+	  
+					  for (int s=0;s<em.size();s++){
+					  for (int ss=0;ss<em.size();ss++){
+
+					  TLorentzVector lvDiLepton=*em[s]+*em[ss];
+
+					  hinvMass_emem->Fill(lvDiLepton.M(),ww);
+	      
+	      
+					  }
+					  }
+					  }
+		      */
+
+
+		    }
+
+		    //h2L1520vertex->Fill(vertexL1520.Z(),TMath::Sqrt(vertexL1520.X()*vertexL1520.X()+vertexL1520.Y()*vertexL1520.Y()));
+			  
+		    TLorentzVector lvLam1520=lvLambda+lvDiLepton;
+		    //HParticleCandSim *tr;
+		    HGeomVector base_Tg, dir_Tg, ver_L1520Tg, baseL1520, vertexL1520;
+		    HParticleTool p_tool, tool,tool1;
+
+
+		    //tr=ep[s]+em[ss]+pimH[j]+pH[k];
+
+		    double distance_1520=tool1.calculateMinimumDistance(vertexL,dirL,vertexDL,dirDL);
+		
+		    vertexL1520=tool.calcVertexAnalytical(vertexL,dirL,vertexDL,dirDL);
+		    //dirL1520.setXYZ((*ep[s]+*em[ss]+*pimH[j]+*pH[k]).X(),(*ep[s]+*em[ss]+*pimH[j]+*pH[k]).Y(),(*ep[s]+*em[ss]+*pimH[j]+*pH[k]).Z());
+		
+		    //dirL1520.setXYZ(lvLam1520.X(),lvLam1520.Y(),lvLam1520.Z());
+		    //p_tool.calcSegVector(tr->getZ(),tr->getR(),TMath::DegToRad()*tr->getPhi(),TMath::DegToRad()*tr->getTheta(),baseL1520,dirL1520_1);
+			  	  
+		    //ver_L1520Tg = p_tool.calcVertexAnalytical(base_Tg,dir_Tg,baseL1520,dirL1520);
+
+		    ver_L1520Tg=tool.calcVertexAnalytical(base_Tg,dir_Tg,vertexL1520,dirL1520);
+		     
+		    //if(vertexL1520.Z()>0){
+		    //cout<<"----------------->FT>>1 "<<s<<" "<<ss<<" "<<vertexL1520.Z()<<endl;
+		    //cout<<"----------------->>2 "<<s<<" "<<ss<<" "<<ver_L1520Tg.Z()<<endl;
+			  		  
+		    double distLam1520Z=tool.calculateMinimumDistance(base_Tg, dir_Tg,vertexL1520,dirL1520);
+		    //cout<<"distLam1520Z: "<<distLam1520Z<<endl;
+
+		    hZvertLam1520FT->Fill(vertexL1520.Z());
+		    hZvertLam1520TgFT->Fill(ver_L1520Tg.Z());
+		    hdistTgLam1520FT->Fill(distLam1520Z);
+			  
+		    //}
+		    //if(invMdilLam>1400 && invMdilLam<1700)hDLmassDistOALcut->Fill(invMepem);	    
+		  }
+		}//oa
+			    	      
+	      }//em
+			    
+	    }//ep
 			  
 			  
 
-		}
+	  }
 	   	    
 	    
-	    }
 	}
+      }
+	
+      /*
+	if (ep.size() || em.size()){
+	for (int s=0;s<ep.size();s++){
+	for (int ss=0;ss<ep.size();ss++){
+
+	TLorentzVector lvDiLepton=*ep[s]+*ep[ss];
+
+	hinvMass_epep->Fill(lvDiLepton.M(),ww);
+	      
+	}
+	}
+	  
+	for (int s=0;s<em.size();s++){
+	for (int ss=0;ss<em.size();ss++){
+
+	TLorentzVector lvDiLepton=*em[s]+*em[ss];
+
+	hinvMass_emem->Fill(lvDiLepton.M(),ww);
+	      
+	      
+	}
+	}
+	}
+      */
+		
+    	
+
 
       //**************************************************************
       //kine analysis*****************************************
@@ -1830,6 +2114,24 @@ Int_t fwdet_tests(HLoop * loop, const AnaParameters & anapars)
 	      h2Elepton4Pi->Fill(kine->getPhiDeg(),kine->getThetaDeg());
 		
 	    }
+	  /*
+	    int fld=0;
+	    if(mech==0 && kineID==2)
+	    {
+		
+	    hEleptons4Pi->Fill(kine->getThetaDeg());
+	    h2Elepton4Pi->Fill(kine->getPhiDeg(),kine->getThetaDeg());
+	    //fld=1;
+	    }
+	    
+	    if(mech==0 && kineID==3)
+	    {
+
+	    //if(fld)
+	    h2Elepton4Pi->Fill(kine->getPhiDeg(),kine->getThetaDeg());
+	    
+	    }
+	  */
 	  if(kineID==14 && kineparentID==18)//proton from lambda
 	    {
 	      //h2IIprotons->Fill(kine->getTotalMomentum(),kine->getThetaDeg());
@@ -1935,8 +2237,11 @@ Int_t fwdet_tests(HLoop * loop, const AnaParameters & anapars)
   hDLmassDistL->Write();
   hDLmassFTDistL->Write();
   hL1520massDistL->Write();
-  hL1520massFTDistL->Write();
+  hL1520massDistLpi0->Write();
 
+  hL1520massFTDistL->Write();
+  hL1520massFTDistLpi0->Write();
+    
   hDLmassDistLRL->Write();
   hDLmassFTDistLRL->Write();
   hL1520massDistLRL->Write();
@@ -1964,7 +2269,7 @@ Int_t fwdet_tests(HLoop * loop, const AnaParameters & anapars)
 
 
   hL1520massDistZLpi0->Write();
-  hL1520massFTDistZLpi0->Write();
+  //hL1520massFTDistZLpi0->Write();
     
   hL1520massFinalpi0->Write();
   hL1520massFTFinalpi0->Write();
@@ -2058,6 +2363,9 @@ Int_t fwdet_tests(HLoop * loop, const AnaParameters & anapars)
   hL1520massFinalRLpi0_L->Write();
   hinvMass_epep_L->Write();
   hinvMass_emem_L->Write();
+
+  hDLmassDistZL_L->Write();
+  hDLmassDistL_L->Write();
   
   //**************************************************************************** 
  
@@ -2081,6 +2389,7 @@ Int_t fwdet_tests(HLoop * loop, const AnaParameters & anapars)
   hL1520massDistZRL_L_epep->Write();
   hDLmassDistL_epep->Write();
   hL1520massDistL_epep->Write();
+  hL1520massDistLpi0_epep->Write();
   hDLmassDistLRL_epep->Write();
   hL1520massDistLRL_epep->Write();
   hDLmassDistLRL_L_epep->Write();
@@ -2124,6 +2433,7 @@ Int_t fwdet_tests(HLoop * loop, const AnaParameters & anapars)
   hL1520massDistZRL_L_emem->Write();
   hDLmassDistL_emem->Write();
   hL1520massDistL_emem->Write();
+  hL1520massDistLpi0_emem->Write();
   hDLmassDistLRL_emem->Write();
   hL1520massDistLRL_emem->Write();
   hDLmassDistLRL_L_emem->Write();
@@ -2146,77 +2456,78 @@ Int_t fwdet_tests(HLoop * loop, const AnaParameters & anapars)
   hL1520massDistZLpi0_emem->Write();
   
   //********************************
-  cEff->Divide(4,3);
-  cEff->cd(1);
-  hEprotons4Pi->Draw();
-  hEprotonsdet->SetLineColor(kRed);
-  hEprotonsdet->Draw("SAME");
-  //cEff->cd(2);
-  //hEprotonsdet->Draw();
-  cEff->cd(2);
-  hEprotonsEff->Divide(hEprotonsdet,hEprotons4Pi);
-  hEprotonsEff->Draw();
-  //cEff->cd(4);
-  //h2EprotonEff->Divide(h2Eprotondet,h2Eproton4Pi);
-  //h2EprotonEff->Draw("COLZ");
-  cEff->cd(3);
-  //h2EprotonEff->Divide(h2Eprotondet,h2Eproton4Pi);
-  h2Eprotondet->Draw("COLZ");
-  cEff->cd(4);
-  //h2EprotonEff->Divide(h2Eprotondet,h2Eproton4Pi);
-  h2Eproton4Pi->Draw("COLZ");
+  /*
+    cEff->Divide(4,3);
+    cEff->cd(1);
+    hEprotons4Pi->Draw();
+    hEprotonsdet->SetLineColor(kRed);
+    hEprotonsdet->Draw("SAME");
+    //cEff->cd(2);
+    //hEprotonsdet->Draw();
+    cEff->cd(2);
+    hEprotonsEff->Divide(hEprotonsdet,hEprotons4Pi);
+    hEprotonsEff->Draw();
+    //cEff->cd(4);
+    //h2EprotonEff->Divide(h2Eprotondet,h2Eproton4Pi);
+    //h2EprotonEff->Draw("COLZ");
+    cEff->cd(3);
+    //h2EprotonEff->Divide(h2Eprotondet,h2Eproton4Pi);
+    h2Eprotondet->Draw("COLZ");
+    cEff->cd(4);
+    //h2EprotonEff->Divide(h2Eprotondet,h2Eproton4Pi);
+    h2Eproton4Pi->Draw("COLZ");
 
 
-  cEff->cd(5);
-  hEpions4Pi->Draw();
-  hEpionsdet->SetLineColor(kRed);
-  hEpionsdet->Draw("SAME");
-  cEff->cd(6);
-  //hEpionsdet->Draw();
-  hEpionsEff->Divide(hEpionsdet,hEpions4Pi);
-  hEpionsEff->Draw();
-  cEff->cd(7);
-  h2Epiondet->Draw("colz");
-  cEff->cd(8);
-  h2Epion4Pi->Draw("colz");
-  //h2EpionEff->Divide(h2Epiondet,h2Epion4Pi);
-  //h2EpionEff->Draw("COLZ");
+    cEff->cd(5);
+    hEpions4Pi->Draw();
+    hEpionsdet->SetLineColor(kRed);
+    hEpionsdet->Draw("SAME");
+    cEff->cd(6);
+    //hEpionsdet->Draw();
+    hEpionsEff->Divide(hEpionsdet,hEpions4Pi);
+    hEpionsEff->Draw();
+    cEff->cd(7);
+    h2Epiondet->Draw("colz");
+    cEff->cd(8);
+    h2Epion4Pi->Draw("colz");
+    //h2EpionEff->Divide(h2Epiondet,h2Epion4Pi);
+    //h2EpionEff->Draw("COLZ");
 
-  cEff->cd(9);
-  hEleptons4Pi->Draw();
-  hEleptonsdet->SetLineColor(kRed);
-  hEleptonsdet->Draw("SAME");
-  cEff->cd(10);
-  hEleptonsEff->Divide(hEleptonsdet,hEleptons4Pi);
-  hEleptonsEff->Draw();
-  cEff->cd(11);
-  h2Eleptondet->Draw("colz");
-  cEff->cd(12);
-  h2Elepton4Pi->Draw("colz");
+    cEff->cd(9);
+    hEleptons4Pi->Draw();
+    hEleptonsdet->SetLineColor(kRed);
+    hEleptonsdet->Draw("SAME");
+    cEff->cd(10);
+    hEleptonsEff->Divide(hEleptonsdet,hEleptons4Pi);
+    hEleptonsEff->Draw();
+    cEff->cd(11);
+    h2Eleptondet->Draw("colz");
+    cEff->cd(12);
+    h2Elepton4Pi->Draw("colz");
 
-  cEff->Write();
-    
+    cEff->Write();
+  */
   //*****************************
+  /*
+    cEffFromLambda->Divide(3,2);
+    cEffFromLambda->cd(1);
+    hEFLprotons4Pi->Draw();
+    cEffFromLambda->cd(2);
+    hEFLprotonsdet->Draw();
+    cEffFromLambda->cd(3);
+    hEFLprotonsEff->Divide(hEFLprotonsdet,hEFLprotons4Pi);
+    hEFLprotonsEff->Draw();
 
-  cEffFromLambda->Divide(3,2);
-  cEffFromLambda->cd(1);
-  hEFLprotons4Pi->Draw();
-  cEffFromLambda->cd(2);
-  hEFLprotonsdet->Draw();
-  cEffFromLambda->cd(3);
-  hEFLprotonsEff->Divide(hEFLprotonsdet,hEFLprotons4Pi);
-  hEFLprotonsEff->Draw();
+    cEffFromLambda->cd(4);
+    hEFLpions4Pi->Draw();
+    cEffFromLambda->cd(5);
+    hEFLpionsdet->Draw();
+    cEffFromLambda->cd(6);
+    hEFLpionsEff->Divide(hEFLpionsdet,hEFLpions4Pi);
+    hEFLpionsEff->Draw();
 
-  cEffFromLambda->cd(4);
-  hEFLpions4Pi->Draw();
-  cEffFromLambda->cd(5);
-  hEFLpionsdet->Draw();
-  cEffFromLambda->cd(6);
-  hEFLpionsEff->Divide(hEFLpionsdet,hEFLpions4Pi);
-  hEFLpionsEff->Draw();
-
-  cEffFromLambda->Write();
-    
+    cEffFromLambda->Write();
+  */
 
   //hinvMepemHH->Write();
   //hinvMepemFT->Write();
