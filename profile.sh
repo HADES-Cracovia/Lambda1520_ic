@@ -17,6 +17,6 @@ export MYHADDIR=/lustre/nyx/hades/user/${USER}/hades/pp45/install
 
 INSTALL_DIR=/lustre/nyx/hades/user/rlalik/hades/install/5.34.34
 export PATH=${INSTALL_DIR}/bin:${MYHADDIR}/bin:${PATH}
-#export LD_LIBRARY_PATH=${INSTALL_DIR}/lib:${MYHADDIR}/lib:${PLUTODIR}:${HADDIR}/lib:${LD_LIBRARY_PATH}
+export LD_LIBRARY_PATH=${INSTALL_DIR}/lib:${MYHADDIR}/lib:${PLUTODIR}:${HADDIR}/lib:${LD_LIBRARY_PATH}
 export LD_LIBRARY_PATH=${INSTALL_DIR}/lib:${MYHADDIR}/lib:${HADDIR}/lib:${LD_LIBRARY_PATH}
 export LD_LIBRARY_PATH=/cvmfs/it.gsi.de/oracle/product/12.1.2/client_x86_64_1/lib/:${LD_LIBRARY_PATH}
