@@ -32,11 +32,11 @@ Int_t   nentries;
 
 
 //--------------------------------------------------------------------
-
+/*
 Int_t fwdet_tests(HLoop * loop, const AnaParameters & anapars)
 {
 	    
-
+  cout<<"beginning of the program"<<endl;
   if (!loop->setInput(""))
     {                                                    // reading file structure
       std::cerr << "READBACK: ERROR : cannot read input !" << std::endl;
@@ -44,6 +44,7 @@ Int_t fwdet_tests(HLoop * loop, const AnaParameters & anapars)
     }
   gStyle->SetOptStat(1);
   gStyle->SetOptFit(1);
+  cout <<"1"<<endl;
 
   TStopwatch timer;
   timer.Reset();
@@ -53,7 +54,7 @@ Int_t fwdet_tests(HLoop * loop, const AnaParameters & anapars)
 
   loop->printCategories(); 
 
-
+*/
 
   HCategory * fCatGeantKine = nullptr;
   fCatGeantKine = HCategoryManager::getCategory(catGeantKine, kTRUE, "catGeantKine");
