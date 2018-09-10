@@ -2,7 +2,8 @@
 
 date
 
-. /lustre/nyx/hades/user/rlalik/hades/pp45/profile.sh
+#. /lustre/nyx/hades/user/rlalik/hades/pp45/profile.sh
+. /lustre/nyx/hades/user/knowakow/HYPERON/Lambda1520/Lambda1520_ic/profile.sh
 
 echo file=$pattern
 echo events=$events

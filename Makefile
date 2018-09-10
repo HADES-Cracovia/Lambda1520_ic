@@ -5,7 +5,7 @@ INSTALL_DIR   := .
 
 USES_RFIO     := no
 USES_ORACLE   := yes
-USES_GFORTRAN := yes
+USES_GFORTRAN := no
 HOME:=/u/knowakow
 
 
