@@ -117,17 +117,45 @@ bool isLepton(HParticleCand* particle)
 	return false;
       if(particle->getBeta()<(1-delta) || particle->getBeta()>(1+delta))
 	return false;
-      // if(dtheta<-0.4 || dtheta>0.4)
-      // return false;
-      // if(dphi*TMath::Sin(particle->getTheta())>0.4 || dphi*TMath::Sin(particle->getTheta())<-0.4)
-      // return false;
+      //if(dtheta<-0.4 || dtheta>0.4)
+      //return false;
+      //if(dphi*TMath::Sin(particle->getTheta())>0.4 || dphi*TMath::Sin(particle->getTheta())<-0.4)
+      //return false;
+      return true;
     }
   else
     return false;
-     
-  return true;
 }
 
+bool isProton(HParticleCand* particle)
+{
+  double mom=particle->getMomentum();
+  //double tof=particle->getTof();
+  double beta=particle->getBeta();
+  double mass=TMath::Sqrt(mom*mom * (  1. / (beta*beta)  - 1. ));
+
+  if(! particle->isFlagBit(kIsUsed))
+    return false; 
+  
+  if(mass < 1127 && mass > 650)
+    return true;
+  return false;
+}
+
+bool isPion(HParticleCand* particle)
+{
+  double mom=particle->getMomentum();
+  //double tof=particle->getTof();
+  double beta=particle->getBeta();
+  double mass=TMath::Sqrt(mom*mom * (  1. / (beta*beta)  - 1. ));
+
+  if(! particle->isFlagBit(kIsUsed))
+    return false;
+  
+  if(mass < 240 && mass > 40)
+    return true;
+  return false;
+}
 //#include "CreateHistos.cxx"
 //#include "WriteHistos.cxx"
 
@@ -729,38 +757,45 @@ Int_t fwdet_tests(HLoop * loop, const AnaParameters & anapars)
 	  nerbyUnFit=fabs(partH->getAngleToNearbyUnfittedInner()); 
 
 	  //cout<<"---> "<<nerbyFit<<" "<<nerbyUnFit<<endl;
-	  if(partH->getRichMatchingQuality()!=-1 && partH->isFlagBit(kIsUsed) && nerbyFit>4.  && nerbyUnFit>4. ){
-	    //if(partH->getRichMatchingQuality()!=-1 && partH->isFlagBit(kIsUsed)){
-	    //if(partH->getRichMatchingQuality()!=-1 && partH->isFlagBit(kIsUsed) && nerbyFit>2.  && nerbyUnFit>2. ){
-	    int flagdil=0;
+	  if(partH->getRichMatchingQuality()!=-1 && partH->isFlagBit(kIsUsed) && nerbyFit>4.  && nerbyUnFit>4. )
+	    {
+	      //if(partH->getRichMatchingQuality()!=-1 && partH->isFlagBit(kIsUsed)){
+	      //if(partH->getRichMatchingQuality()!=-1 && partH->isFlagBit(kIsUsed) && nerbyFit>2.  && nerbyUnFit>2. ){
+	      int flagdil=0;
 	   
-	    if(partH->getGeantPID()==2) //e+
-	      {
-		partH->calc4vectorProperties(HPhysicsConstants::mass(2));
-		ep.push_back(partH);  
-		hEleptonsdet->Fill(partH->getTheta());
-		h2Eleptondet->Fill(partH->getPhi(),partH->getTheta());
-		//flagdil=1;
-		//h2IIleptonsInAcceptance->Fill(partH->getMomentum(),partH->getTheta());
-		//cout<<"e+ "<<evnb<<" "<<partH->getGeantParentPID()<<" "<<partH->getGeantParentTrackNum()<<" "<<partH->getGeantGrandParentPID()<<endl;
-		//dobre pary: 0,-1
-	      }
+	      if(//partH->getGeantPID()==2
+		 isLepton(partH) && partH->getCharge()==1
+		 ) //e+
+		{
+		  partH->calc4vectorProperties(HPhysicsConstants::mass(2));
+		  ep.push_back(partH);  
+		  hEleptonsdet->Fill(partH->getTheta());
+		  h2Eleptondet->Fill(partH->getPhi(),partH->getTheta());
+		  //flagdil=1;
+		  //h2IIleptonsInAcceptance->Fill(partH->getMomentum(),partH->getTheta());
+		  //cout<<"e+ "<<evnb<<" "<<partH->getGeantParentPID()<<" "<<partH->getGeantParentTrackNum()<<" "<<partH->getGeantGrandParentPID()<<endl;
+		  //dobre pary: 0,-1
+		}
 	   		  
-	    if(partH->getGeantPID()==3) //e-
-	      {
-		partH->calc4vectorProperties(HPhysicsConstants::mass(3));
-		em.push_back(partH);  
-		hEleptonsdet->Fill(partH->getTheta());
-		//if(flagdil)
-		h2Eleptondet->Fill(partH->getPhi(),partH->getTheta());
+	      if(//partH->getGeantPID()==3
+		 isLepton(partH) && partH->getCharge()==-1
+		 ) //e-
+		{
+		  partH->calc4vectorProperties(HPhysicsConstants::mass(3));
+		  em.push_back(partH);  
+		  hEleptonsdet->Fill(partH->getTheta());
+		  //if(flagdil)
+		  h2Eleptondet->Fill(partH->getPhi(),partH->getTheta());
 		
-		//cout<<"e- "<<evnb<<" "<<partH->getGeantParentPID()<<" "<<partH->getGeantParentTrackNum()<<" "<<partH->getGeantGrandParentPID()<<endl;
+		  //cout<<"e- "<<evnb<<" "<<partH->getGeantParentPID()<<" "<<partH->getGeantParentTrackNum()<<" "<<partH->getGeantGrandParentPID()<<endl;
 	   
 
-	      }
-	  }
+		}
+	    }
 	  
-	  if(partH->getGeantPID()==9 && partH->isFlagBit(kIsUsed))// proton->getChi2()<10)
+	  if(//partH->getGeantPID()==9 && partH->isFlagBit(kIsUsed)
+	     isPion(partH) && partH->getCharge()==-1
+	     )// proton->getChi2()<10)
 	    {  
 	      partH->calc4vectorProperties(HPhysicsConstants::mass(9));
 	      pimH.push_back(partH);  
@@ -772,7 +807,9 @@ Int_t fwdet_tests(HLoop * loop, const AnaParameters & anapars)
 	   	      
 	    }
 
-	  if(partH->getGeantPID()==14 && partH->isFlagBit(kIsUsed))// proton->getChi2()<10)
+	  if(//partH->getGeantPID()==14 && partH->isFlagBit(kIsUsed)
+	     isProton(partH) && partH ->getCharge()==1
+	     )// proton->getChi2()<10)
 	    {
 	   
 	      partH->calc4vectorProperties(HPhysicsConstants::mass(14));
