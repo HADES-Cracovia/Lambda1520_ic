@@ -25,7 +25,15 @@
 using namespace std;
 
 Int_t   nentries;
+//global histogram repository*****************
+TH2F *proton_identyf_real=new TH2F("proton_identyf_real","proton_identyf_real:p[MeV]:#beta",1000,0,3000,1000,0,1.2);
+  TH2F *proton_identyf_ideal=new TH2F("proton_identyf_ideal","proton_identyf_ideal:p[MeV]:#beta",1000,0,3000,1000,0,1.2);
+  TH2F *pion_identyf_real=new TH2F("pion_identyf_real","pion_identyf_real:p[MeV]:#beta",1000,0,2000,1000,0,1.2);
+  TH2F *pion_identyf_ideal=new TH2F("pion_identyf_ideal","pion_identyf_ideal:p[MeV]:#beta",1000,0,2000,1000,0,1.2);
+  TH2F *lepton_identyf_real=new TH2F("lepton_identyf_real","lepton_identyf_real:p[MeV]:#beta",1000,0,2000,1000,0,1.2);
+  TH2F *lepton_identyf_ideal=new TH2F("lepton_identyf_ideal","lepton_identyf_ideal:p[MeV]:#beta",1000,0,2000,1000,0,1.2);
 
+//********************************************
 
 double trackDistance(HParticleCand* track1, HParticleCand*  track2)
 {
@@ -102,18 +110,21 @@ Int_t getMotherIndex(HGeantKine* particle)
 }
 
 
-bool isLepton(HParticleCand* particle)
+bool isLepton(HParticleCandSim* particle)
 {
-  double delta=0.05;
+  double delta=0.1;
   double mquality=particle->getRichMatchingQuality();
 
   double dphi=particle->getDeltaPhi();
   double dtheta=particle->getDeltaTheta();
-      
-          
+
+  if(particle->isFlagBit(kIsUsed))
+    if(particle->getGeantPID()==2 || particle->getGeantPID()==3)
+      lepton_identyf_ideal->Fill(particle->getMomentum(),particle->getBeta());
+  
   if(particle->isFlagBit(kIsUsed))
     {
-      if(mquality==-1 || mquality>5)
+      if(mquality==-1 /*|| mquality>5*/)
 	return false;
       if(particle->getBeta()<(1-delta) || particle->getBeta()>(1+delta))
 	return false;
@@ -121,28 +132,38 @@ bool isLepton(HParticleCand* particle)
       //return false;
       //if(dphi*TMath::Sin(particle->getTheta())>0.4 || dphi*TMath::Sin(particle->getTheta())<-0.4)
       //return false;
-      return true;
+      lepton_identyf_real->Fill(particle->getMomentum(),particle->getBeta());
+	return true;
     }
   else
     return false;
 }
 
-bool isProton(HParticleCand* particle)
+bool isProton(HParticleCandSim* particle)
 {
   double mom=particle->getMomentum();
   //double tof=particle->getTof();
   double beta=particle->getBeta();
   double mass=TMath::Sqrt(mom*mom * (  1. / (beta*beta)  - 1. ));
 
-  if(! particle->isFlagBit(kIsUsed))
+  if(particle->isFlagBit(kIsUsed))
+    {
+      if(particle->getGeantPID()==14)
+	proton_identyf_ideal->Fill(particle->getMomentum(),particle->getBeta());
+    }
+  else
     return false; 
   
   if(mass < 1127 && mass > 650)
-    return true;
+    {
+      proton_identyf_real->Fill(particle->getMomentum(),particle->getBeta());
+      return true;
+    }
+  
   return false;
 }
 
-bool isPion(HParticleCand* particle)
+bool isPion(HParticleCandSim* particle)
 {
   double mom=particle->getMomentum();
   //double tof=particle->getTof();
@@ -151,9 +172,15 @@ bool isPion(HParticleCand* particle)
 
   if(! particle->isFlagBit(kIsUsed))
     return false;
+
+  if(particle->getGeantPID()==8 || particle->getGeantPID()==9)
+    pion_identyf_ideal->Fill(particle->getMomentum(),particle->getBeta());
   
   if(mass < 240 && mass > 40)
-    return true;
+    {
+      pion_identyf_real->Fill(particle->getMomentum(),particle->getBeta());
+      return true;
+    }
   return false;
 }
 //#include "CreateHistos.cxx"
@@ -614,6 +641,13 @@ Int_t fwdet_tests(HLoop * loop, const AnaParameters & anapars)
   TH1F* hEFLpionsdet=new TH1F("hEFLprotonsdet","prot_registered; theta",180,0,180);
   TH1F* hEFLpionsEff=new TH1F("hEFLprotonsEff","prot_effi; theta;efficiency",180,0,180);
      
+  TH2F *proton_identyf_real=new TH2F("proton_identyf_real","proton_identyf_real:p[MeV]:#beta",1000,0,3000,1000,0,1.2);
+  TH2F *proton_identyf_ideal=new TH2F("proton_identyf_ideal","proton_identyf_ideal:p[MeV]:#beta",1000,0,3000,1000,0,1.2);
+  TH2F *pion_identyf_real=new TH2F("pion_identyf_real","pion_identyf_real:p[MeV]:#beta",1000,0,2000,1000,0,1.2);
+  TH2F *pion_identyf_ideal=new TH2F("pion_identyf_ideal","pion_identyf_ideal:p[MeV]:#beta",1000,0,2000,1000,0,1.2);
+  TH2F *lepton_identyf_real=new TH2F("lepton_identyf_real","lepton_identyf_real:p[MeV]:#beta",1000,0,2000,1000,0,1.2);
+  TH2F *lepton_identyf_ideal=new TH2F("lepton_identyf_ideal","lepton_identyf_ideal:p[MeV]:#beta",1000,0,2000,1000,0,1.2);
+
   //TH1F* hinvMepemFT =new TH1F("hinvMepemFT","hinvMepemFT",1000,0,700);
   //TH1F* hinvMepemHH =new TH1F("hinvMepemHH","hinvMepemHH",1000,0,700);
      
@@ -2318,7 +2352,30 @@ Int_t fwdet_tests(HLoop * loop, const AnaParameters & anapars)
   hL1520massFinalRLpi0_L_emem->Write();
   hL1520massFinalpi0_emem->Write();
   hL1520massDistZLpi0_emem->Write();
-  
+
+  proton_identyf_ideal->Write();
+  proton_identyf_real->Write();
+  pion_identyf_ideal->Write();
+  pion_identyf_real->Write();
+  lepton_identyf_ideal->Write();
+  lepton_identyf_real->Write();
+
+  TCanvas* c_identyf=new TCanvas("c_identyf","c_identyf");
+  c_identyf->Divide(2,3);
+  c_identyf->cd(1);
+  proton_identyf_ideal->Draw();
+  c_identyf->cd(2);
+  proton_identyf_real->Draw();
+  c_identyf->cd(3);
+  pion_identyf_ideal->Draw();
+  c_identyf->cd(4);
+  pion_identyf_real->Draw();
+  c_identyf->cd(5);
+  lepton_identyf_real->Draw();
+  c_identyf->cd(6);
+  lepton_identyf_ideal->Draw();
+
+  c_identyf->Write();
   //********************************
   /*
     cEff->Divide(4,3);
