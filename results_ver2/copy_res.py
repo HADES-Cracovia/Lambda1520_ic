@@ -1,7 +1,7 @@
 
 
 directory="../output_ver2/" #oryginal data directory
-fname="./file48_list.dat" #file with list of expected files
+fname="../files_list_k.dat" #file with list of expected files
 import subprocess
 print("Copy and hadd files from \"results_ver2\" directory")
 import time
