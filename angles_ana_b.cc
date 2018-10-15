@@ -119,7 +119,7 @@ bool isLepton(HParticleCandSim* particle)
   return true;
 }
 
-bool isLepton(HParticleCandSim* particle, TH2F* h1, TH2F* hphi1, TH2F* htheta1, TH2F* h2, TH2F* hphi2, TH2F* htheta2)
+bool isLepton(HParticleCandSim* particle, TH2F* h1,/* TH2F* hphi1, TH2F* htheta1,*/ TH2F* h2/*, TH2F* hphi2, TH2F* htheta2*/)
 {
   double delta=0.1;
   double mquality=particle->getRichMatchingQuality();
@@ -135,14 +135,14 @@ bool isLepton(HParticleCandSim* particle, TH2F* h1, TH2F* hphi1, TH2F* htheta1, 
   if(particle->getGeantPID()==2 || particle->getGeantPID()==3)
     {
     h1->Fill(mom,particle->getBeta());
-    htheta1->Fill(dtheta,mom);
-    hphi1->Fill(dphi,mom);
+    //htheta1->Fill(dtheta,mom);
+    // hphi1->Fill(dphi,mom);
     }
   if(isLepton(particle))
     {
       h2->Fill(mom,particle->getBeta());
-      htheta2->Fill(dtheta,mom);
-      hphi2->Fill(dphi,mom);
+      //htheta2->Fill(dtheta,mom);
+      //hphi2->Fill(dphi,mom);
       return true;
     }
   else
@@ -817,7 +817,7 @@ Int_t fwdet_tests(HLoop * loop, const AnaParameters & anapars)
 	      int flagdil=0;
 	   
 	      if(//partH->getGeantPID()==2
-		 isLepton(partH,lepton_identyf_ideal,lepton_identyf_ideal_dphi,lepton_identyf_ideal_dtheta,lepton_identyf_real,lepton_identyf_real_dphi,lepton_identyf_real_dtheta)
+		 isLepton(partH,lepton_identyf_ideal,/*lepton_identyf_ideal_dphi,lepton_identyf_ideal_dtheta,*/lepton_identyf_real/*,lepton_identyf_real_dphi,lepton_identyf_real_dtheta*/)
 		 && partH->getCharge()==1
 		 ) //e+
 		{
@@ -832,7 +832,7 @@ Int_t fwdet_tests(HLoop * loop, const AnaParameters & anapars)
 		}
 	   		  
 	      if(//partH->getGeantPID()==3
-		 isLepton(partH,lepton_identyf_ideal,lepton_identyf_ideal_dphi,lepton_identyf_ideal_dtheta,lepton_identyf_real,lepton_identyf_real_dphi,lepton_identyf_real_dtheta)
+		 isLepton(partH,lepton_identyf_ideal/*,lepton_identyf_ideal_dphi,lepton_identyf_ideal_dtheta*/,lepton_identyf_real/*,lepton_identyf_real_dphi,lepton_identyf_real_dtheta*/)
 		 && partH->getCharge()==-1
 		 ) //e-
 		{
