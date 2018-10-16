@@ -19,12 +19,16 @@
 #include <sstream>
 #include <TGraph.h>
 #include <TGraphErrors.h>
+#include <cassert>
 
 #define PR(x) std::cout << "++DEBUG: " << #x << " = |" << x << "| (" << __FILE__ << ", " << __LINE__ << ")\n";
 
+
 using namespace std;
 
-Int_t   nentries;
+Int_t  nentries;
+TCutG* leptonCut;
+TFile* file;
 
 double trackDistance(HParticleCand* track1, HParticleCand*  track2)
 {
@@ -110,7 +114,9 @@ bool isLepton(HParticleCandSim* particle)
 
   if(mquality==-1 /*|| mquality>5*/)
     return false;
-  if(particle->getBeta()<(1-delta) || particle->getBeta()>(1+delta))
+  //if(particle->getBeta()<(1-delta) || particle->getBeta()>(1+delta))
+  //return false;
+  if(!(leptonCut->IsInside(particle->getMomentum(),particle->getBeta())))
     return false;
   //if(dtheta<-0.4 || dtheta>0.4)
   //return false;
@@ -119,7 +125,7 @@ bool isLepton(HParticleCandSim* particle)
   return true;
 }
 
-bool isLepton(HParticleCandSim* particle, TH2F* h1,/* TH2F* hphi1, TH2F* htheta1,*/ TH2F* h2/*, TH2F* hphi2, TH2F* htheta2*/)
+bool isLepton(HParticleCandSim* particle, TH2F* h1, TH2F* hphi1, TH2F* htheta1, TH2F* h2, TH2F* hphi2, TH2F* htheta2)
 {
   double delta=0.1;
   double mquality=particle->getRichMatchingQuality();
@@ -134,15 +140,15 @@ bool isLepton(HParticleCandSim* particle, TH2F* h1,/* TH2F* hphi1, TH2F* htheta1
   
   if(particle->getGeantPID()==2 || particle->getGeantPID()==3)
     {
-    h1->Fill(mom,particle->getBeta());
-    //htheta1->Fill(dtheta,mom);
-    // hphi1->Fill(dphi,mom);
+      h1->Fill(mom,particle->getBeta());
+      htheta1->Fill(dtheta,mom);
+      hphi1->Fill(dphi,mom);
     }
   if(isLepton(particle))
     {
       h2->Fill(mom,particle->getBeta());
-      //htheta2->Fill(dtheta,mom);
-      //hphi2->Fill(dphi,mom);
+      htheta2->Fill(dtheta,mom);
+      hphi2->Fill(dphi,mom);
       return true;
     }
   else
@@ -162,7 +168,7 @@ bool isProton(HParticleCandSim* particle, TH2F* h1, TH2F* h2)
   if(particle->getGeantPID()==14)
     h1->Fill(particle->getMomentum(),particle->getBeta());
     
-    if(mass < 1127 && mass > 650 && !isLepton(particle))
+  if(mass < 1127 && mass > 650 && !isLepton(particle))
     {
       h2->Fill(particle->getMomentum(),particle->getBeta());
       return true;
@@ -182,7 +188,7 @@ bool isPion(HParticleCandSim* particle, TH2F* h1, TH2F* h2)
     return false;
   
   if(particle->getGeantPID()==8 || particle->getGeantPID()==9)
-      h1->Fill(particle->getMomentum(),particle->getBeta());
+    h1->Fill(particle->getMomentum(),particle->getBeta());
   
   if(isLepton(particle))
     return false;
@@ -203,8 +209,6 @@ bool isPion(HParticleCandSim* particle, TH2F* h1, TH2F* h2)
 
 Int_t fwdet_tests(HLoop * loop, const AnaParameters & anapars)
 {
-	    
-
   if (!loop->setInput(""))
     {                                                    // reading file structure
       std::cerr << "READBACK: ERROR : cannot read input !" << std::endl;
@@ -221,7 +225,11 @@ Int_t fwdet_tests(HLoop * loop, const AnaParameters & anapars)
 
   loop->printCategories(); 
 
-
+  file= new TFile("lepton_graph_cut.root");
+  assert(file);
+  leptonCut=(TCutG*)file->Get("CUTG");
+  assert(leptonCut);
+  file->Close();
 
   HCategory * fCatGeantKine = nullptr;
   fCatGeantKine = HCategoryManager::getCategory(catGeantKine, kTRUE, "catGeantKine");
@@ -659,13 +667,13 @@ Int_t fwdet_tests(HLoop * loop, const AnaParameters & anapars)
   TH2F *lepton_identyf_real=new TH2F("lepton_identyf_real","lepton_identyf_real;p[MeV];#beta",1000,0,2000,1000,0,1.2);
   TH2F *lepton_identyf_ideal=new TH2F("lepton_identyf_ideal","lepton_identyf_ideal;p[MeV];#beta",1000,0,2000,1000,0,1.2);
 
-  TH2F *lepton_identyf_real_dphi=new TH2F("lepton_identyf_real_dphi","lepton_identyf_real_dphi;dphi;p[MeV]",200,1,-1,1000,0,2000);
-  TH2F *lepton_identyf_ideal_dphi=new TH2F("lepton_identyf_ideal_dphi","lepton_identyf_ideal_dphi;dphi;p[MeV]",200,1,-1,1000,0,2000);
-  TH2F *lepton_identyf_real_dtheta=new TH2F("lepton_identyf_real_dtheta","lepton_identyf_real_dtheta;dtheta;p[MeV]",200,1,-1,1000,0,2000);
-  TH2F *lepton_identyf_ideal_dtheta=new TH2F("lepton_identyf_ideal_dtheta","lepton_identyf_ideal_dtheta;dtheta;p[MeV]",200,1,-1,1000,0,2000);
+  TH2F *lepton_identyf_real_dphi=new TH2F("lepton_identyf_real_dphi","lepton_identyf_real_dphi;dphi;p[MeV]",200,-10,10,1000,0,2000);
+  TH2F *lepton_identyf_ideal_dphi=new TH2F("lepton_identyf_ideal_dphi","lepton_identyf_ideal_dphi;dphi;p[MeV]",200,-10,10,1000,0,2000);
+  TH2F *lepton_identyf_real_dtheta=new TH2F("lepton_identyf_real_dtheta","lepton_identyf_real_dtheta;dtheta;p[MeV]",200,-10,10,1000,0,2000);
+  TH2F *lepton_identyf_ideal_dtheta=new TH2F("lepton_identyf_ideal_dtheta","lepton_identyf_ideal_dtheta;dtheta;p[MeV]",200,-10,10,1000,0,2000);
 
   
- //********************************************
+  //********************************************
 
   //TH1F* hinvMepemFT =new TH1F("hinvMepemFT","hinvMepemFT",1000,0,700);
   //TH1F* hinvMepemHH =new TH1F("hinvMepemHH","hinvMepemHH",1000,0,700);
@@ -817,7 +825,7 @@ Int_t fwdet_tests(HLoop * loop, const AnaParameters & anapars)
 	      int flagdil=0;
 	   
 	      if(//partH->getGeantPID()==2
-		 isLepton(partH,lepton_identyf_ideal,/*lepton_identyf_ideal_dphi,lepton_identyf_ideal_dtheta,*/lepton_identyf_real/*,lepton_identyf_real_dphi,lepton_identyf_real_dtheta*/)
+		 isLepton(partH,lepton_identyf_ideal,lepton_identyf_ideal_dphi,lepton_identyf_ideal_dtheta,lepton_identyf_real,lepton_identyf_real_dphi,lepton_identyf_real_dtheta)
 		 && partH->getCharge()==1
 		 ) //e+
 		{
@@ -832,7 +840,7 @@ Int_t fwdet_tests(HLoop * loop, const AnaParameters & anapars)
 		}
 	   		  
 	      if(//partH->getGeantPID()==3
-		 isLepton(partH,lepton_identyf_ideal/*,lepton_identyf_ideal_dphi,lepton_identyf_ideal_dtheta*/,lepton_identyf_real/*,lepton_identyf_real_dphi,lepton_identyf_real_dtheta*/)
+		 isLepton(partH,lepton_identyf_ideal,lepton_identyf_ideal_dphi,lepton_identyf_ideal_dtheta,lepton_identyf_real,lepton_identyf_real_dphi,lepton_identyf_real_dtheta)
 		 && partH->getCharge()==-1
 		 ) //e-
 		{
@@ -2382,25 +2390,25 @@ Int_t fwdet_tests(HLoop * loop, const AnaParameters & anapars)
   lepton_identyf_real_dphi->Write();
   lepton_identyf_ideal_dtheta->Write();
   lepton_identyf_real_dtheta->Write();
- /*
-  TCanvas* c_identyf=new TCanvas("c_identyf","c_identyf");
-  c_identyf->Divide(2,3);
-  c_identyf->cd(1);
-  proton_identyf_ideal->Draw();
-  c_identyf->cd(2);
-  proton_identyf_real->Draw();
-  c_identyf->cd(3);
-  pion_identyf_ideal->Draw();
-  c_identyf->cd(4);
-  pion_identyf_real->Draw();
-  c_identyf->cd(5);
-  lepton_identyf_real->Draw();
-  c_identyf->cd(6);
-  lepton_identyf_ideal->Draw();
-
-  c_identyf->Write();
-  //********************************
   /*
+    TCanvas* c_identyf=new TCanvas("c_identyf","c_identyf");
+    c_identyf->Divide(2,3);
+    c_identyf->cd(1);
+    proton_identyf_ideal->Draw();
+    c_identyf->cd(2);
+    proton_identyf_real->Draw();
+    c_identyf->cd(3);
+    pion_identyf_ideal->Draw();
+    c_identyf->cd(4);
+    pion_identyf_real->Draw();
+    c_identyf->cd(5);
+    lepton_identyf_real->Draw();
+    c_identyf->cd(6);
+    lepton_identyf_ideal->Draw();
+
+    c_identyf->Write();
+    //********************************
+    /*
     cEff->Divide(4,3);
     cEff->cd(1);
     hEprotons4Pi->Draw();

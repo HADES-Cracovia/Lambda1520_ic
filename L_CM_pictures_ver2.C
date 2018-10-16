@@ -108,7 +108,7 @@ int sumSignals(TH1F* &histSum, TH1F** hists, int channels, int signal[])
 
 int L_CM_pictures_ver2()
 {
-  const int fn=10;//number of files in "infile"
+  const int fn=12;//number of files in "infile"
   const int signal_ch[]={1,8,9};//list of signal channels in "infile" file, starting from 0
   std::ifstream infile("files_list_k.dat");//list of histograms
   std::string file;
@@ -130,7 +130,9 @@ int L_CM_pictures_ver2()
     10 /10,//10 times bgger statistics
     7/10,//10 times bgger statistics
     8.84e-4,
-    7.59e-3    
+    7.59e-3,
+    10,//temp solution channel 55
+    10//temp solution channel 56
   };//ub
 
   TH1F *hL1520massDistZLpi0[fn];
@@ -296,6 +298,8 @@ int L_CM_pictures_ver2()
   legend->AddEntry(hL1520massFinalpi0[2],"L1520 decays 130#mub","l");
   legend->AddEntry(hL1520massFinalpi0[8],"p K+ #Lambda(1405)[#Lambda(1115) e+ e-] 173#mub","l");
   legend->AddEntry(hL1520massFinalpi0[9],"p K+ #Sigma(1385)[#Lambda(1115) e+ e-] 64#mub","l");
+  legend->AddEntry(hL1520massFinalpi0[10],"p #Delta^{+})[p e+ e-] 10#mub","l");
+  legend->AddEntry(hL1520massFinalpi0[11],"p p#Delta^{0}[n e+ e-] 10#mub","l");
   //Draw all things
   TCanvas *cPictures = new TCanvas("cPictures","cPictures");
 
