@@ -108,7 +108,7 @@ int sumSignals(TH1F* &histSum, TH1F** hists, int channels, int signal[])
 
 int L_CM_pictures_ver3()
 {
-  const int fn=12;//number of files in "infile"
+  const int fn=14;//number of files in "infile"
   const int signal_ch[]={1,8,9};//list of signal channels in "infile" file, starting from 0
   std::ifstream infile("files_list_k.dat");//list of histograms
   std::string file;
@@ -132,7 +132,9 @@ int L_CM_pictures_ver3()
     8.84e-4,//channel 50
     7.59e-3,//channel 52
     1.242e-1 / 8.065167e-10,//channel 55 weight 8.065167e-10 set in PLUTO
-    24e-2 / 8.065167e-10//channel 56 weight 8.065167e-10 set in PLUTO
+    24e-2 / 8.065167e-10,//channel 56 weight 8.065167e-10 set in PLUTO
+    29e-4/ 8.065167e-10,//channel 57 weight 8.065167e-10 set in PLUTO
+    18.6e-4/ 8.065167e-10//channel 58 weight 8.065167e-10 set in PLUTO
   };//ub
   
   TH1F *hL1520massDistZLpi0[fn];
@@ -440,9 +442,9 @@ int L_CM_pictures_ver3()
     {
       hDLmassDistZL[signal_ch[j]]->Draw("same");
     }
-  hDLmassDistZL[0]->Draw("same");
-  hDLmassDistZL[10]->Draw("same");
-  hDLmassDistZL[11]->Draw("same");
+  //hDLmassDistZL[0]->Draw("same");
+  //hDLmassDistZL[10]->Draw("same");
+  //hDLmassDistZL[11]->Draw("same");
   //hDLmassDistZL[1]->Draw("same");
   //hDLmassDistZL[8]->Draw("same");
   //hDLmassDistZL[9]->Draw("same");
