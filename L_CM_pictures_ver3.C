@@ -110,6 +110,7 @@ int L_CM_pictures_ver3()
 {
   const int fn=14;//number of files in "infile"
   const int signal_ch[]={1,8,9};//list of signal channels in "infile" file, starting from 0
+  const int ur_background[]={10,11,12,13};
   std::ifstream infile("files_list_k.dat");//list of histograms
   std::string file;
   //std::string directory="/lustre/nyx/hades/user/iciepal/Lambda1520_ic/";//directory comon for all files
@@ -174,7 +175,9 @@ int L_CM_pictures_ver3()
   TH1F *hL1520mass_sum_all_signals;
   TH1F *hDLmass_sum_all_signals;
   TH1F *hDLmass_sum_right_vertex;
-  
+
+  TH1F *hDLmass_delta;
+  TH1F *hL1520_delta;
   //read file wth list of histograms
   if(!infile)
     {
@@ -285,6 +288,8 @@ int L_CM_pictures_ver3()
   sum_background(hL1520mass_sum_CBbackground,hL1520mass_background_epep,hL1520mass_background_emem);
   sumSignals(hL1520mass_sum_all_signals,hL1520massDistZLpi0,fn,signal_ch);
   sumSignals(hDLmass_sum_all_signals,hDLmassDistZL,fn,signal_ch);
+  sumSignals(hDLmass_delta,hDLmassDistZL,fn,ur_background);
+  sumSignals(hL1520_delta,hL1520massDistZLpi0,fn,ur_background);
   
   cout<<"all histograms set"<<endl;
   
@@ -300,8 +305,10 @@ int L_CM_pictures_ver3()
   legend->AddEntry(hL1520massFinalpi0[2],"L1520 decays 130#mub","l");
   legend->AddEntry(hL1520massFinalpi0[8],"p K+ #Lambda(1405)[#Lambda(1115) e+ e-] 173#mub","l");
   legend->AddEntry(hL1520massFinalpi0[9],"p K+ #Sigma(1385)[#Lambda(1115) e+ e-] 64#mub","l");
-  legend->AddEntry(hL1520massFinalpi0[10],"p #Delta^{+})[p e+ e-] #mub","l");
-  legend->AddEntry(hL1520massFinalpi0[11],"p p#Delta^{0}[n e+ e-] #mub","l");
+  legend->AddEntry(hL1520massFinalpi0[10],"p #Delta^{+}[p e+ e-] #pi^{+} #pi^{-} #mub","l");
+  legend->AddEntry(hL1520massFinalpi0[11],"p #Delta^{0}[n e+ e-] #pi^{+} #pi^{-} #pi^{-} #mub","l");
+  legend->AddEntry(hL1520massFinalpi0[12],"#Delta^{+}[p e+ e-] #Lambda K^{+} #mub","l");
+  legend->AddEntry(hL1520massFinalpi0[13],"#Delta^{0}[n e+ e-] #Lambda K^{+} #pi^{+} #mub","l");
   //Draw all things
   TCanvas *cPictures = new TCanvas("cPictures","cPictures");
 
@@ -389,14 +396,21 @@ int L_CM_pictures_ver3()
   cout<<"************"<<endl<<"FF scaling factor="<<ff_const<<endl<<"***********"<<endl;
   hL1520mass_FF->Scale(ff_const);
   //**********************************
+
+  //L1520 SPECTRUM
   
   TCanvas* cFinalL1520=new TCanvas("cFinalL1520","cFinalL1520");
   cFinalL1520->cd();
+
+  hL1520mass_background->Add(hL1520_delta,-1);
+  hL1520mass_background->GetXaxis()->SetTitle("M_{#Lambda^{0} e^{+} e^{-}} [MeV]");
+  
   TH1F* sum_renormalize=renolmalize(hL1520mass_background,4);
   TH1F* CM_background=renolmalize(hL1520mass_sum_CBbackground,4);
-  hL1520mass_FF->Draw("same");
-  hL1520mass_FF->SetLineStyle(2);
-  hL1520mass_FF->SetLineColor(kGreen);
+  //hL1520mass_FF->Draw("same");
+  //hL1520mass_FF->SetLineStyle(2);
+  //hL1520mass_FF->SetLineColor(kGreen);
+  hL1520mass_sum_all_signals->GetXaxis()->SetTitle("M_{#Lambda^{0} e^{+} e^{-}} [MeV]");
   hL1520mass_sum_all_signals->Draw("same");
   hL1520mass_sum_all_signals->SetLineWidth(2);
   hL1520mass_sum_all_signals->SetLineColor(kGreen);
@@ -407,7 +421,11 @@ int L_CM_pictures_ver3()
   hL1520massDistZLpi0[1]->Draw("same");
   hL1520massDistZLpi0[8]->Draw("same");
   hL1520massDistZLpi0[9]->Draw("same");
-  
+  hL1520_delta->Draw("same");
+  hL1520_delta->SetLineWidth(2);
+
+
+  //dI-LEPTON SPECTRUM
   
   TCanvas* cFinalDL_cb=new TCanvas("cFinalDL_cb","cFinalDL_cb");
   gPad->SetLogy();
@@ -418,6 +436,10 @@ int L_CM_pictures_ver3()
   TH1F* hDLmass_sum_background_re=renolmalize(hDLmass_sum_background,2);
   TH1F* hDLmass_sum_renolmalize=renolmalize(hDLmass_sum,2);
 
+  hDLmass_sum_right_vertex->Add(hDLmass_delta,-1);
+  hDLmass_sum_right_vertex->Add(hDLmass_sum_all_signals,-1);
+  hDLmass_sum_right_vertex->GetXaxis()->SetTitle("M_{e^{+} e^{-}} [MeV]");
+  
   hDLmass_sum_right_vertex->Draw("same");
   hDLmass_sum_right_vertex->SetLineColor(kMagenta);
   hDLmass_sum_right_vertex->SetLineStyle(1);
@@ -435,6 +457,8 @@ int L_CM_pictures_ver3()
   hDLmass_FF->Draw("same");
   hDLmass_FF->SetLineStyle(2);
   hDLmass_FF->SetLineColor(kGreen);
+  hDLmass_delta->Draw("same");
+  hDLmass_delta->SetLineWidth(2);
 
   //draw signal channels
   int jmax=sizeof(signal_ch)/sizeof(signal_ch[0]);
